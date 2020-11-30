@@ -10,5 +10,5 @@ app.use(express.json());
 app.use("/organization", organization_router);
 app.use("/user", user_router);
 app.listen(port, () => {
-  console.log("Server running on port " + port);
+  console.log("Server running on port  " + port);
 });
