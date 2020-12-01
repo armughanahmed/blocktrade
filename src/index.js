@@ -1,7 +1,6 @@
 require("dotenv").config();
 const express = require("express");
 
-// const user_router = require("./api/users");
 const organization_router = require("./api/organization/organization.router");
 const user_router = require("./api/users/user.router");
 const app = express();

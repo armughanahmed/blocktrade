@@ -1,37 +1,21 @@
 const pool = require("../../db/mysql");
-
 module.exports = {
-  create: (data, callBack) => {
+  create: (data, callback) => {
     pool.query(
-      `insert into employees(org_id,name, email, country, city, password,role,active)
-                values(?,?,?,?,?,?,?,?)`,
-      [
-        data.decode.result.org_id,
-        data.name,
-        data.email,
-        data.country,
-        data.city,
-        data.password,
-        data.role,
-        0,
-      ],
+      `insert into employees(org_id,email,role,active)
+                  values(?,?,?,?)`,
+      [data.decode.result.org_id, data.email, data.role, 0],
       (error, results, fields) => {
-        if (error) {
-          callBack(error);
-        }
-        return callBack(null, results);
+        return callback(error, results);
       }
     );
   },
-  getUserByUserEmail: (email, callBack) => {
+  getUserByUserEmail: (email, callback) => {
     pool.query(
       `select * from employees where email = ?`,
       [email],
       (error, results, fields) => {
-        if (error) {
-          callBack(error);
-        }
-        return callBack(null, results[0]);
+        return callback(error, results[0]);
       }
     );
   },
@@ -47,17 +31,13 @@ module.exports = {
   //       }
   //     );
   //   },
-  getUsers: (decode, callBack) => {
-    // console.log(decode.result.org_id);
+  getUsers: (decode, callback) => {
+    let service = {};
     pool.query(
       `select * from employees where org_id = ?`,
       [decode.result.org_id],
       (error, results, fields) => {
-        if (error) {
-          callBack(error);
-        }
-        console.log(results);
-        return callBack(null, results);
+        return callback(error, results);
       }
     );
   },

@@ -32,7 +32,7 @@ module.exports = {
             data.city,
             data.password,
             "admin",
-            1,
+            0,
           ],
           (error, results, fields) => {
             if (error) {

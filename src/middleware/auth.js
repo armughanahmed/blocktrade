@@ -13,7 +13,7 @@ module.exports = {
     if (token) {
       // Remove Bearer from string
       token = token.slice(7);
-      jwt.verify(token, process.env.JWT_KEY, (err, decoded) => {
+      jwt.verify(token, "blocktrade", (err, decoded) => {
         if (err) {
           return res.json({
             success: 0,
@@ -36,7 +36,6 @@ module.exports = {
       req.decoded.result.role == "admin" ||
       req.decoded.result.role == "moderator"
     ) {
-      console.log("yes");
       next();
     } else {
       return res.json({
