@@ -1,0 +1,33 @@
+@media only screen and (max-width: 600px) {
+    .card{
+      margin-top:50px;
+      margin-right: 0;
+    }
+
+    #register-image{
+      display: none;
+    }
+
+    #register-page{
+      background-color: rgb(247, 247, 247);
+    }
+  }
+
+  #register-page {
+    min-height: 100vh;
+    display: flex;
+    font-weight: 400;
+    font-family: sans-serif;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    background-image: linear-gradient( 90.9deg,  rgba(3,195,195,1) 0.3%, rgba(37,84,112,1) 87.8% );
+
+   
+
+  }
+
+  #register-card{
+      margin-top: 35px;
+      margin-bottom: 45px;
+      background-color: rgb(240, 241, 241);
+  }
