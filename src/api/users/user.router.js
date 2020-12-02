@@ -1,8 +1,11 @@
 const router = require("express").Router();
+const { verify } = require("jsonwebtoken");
 const { auth, authAdmin } = require("../../middleware/auth");
 const {
   createUser,
+  createVerifiedUser,
   login,
+  verifyToken,
   //   getUserByUserId,
   getUsers,
   //   updateUsers,
@@ -10,9 +13,10 @@ const {
 } = require("./user.controller");
 router.get("/", auth, authAdmin, getUsers);
 router.post("/", auth, authAdmin, createUser);
+router.post("/signup", createVerifiedUser);
 // router.get("/:id", auth, getUserByUserId);
 router.post("/login", login);
 // router.patch("/", auth, updateUsers);
 // router.delete("/", auth, deleteUser);
-
+router.get("/invite/:token", verifyToken);
 module.exports = router;

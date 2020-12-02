@@ -1,14 +1,19 @@
 const {
+  deleteToken,
+  verifyToken,
   create,
   getUserByUserEmail,
   getUserByUserId,
   getUsers,
   updateUser,
   deleteUser,
+  createInvite,
+  verifyTokenStatus,
+  createUser,
 } = require("./user.service");
 const nodemailer = require("nodemailer");
 const { hashSync, genSaltSync, compareSync } = require("bcrypt");
-const { sign, verify } = require("jsonwebtoken");
+const { sign, verify, decode } = require("jsonwebtoken");
 const sendEmail = async (text, to, org) => {
   let transporter = nodemailer.createTransport({
     service: "gmail",
@@ -19,11 +24,11 @@ const sendEmail = async (text, to, org) => {
   });
 
   let mailOptions = {
-    from: "armughancr7@gmail.com", // TODO: email sender
-    to: to, // TODO: email receiver
+    from: "armughancr7@gmail.com",
+    to: to,
     subject: "invite link",
     // cc: org,
-    text: text,
+    html: `<p>Click <a href=${text}>here</a> to verify</p>`,
   };
 
   let info = await transporter.sendMail(mailOptions);
@@ -32,12 +37,98 @@ const sendEmail = async (text, to, org) => {
   return info;
 };
 module.exports = {
+  createVerifiedUser: (req, res) => {
+    const body = req.body;
+    const salt = genSaltSync(10);
+    body.password = hashSync(body.password, salt);
+    verifyTokenStatus(body, (error = null, results = null) => {
+      if (error) {
+        console.log("createVerifiedUser:: ");
+        console.log(error);
+        return res.status(500).send({
+          success: 0,
+          message: "something went wrong with the database",
+          data: null,
+        });
+      }
+      if (!results) {
+        return res.status(404).send({
+          success: 0,
+          message: "user not verified",
+          data: null,
+        });
+      }
+      createUser(body, (error = null, results = null) => {
+        if (error) {
+          console.log("createVerifiedUser::");
+          console.log(error);
+          return res.status(500).send({
+            success: 0,
+            message: "something went wrong with the database",
+            data: null,
+          });
+        }
+        console.log("createUser:: user created succesfully");
+        deleteToken(body, (error, results) => {
+          if (error) {
+            console.log("deleteToken::");
+            console.log(error);
+            return res.status(500).send({
+              success: 0,
+              message: "something went wrong with the database",
+              data: null,
+            });
+          }
+        });
+      });
+      return res.status(201).send({
+        success: 1,
+        message: "Succesfully created user",
+      });
+    });
+  },
+  verifyToken: (req, res) => {
+    let token = req.params.token;
+    verify(token, "invite", (err, decoded) => {
+      if (err) {
+        return res.status(400).send({
+          success: 0,
+          message: "Invalid Invite link",
+          data: null,
+        });
+      }
+    });
+    const decoded = decode(token);
+    verifyToken(decoded, (error = null, results = null) => {
+      if (error) {
+        console.log(`verifytoken:: ${error}`);
+        return res.status(500).send({
+          success: 0,
+          message: "something went wrong with database",
+          data: null,
+        });
+      }
+      if (!results || results.affectedRows == 0) {
+        return res.status(404).send({
+          success: 0,
+          message: "invite link does not exist!",
+          data: null,
+        });
+      }
+      return res.status(200).send({
+        success: 1,
+        message: "invite link verified",
+        data: decoded,
+        data: null,
+      });
+    });
+  },
   createUser: (req, res) => {
     const body = req.body;
     // const salt = genSaltSync(10);
     // body.password = hashSync(body.password, salt);
     body.decode = req.decoded;
-    create(body, (error = null, results = null) => {
+    createInvite(body, async (error = null, results = null) => {
       if (error) {
         console.log(error);
         return res.status(500).send({
@@ -48,8 +139,12 @@ module.exports = {
       }
 
       const jsontoken = sign({ result: body }, "invite");
-      const url = `localhost:4000/invite/${jsontoken}`;
-      const mail = sendEmail(url, body.email, body.decode.result.org_id);
+      const url = `http://localhost:4000/user/invite/${jsontoken}`;
+      const mail = await sendEmail(
+        url,
+        body.receiver_email,
+        body.decode.result.org_id
+      );
       if (!mail) {
         console.log("createUser:: error in sending mail");
       }

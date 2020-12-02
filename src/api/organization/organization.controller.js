@@ -1,7 +1,30 @@
 const { createOrganization } = require("./organization.service");
 const { hashSync, genSaltSync, compareSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
+const sendEmail = async (text, to, org) => {
+  let transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "armughancr7@gmail.com",
+      pass: "kiunbataon",
+    },
+  });
 
+  let mailOptions = {
+    from: "armughancr7@gmail.com",
+    to: to,
+    subject: "invite link",
+    // cc: org,
+    html: `<h3>thank you ${text} for registering with blocktrade.</h3><br>
+           <h3>Our team will contact you shortly after viewing the provided infromation</h3>`,
+  };
+
+  let info = await transporter.sendMail(mailOptions);
+  console.log("Message sent: %s", info.messageId);
+  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+  return info;
+};
 module.exports = {
   createOrganization: (req, res) => {
     const body = req.body;
@@ -14,6 +37,14 @@ module.exports = {
           status: 500,
           message: "Database connection errror",
         });
+      }
+      const mail = await sendEmail(
+        body.name,
+        body.email,
+        null
+      );
+      if (!mail) {
+        console.log("createUser:: error in sending mail");
       }
       return res.status(200).json({
         status: 200,
