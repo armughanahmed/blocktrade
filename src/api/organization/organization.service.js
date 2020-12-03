@@ -1,7 +1,7 @@
 const pool = require("../../db/mysql");
 
 module.exports = {
-  createOrganization: (data, callBack) => {
+  createOrganization: (data, callback) => {
     pool.query(
       `insert into Organizations(name, type,email, password, country, city, zipCode,officeAddress,phoneNumber,NTN) 
                 values(?,?,?,?,?,?,?,?,?,?)`,
@@ -19,7 +19,7 @@ module.exports = {
       ],
       (error, results, fields) => {
         if (error) {
-          callBack(error);
+          callback(error);
         }
         pool.query(
           `insert into employees(org_id,name, email, country, city, password,role,active)
@@ -36,11 +36,11 @@ module.exports = {
           ],
           (error, results, fields) => {
             if (error) {
-              callBack(error);
+              callback(error);
             }
           }
         );
-        return callBack(null, results);
+        return callback(null, results);
       }
     );
   },

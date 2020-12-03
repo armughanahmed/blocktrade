@@ -1,12 +1,4 @@
 const jwt = require("jsonwebtoken");
-// const {
-//   create,
-//   getUserByUserEmail,
-//   getUserByUserId,
-//   getUsers,
-//   updateUser,
-//   deleteUser,
-// } = require("./user.service");
 module.exports = {
   auth: (req, res, next) => {
     let token = req.get("authorization");
@@ -25,9 +17,10 @@ module.exports = {
         }
       });
     } else {
-      return res.json({
+      return res.status(401).send({
         success: 0,
         message: "Access Denied! Unauthorized User",
+        data: null,
       });
     }
   },
@@ -38,9 +31,21 @@ module.exports = {
     ) {
       next();
     } else {
-      return res.json({
+      return res.status(401).send({
         success: 0,
-        message: "not an admin",
+        message: "Access Denied! Unauthorized Admin",
+        data: null,
+      });
+    }
+  },
+  authModerator: (req, res, next) => {
+    if (req.decoded.result.role == "moderator") {
+      next();
+    } else {
+      return res.status(401).send({
+        success: 0,
+        message: "Access Denied! Unauthorized Moderator",
+        data: null,
       });
     }
   },

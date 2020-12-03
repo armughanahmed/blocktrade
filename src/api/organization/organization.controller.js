@@ -25,12 +25,13 @@ const sendEmail = async (text, to, org) => {
   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
   return info;
 };
+
 module.exports = {
   createOrganization: (req, res) => {
     const body = req.body;
     const salt = genSaltSync(10);
     body.password = hashSync(body.password, salt);
-    createOrganization(body, (err, results) => {
+    createOrganization(body, async (err, results) => {
       if (err) {
         console.log(err);
         return res.status(500).json({
@@ -38,11 +39,7 @@ module.exports = {
           message: "Database connection errror",
         });
       }
-      const mail = await sendEmail(
-        body.name,
-        body.email,
-        null
-      );
+      const mail = await sendEmail(body.name, body.email, null);
       if (!mail) {
         console.log("createUser:: error in sending mail");
       }

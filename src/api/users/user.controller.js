@@ -125,8 +125,6 @@ module.exports = {
   },
   createUser: (req, res) => {
     const body = req.body;
-    // const salt = genSaltSync(10);
-    // body.password = hashSync(body.password, salt);
     body.decode = req.decoded;
     createInvite(body, async (error = null, results = null) => {
       if (error) {
