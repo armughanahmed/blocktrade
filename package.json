@@ -15,5 +15,16 @@
   "bugs": {
     "url": "https://github.com/armughanahmed/blocktrade/issues"
   },
-  "homepage": "https://github.com/armughanahmed/blocktrade#readme"
+  "homepage": "https://github.com/armughanahmed/blocktrade#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "cron": "^1.8.2",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.20",
+    "mysql": "^2.18.1",
+    "node-cron": "^2.0.3",
+    "nodemailer": "^6.4.16"
+  }
 }

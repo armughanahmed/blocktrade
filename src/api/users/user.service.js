@@ -43,10 +43,11 @@ module.exports = {
       }
     );
   },
-  getUserByUserEmail: (email, callback) => {
+  getUserByUserEmail: (data, callback) => {
+    console.log(data);
     pool.query(
       `select * from employees where email = ?`,
-      [email],
+      [data],
       (error, results, fields) => {
         console.log("getUserByUserEmail::");
         console.log(results);

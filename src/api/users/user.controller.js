@@ -126,7 +126,7 @@ module.exports = {
   createUser: (req, res) => {
     const body = req.body;
     body.decode = req.decoded;
-    getUserByUserEmail(body, (error = null, results = null) => {
+    getUserByUserEmail(body.email, (error = null, results = null) => {
       if (error) {
         console.log("createUser::");
         console.log(error);
