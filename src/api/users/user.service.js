@@ -48,6 +48,8 @@ module.exports = {
       `select * from employees where email = ?`,
       [email],
       (error, results, fields) => {
+        console.log("getUserByUserEmail::");
+        console.log(results);
         return callback(error, results[0]);
       }
     );

@@ -1,4 +1,7 @@
-const { createOrganization } = require("./organization.service");
+const {
+  createOrganization,
+  getOrganizationByEmail,
+} = require("./organization.service");
 const { hashSync, genSaltSync, compareSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
@@ -29,23 +32,41 @@ const sendEmail = async (text, to, org) => {
 module.exports = {
   createOrganization: (req, res) => {
     const body = req.body;
-    const salt = genSaltSync(10);
-    body.password = hashSync(body.password, salt);
-    createOrganization(body, async (err, results) => {
-      if (err) {
-        console.log(err);
-        return res.status(500).json({
-          status: 500,
+    getOrganizationByEmail(body.email, (error = null, results = null) => {
+      if (error) {
+        console.log("createOrganization::");
+        console.log(error);
+        return res.status(500).send({
+          success: 0,
           message: "Database connection errror",
+          data: null,
         });
       }
-      const mail = await sendEmail(body.name, body.email, null);
-      if (!mail) {
-        console.log("createUser:: error in sending mail");
+      if (results) {
+        return res.status(302).send({
+          success: 0,
+          message: "Email already exists",
+          data: null,
+        });
       }
-      return res.status(200).json({
-        status: 200,
-        data: results,
+      const salt = genSaltSync(10);
+      body.password = hashSync(body.password, salt);
+      createOrganization(body, async (err, results) => {
+        if (err) {
+          console.log(err);
+          return res.status(500).json({
+            status: 500,
+            message: "Database connection errror",
+          });
+        }
+        const mail = await sendEmail(body.name, body.email, null);
+        if (!mail) {
+          console.log("createUser:: error in sending mail");
+        }
+        return res.status(200).json({
+          status: 200,
+          data: results,
+        });
       });
     });
   },

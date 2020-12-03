@@ -36,6 +36,17 @@ module.exports = {
       }
     );
   },
+  getAdminByEmail: (data, callback) => {
+    pool.query(
+      `select * from employees where email=?`,
+      [data],
+      (error, results, fields) => {
+        console.log("getAdminByMail::");
+        console.log(results);
+        return callback(error, results[0]);
+      }
+    );
+  },
   // createOrganization: (data, callback) => {
   //   pool.query(
   //     `insert into Organizations(name, type,email, password, country, city, zipCode,officeAddress,phoneNumber,NTN)

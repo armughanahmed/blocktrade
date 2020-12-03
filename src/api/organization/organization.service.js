@@ -1,6 +1,17 @@
 const pool = require("../../db/mysql");
 
 module.exports = {
+  getOrganizationByEmail: (data, callback) => {
+    pool.query(
+      `select * from Organizations where email=?`,
+      [data],
+      (error, results, fields) => {
+        console.log("getOrganizationByMail::");
+        console.log(results);
+        return callback(error, results[0]);
+      }
+    );
+  },
   createOrganization: (data, callback) => {
     pool.query(
       `insert into Organizations(name, type,email, password, country, city, zipCode,officeAddress,phoneNumber,NTN) 

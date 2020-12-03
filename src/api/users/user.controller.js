@@ -126,30 +126,48 @@ module.exports = {
   createUser: (req, res) => {
     const body = req.body;
     body.decode = req.decoded;
-    createInvite(body, async (error = null, results = null) => {
+    getUserByUserEmail(body, (error = null, results = null) => {
       if (error) {
+        console.log("createUser::");
         console.log(error);
         return res.status(500).send({
           success: 0,
-          message: "database connection error",
+          message: "Database connection errror",
           data: null,
         });
       }
-
-      const jsontoken = sign({ result: body }, "invite");
-      const url = `http://localhost:4000/user/invite/${jsontoken}`;
-      const mail = await sendEmail(
-        url,
-        body.receiver_email,
-        body.decode.result.org_id
-      );
-      if (!mail) {
-        console.log("createUser:: error in sending mail");
+      if (results) {
+        return res.status(302).send({
+          success: 0,
+          message: "Email already exists",
+          data: null,
+        });
       }
-      return res.status(200).send({
-        success: 1,
-        message: "succesfully created",
-        data: results,
+      createInvite(body, async (error = null, results = null) => {
+        if (error) {
+          console.log(error);
+          return res.status(500).send({
+            success: 0,
+            message: "database connection error",
+            data: null,
+          });
+        }
+
+        const jsontoken = sign({ result: body }, "invite");
+        const url = `http://localhost:4000/user/invite/${jsontoken}`;
+        const mail = await sendEmail(
+          url,
+          body.receiver_email,
+          body.decode.result.org_id
+        );
+        if (!mail) {
+          console.log("createUser:: error in sending mail");
+        }
+        return res.status(200).send({
+          success: 1,
+          message: "succesfully created",
+          data: results,
+        });
       });
     });
   },

@@ -1,4 +1,8 @@
-const { getAdmin, createModerator } = require("./admin.service");
+const {
+  getAdmin,
+  createModerator,
+  getAdminByEmail,
+} = require("./admin.service");
 const { hashSync, genSaltSync, compareSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
@@ -67,26 +71,44 @@ module.exports = {
   adminSignup: (req, res) => {
     let body = req.body;
     body.decode = req.decoded;
-    const salt = genSaltSync(10);
-    body.password = hashSync(body.password, salt);
-    createModerator(body, async (error = null, results = null) => {
+    getAdminByEmail(body, (error = null, results = null) => {
       if (error) {
         console.log("adminSignup::");
         console.log(error);
         return res.status(500).send({
           success: 0,
-          message: "failed to create moderator. db error",
+          message: "Database connection errror",
           data: null,
         });
       }
-      const mail = await sendEmailModerator(body.name, body.email, null);
-      if (!mail) {
-        console.log("createUser:: error in sending mail");
+      if (results) {
+        return res.status(302).send({
+          success: 0,
+          message: "Email already exists",
+          data: null,
+        });
       }
-      return res.status(201).send({
-        success: 1,
-        message: "moderator created",
-        data: results,
+      const salt = genSaltSync(10);
+      body.password = hashSync(body.password, salt);
+      createModerator(body, async (error = null, results = null) => {
+        if (error) {
+          console.log("adminSignup::");
+          console.log(error);
+          return res.status(500).send({
+            success: 0,
+            message: "failed to create moderator. db error",
+            data: null,
+          });
+        }
+        const mail = await sendEmailModerator(body.name, body.email, null);
+        if (!mail) {
+          console.log("createUser:: error in sending mail");
+        }
+        return res.status(201).send({
+          success: 1,
+          message: "moderator created",
+          data: results,
+        });
       });
     });
   },
