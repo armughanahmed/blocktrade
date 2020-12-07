@@ -1,0 +1,31 @@
+#shipping-mode{
+    height: 66vh;
+}
+
+.added-consignments .card{
+    background-color: #fcfcfc;
+    padding: 0;
+    border: 1px solid #053C66;
+    border-radius: 3px;
+}
+
+.added-consignments p strong{
+    font-size: 14px;
+    color: #043255;
+}
+
+.added-consignments p{
+    font-size: 13px;
+    
+}
+
+.main-added-consignments{
+    margin-top: 80px;
+}
+
+.main-added-consignments h3{
+    margin-bottom: 20px;
+    text-align: center;
+    padding: 25px;
+    font-size: 20px;
+}
