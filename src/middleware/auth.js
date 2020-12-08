@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const { getUserByUserId } = require("../api/users/user.service");
 module.exports = {
   auth: (req, res, next) => {
     let token = req.get("authorization");
@@ -45,6 +46,18 @@ module.exports = {
       return res.status(401).send({
         success: 0,
         message: "Access Denied! Unauthorized Moderator",
+        data: null,
+      });
+    }
+  },
+  authOrganization: async (req, res, next) => {
+    const user = await getUserByUserId(req.body.id);
+    if (user.org_id == req.decoded.result.org_id) {
+      next();
+    } else {
+      return res.status(401).send({
+        success: 0,
+        message: "Access Denied! Unauthorized organization",
         data: null,
       });
     }

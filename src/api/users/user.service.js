@@ -115,26 +115,31 @@ module.exports = {
       );
     });
   },
-  //   updateUser: (data, callBack) => {
-  //     pool.query(
-  //       `update registration set firstName=?, lastName=?, gender=?, email=?, password=?, number=? where id = ?`,
-  //       [
-  //         data.first_name,
-  //         data.last_name,
-  //         data.gender,
-  //         data.email,
-  //         data.password,
-  //         data.number,
-  //         data.id,
-  //       ],
-  //       (error, results, fields) => {
-  //         if (error) {
-  //           callBack(error);
-  //         }
-  //         return callBack(null, results[0]);
-  //       }
-  //     );
-  //   },
+  updateUser: (data) => {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `update Employees set name=? , email=?, country=?, city=?, password=?, role=? where id = ?`,
+        [
+          data.name,
+          data.email,
+          data.country,
+          data.city,
+          data.password,
+          data.role,
+          data.id,
+        ],
+        (error, results, fields) => {
+          if (error) {
+            console.log("updateUser::");
+            return reject(error);
+          }
+          console.log("updateUser::");
+          console.log(results);
+          resolve(results[0]);
+        }
+      );
+    });
+  },
   deleteUser: (data) => {
     return new Promise((resolve, reject) => {
       pool.query(

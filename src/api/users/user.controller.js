@@ -175,10 +175,10 @@ module.exports = {
       }
     } catch (e) {}
   },
-  getUserByUserId: (req, res) => {
-    try{
+  getUserByUserId: async (req, res) => {
+    try {
       const id = req.params.id;
-      const user=await getUserByUserId(id)
+      const user = await getUserByUserId(id);
       if (!user) {
         return res.status(404).send({
           success: 0,
@@ -188,14 +188,14 @@ module.exports = {
       user.password = undefined;
       return res.status(200).send({
         success: 1,
-        message:"user found succesfully",
+        message: "user found succesfully",
         data: user,
       });
-    }catch(e){
-      console.log(e)
+    } catch (e) {
+      console.log(e);
       return res.status(200).send({
         success: 0,
-        message:"something went wrong while finding users by user id",
+        message: "something went wrong while finding users by user id",
         data: null,
       });
     }
@@ -216,41 +216,43 @@ module.exports = {
       });
     }
   },
-  //   updateUsers: (req, res) => {
-  //     const body = req.body;
-  //     const salt = genSaltSync(10);
-  //     body.password = hashSync(body.password, salt);
-  //     updateUser(body, (err, results) => {
-  //       if (err) {
-  //         console.log(err);
-  //         return;
-  //       }
-  //       return res.json({
-  //         success: 1,
-  //         message: "updated successfully",
-  //       });
-  //     });
-  //   },
-    deleteUser: (req, res) => {
-      try{
-        const data = req.body;
-        const user=await deleteUser(data)
-        if (!user) {
-          return res.status(404).send({
-            success: 0,
-            message: "user not found",
-          });
-        }
-        return res.status(200).send({
-          success: 1,
-          message: "user deleted successfully",
-        });
-      }catch(e){
-        console.log(e);
-        return res.status(200).send({
+  updateUsers: async (req, res) => {
+    try {
+      const body = req.body;
+      const salt = genSaltSync(10);
+      body.password = hashSync(body.password, salt);
+      const user = await updateUser(body);
+      return res.status(201).send({
+        success: 1,
+        message: "user updated successfully",
+      });
+    } catch (e) {
+      return res.status(500).send({
+        success: 0,
+        message: "error in updating user",
+      });
+    }
+  },
+  deleteUser: async (req, res) => {
+    try {
+      const data = req.body;
+      const user = await deleteUser(data);
+      if (!user) {
+        return res.status(404).send({
           success: 0,
-          message: "something went wrong while deleting user",
+          message: "user not found",
         });
       }
-    },
+      return res.status(200).send({
+        success: 1,
+        message: "user deleted successfully",
+      });
+    } catch (e) {
+      console.log(e);
+      return res.status(200).send({
+        success: 0,
+        message: "something went wrong while deleting user",
+      });
+    }
+  },
 };
