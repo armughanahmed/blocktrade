@@ -13,6 +13,7 @@ import Login from './layouts/Login';
 import DashboardCO from './layouts/cargoOwner/DashboardCO';
 import StartConsignmentCO from './layouts/cargoOwner/StartConsignmentCO';
 import ViewConsignmentsCO from './layouts/cargoOwner/ViewConsignmentsCO';
+import TrackConsignment from './layouts/cargoOwner/TrackConsignment';
 
 function App() {
   return (  
@@ -23,6 +24,7 @@ function App() {
           <Route path="/dashboard" component={DashboardCO}/>
           <Route path="/startConsignment" component={StartConsignmentCO}/>
           <Route path="/viewConsignments" component={ViewConsignmentsCO}/>
+          <Route path="/trackConsignment" component={TrackConsignment}/>
       </Switch>
     </Router>
   );
