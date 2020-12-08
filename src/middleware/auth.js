@@ -7,7 +7,7 @@ module.exports = {
       token = token.slice(7);
       jwt.verify(token, "blocktrade", (err, decoded) => {
         if (err) {
-          return res.json({
+          return res.status(400).send({
             success: 0,
             message: "Invalid Token...",
           });

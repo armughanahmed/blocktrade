@@ -11,6 +11,7 @@ const {
   verifyTokenStatus,
   createUser,
 } = require("./user.service");
+const { getOrganizationByID } = require("../organization/organization.service");
 const nodemailer = require("nodemailer");
 const { hashSync, genSaltSync, compareSync } = require("bcrypt");
 const { sign, verify, decode } = require("jsonwebtoken");
@@ -37,78 +38,54 @@ const sendEmail = async (text, to, org) => {
   return info;
 };
 module.exports = {
-  createVerifiedUser: (req, res) => {
-    const body = req.body;
-    const salt = genSaltSync(10);
-    body.password = hashSync(body.password, salt);
-    verifyTokenStatus(body, (error = null, results = null) => {
-      if (error) {
-        console.log("createVerifiedUser:: ");
-        console.log(error);
-        return res.status(500).send({
-          success: 0,
-          message: "something went wrong with the database",
-          data: null,
-        });
-      }
-      if (!results) {
+  createVerifiedUser: async (req, res) => {
+    try {
+      const body = req.body;
+      const salt = genSaltSync(10);
+      body.password = hashSync(body.password, salt);
+      const verifiedToken = await verifyTokenStatus(body);
+      if (!verifiedToken) {
         return res.status(404).send({
           success: 0,
           message: "user not verified",
           data: null,
         });
       }
-      createUser(body, (error = null, results = null) => {
-        if (error) {
-          console.log("createVerifiedUser::");
-          console.log(error);
-          return res.status(500).send({
-            success: 0,
-            message: "something went wrong with the database",
-            data: null,
-          });
-        }
-        console.log("createUser:: user created succesfully");
-        deleteToken(body, (error, results) => {
-          if (error) {
-            console.log("deleteToken::");
-            console.log(error);
-            return res.status(500).send({
-              success: 0,
-              message: "something went wrong with the database",
-              data: null,
-            });
-          }
-        });
-      });
+      await createUser(body);
+      await deleteToken(body);
+
       return res.status(201).send({
         success: 1,
         message: "Succesfully created user",
+        data: {
+          email: body.email,
+          role: body.role,
+        },
       });
-    });
+    } catch (e) {
+      return res.status(500).send({
+        success: 0,
+        message: "error in creating verified user",
+        data: null,
+      });
+    }
   },
-  verifyToken: (req, res) => {
-    let token = req.params.token;
-    verify(token, "invite", (err, decoded) => {
-      if (err) {
-        return res.status(400).send({
-          success: 0,
-          message: "Invalid Invite link",
-          data: null,
-        });
-      }
-    });
-    const decoded = decode(token);
-    verifyToken(decoded, (error = null, results = null) => {
-      if (error) {
-        console.log(`verifytoken:: ${error}`);
-        return res.status(500).send({
-          success: 0,
-          message: "something went wrong with database",
-          data: null,
-        });
-      }
-      if (!results || results.affectedRows == 0) {
+  verifyToken: async (req, res) => {
+    try {
+      let token = req.params.token;
+      verify(token, "invite", (err, decoded) => {
+        if (err) {
+          return res.status(400).send({
+            success: 0,
+            message: "Invalid Invite link",
+            data: null,
+          });
+        }
+      });
+      const decoded = decode(token);
+      // const org = await getOrganizationByID(decoded.result.org_id);
+      const verifiedToken = await verifyToken(decoded);
+      if (!verifiedToken || verifiedToken.affectedRows == 0) {
         return res.status(404).send({
           success: 0,
           message: "invite link does not exist!",
@@ -119,87 +96,73 @@ module.exports = {
         success: 1,
         message: "invite link verified",
         data: decoded,
+      });
+    } catch (e) {
+      return res.status(500).send({
+        success: 0,
+        message: "error in verifying invite link",
         data: null,
       });
-    });
+    }
   },
-  createUser: (req, res) => {
-    const body = req.body;
-    body.decode = req.decoded;
-    getUserByUserEmail(body.email, (error = null, results = null) => {
-      if (error) {
-        console.log("createUser::");
-        console.log(error);
-        return res.status(500).send({
-          success: 0,
-          message: "Database connection errror",
-          data: null,
-        });
-      }
-      if (results) {
+  createUser: async (req, res) => {
+    try {
+      const body = req.body;
+      body.decode = req.decoded;
+      const userEmail = await getUserByUserEmail(body.email);
+      if (userEmail) {
         return res.status(302).send({
           success: 0,
           message: "Email already exists",
           data: null,
         });
       }
-      createInvite(body, async (error = null, results = null) => {
-        if (error) {
-          console.log(error);
-          return res.status(500).send({
-            success: 0,
-            message: "database connection error",
-            data: null,
-          });
-        }
+      await createInvite(body);
 
-        const jsontoken = sign({ result: body }, "invite");
-        const url = `http://localhost:4000/user/invite/${jsontoken}`;
-        const mail = await sendEmail(
-          url,
-          body.receiver_email,
-          body.decode.result.org_id
-        );
-        if (!mail) {
-          console.log("createUser:: error in sending mail");
-        }
-        return res.status(200).send({
-          success: 1,
-          message: "succesfully created",
-          data: results,
-        });
-      });
-    });
-  },
-  login: (req, res) => {
-    const body = req.body;
-    getUserByUserEmail(body.email, (error = null, results = null) => {
-      if (error) {
-        console.log(`login::error ${error}`);
-        return res.status(500).send({
-          success: 0,
-          message: "database error",
-          data: null,
-        });
+      const jsontoken = sign({ result: body }, "invite");
+      const url = `http://localhost:4000/user/invite/${jsontoken}`;
+      const mail = sendEmail(
+        url,
+        body.receiver_email,
+        body.decode.result.org_id
+      );
+      if (!mail) {
+        console.log("createUser:: error in sending mail");
       }
-      if (!results) {
+      return res.status(200).send({
+        success: 1,
+        message: "succesfully created",
+        data: results,
+      });
+    } catch (e) {
+      return res.status(500).send({
+        success: 0,
+        message: "Something went wrong while creating user",
+        data: null,
+      });
+    }
+  },
+  login: async (req, res) => {
+    try {
+      const body = req.body;
+      const user = await getUserByUserEmail(body.email);
+      if (!user) {
         return res.status(403).send({
           success: 0,
           message: "invalid login credentials",
           data: null,
         });
       }
-      console.log(results);
-      const result = compareSync(body.password, results.password);
+      const result = compareSync(body.password, user.password);
       if (result) {
-        results.password = undefined;
-        const jsontoken = sign({ result: results }, "blocktrade");
+        user.password = undefined;
+        const jsontoken = sign({ result: user }, "blocktrade");
         return res.json({
           success: 1,
           message: "login successfully",
           data: {
-            organization_id: results.org_id,
-            role: results.role,
+            organization_id: user.org_id,
+            role: user.role,
           },
           token: jsontoken,
         });
@@ -210,44 +173,48 @@ module.exports = {
           data: null,
         });
       }
-    });
+    } catch (e) {}
   },
-  //   getUserByUserId: (req, res) => {
-  //     const id = req.params.id;
-  //     getUserByUserId(id, (err, results) => {
-  //       if (err) {
-  //         console.log(err);
-  //         return;
-  //       }
-  //       if (!results) {
-  //         return res.json({
-  //           success: 0,
-  //           message: "Record not Found",
-  //         });
-  //       }
-  //       results.password = undefined;
-  //       return res.json({
-  //         success: 1,
-  //         data: results,
-  //       });
-  //     });
-  //   },
-  getUsers: (req, res) => {
-    getUsers(req.decoded, (error = null, results = null) => {
-      if (error) {
-        console.log(`getUsers::error ${error}`);
-        res.status(500).send({
+  getUserByUserId: (req, res) => {
+    try{
+      const id = req.params.id;
+      const user=await getUserByUserId(id)
+      if (!user) {
+        return res.status(404).send({
           success: 0,
-          message: "database error",
-          data: null,
+          message: "user not found",
         });
       }
+      user.password = undefined;
+      return res.status(200).send({
+        success: 1,
+        message:"user found succesfully",
+        data: user,
+      });
+    }catch(e){
+      console.log(e)
+      return res.status(200).send({
+        success: 0,
+        message:"something went wrong while finding users by user id",
+        data: null,
+      });
+    }
+  },
+  getUsers: async (req, res) => {
+    try {
+      const users = await getUsers(req.decoded);
       return res.status(200).send({
         success: 1,
         message: "succesfully got users",
-        data: results,
+        data: users,
       });
-    });
+    } catch (e) {
+      return res.status(500).send({
+        success: 1,
+        message: "something went wrong while fetching users",
+        data: null,
+      });
+    }
   },
   //   updateUsers: (req, res) => {
   //     const body = req.body;
@@ -264,23 +231,26 @@ module.exports = {
   //       });
   //     });
   //   },
-  //   deleteUser: (req, res) => {
-  //     const data = req.body;
-  //     deleteUser(data, (err, results) => {
-  //       if (err) {
-  //         console.log(err);
-  //         return;
-  //       }
-  //       if (!results) {
-  //         return res.json({
-  //           success: 0,
-  //           message: "Record Not Found",
-  //         });
-  //       }
-  //       return res.json({
-  //         success: 1,
-  //         message: "user deleted successfully",
-  //       });
-  //     });
-  //   },
+    deleteUser: (req, res) => {
+      try{
+        const data = req.body;
+        const user=await deleteUser(data)
+        if (!user) {
+          return res.status(404).send({
+            success: 0,
+            message: "user not found",
+          });
+        }
+        return res.status(200).send({
+          success: 1,
+          message: "user deleted successfully",
+        });
+      }catch(e){
+        console.log(e);
+        return res.status(200).send({
+          success: 0,
+          message: "something went wrong while deleting user",
+        });
+      }
+    },
 };

@@ -1,6 +1,7 @@
 const {
   createOrganization,
   getOrganizationByEmail,
+  createEmployees,
 } = require("./organization.service");
 const { hashSync, genSaltSync, compareSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
@@ -30,19 +31,11 @@ const sendEmail = async (text, to, org) => {
 };
 
 module.exports = {
-  createOrganization: (req, res) => {
-    const body = req.body;
-    getOrganizationByEmail(body.email, (error = null, results = null) => {
-      if (error) {
-        console.log("createOrganization::");
-        console.log(error);
-        return res.status(500).send({
-          success: 0,
-          message: "Database connection errror",
-          data: null,
-        });
-      }
-      if (results) {
+  createOrganization: async (req, res) => {
+    try {
+      const body = req.body;
+      const email = await getOrganizationByEmail(body.email);
+      if (email) {
         return res.status(302).send({
           success: 0,
           message: "Email already exists",
@@ -51,23 +44,25 @@ module.exports = {
       }
       const salt = genSaltSync(10);
       body.password = hashSync(body.password, salt);
-      createOrganization(body, async (err, results) => {
-        if (err) {
-          console.log(err);
-          return res.status(500).json({
-            status: 500,
-            message: "Database connection errror",
-          });
-        }
-        const mail = await sendEmail(body.name, body.email, null);
-        if (!mail) {
-          console.log("createUser:: error in sending mail");
-        }
-        return res.status(200).json({
-          status: 200,
-          data: results,
-        });
+      const createOrg = await createOrganization(body);
+      body.org_id = createOrg.insertId;
+      console.log(createOrg);
+      const createEmp = await createEmployees(body);
+      const mail = sendEmail(body.name, body.email, null);
+      if (!mail) {
+        console.log("createUser:: error in sending mail");
+      }
+      return res.status(200).send({
+        success: 1,
+        message: "succesfully created organization",
+        data: null,
       });
-    });
+    } catch (e) {
+      return res.status(500).send({
+        success: 0,
+        message: "succesfully created organization",
+        data: null,
+      });
+    }
   },
 };

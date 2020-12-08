@@ -30,29 +30,22 @@ const sendEmailModerator = async (text, to, org) => {
   return info;
 };
 module.exports = {
-  login: (req, res) => {
-    const body = req.body;
-    getAdmin(body.email, (error = null, results = null) => {
-      if (error) {
-        console.log(`login::error ${error}`);
-        return res.status(500).send({
-          success: 0,
-          message: "database error",
-          data: null,
-        });
-      }
-      if (!results) {
+  login: async (req, res) => {
+    try {
+      const body = req.body;
+      const admin = await getAdmin(body.email);
+      if (!admin) {
         return res.status(403).send({
           success: 0,
           message: "invalid login credentials",
           data: null,
         });
       }
-      console.log(results);
-      const result = compareSync(body.password, results.password);
+      console.log(admin);
+      const result = compareSync(body.password, admin.password);
       if (result) {
-        results.password = undefined;
-        const jsontoken = sign({ result: results }, "blocktrade");
+        admin.password = undefined;
+        const jsontoken = sign({ result: admin }, "blocktrade");
         return res.json({
           success: 1,
           message: "login successfully",
@@ -66,22 +59,14 @@ module.exports = {
           data: null,
         });
       }
-    });
+    } catch (e) {}
   },
-  adminSignup: (req, res) => {
-    let body = req.body;
-    body.decode = req.decoded;
-    getAdminByEmail(body, (error = null, results = null) => {
-      if (error) {
-        console.log("adminSignup::");
-        console.log(error);
-        return res.status(500).send({
-          success: 0,
-          message: "Database connection errror",
-          data: null,
-        });
-      }
-      if (results) {
+  adminSignup: async (req, res) => {
+    try {
+      let body = req.body;
+      body.decode = req.decoded;
+      const admin = await getAdminByEmail(body);
+      if (admin) {
         return res.status(302).send({
           success: 0,
           message: "Email already exists",
@@ -90,27 +75,17 @@ module.exports = {
       }
       const salt = genSaltSync(10);
       body.password = hashSync(body.password, salt);
-      createModerator(body, async (error = null, results = null) => {
-        if (error) {
-          console.log("adminSignup::");
-          console.log(error);
-          return res.status(500).send({
-            success: 0,
-            message: "failed to create moderator. db error",
-            data: null,
-          });
-        }
-        const mail = await sendEmailModerator(body.name, body.email, null);
-        if (!mail) {
-          console.log("createUser:: error in sending mail");
-        }
-        return res.status(201).send({
-          success: 1,
-          message: "moderator created",
-          data: results,
-        });
+      const moderator = await createModerator(body);
+      const mail = sendEmailModerator(body.name, body.email, null);
+      if (!mail) {
+        console.log("createUser:: error in sending mail");
+      }
+      return res.status(201).send({
+        success: 1,
+        message: "moderator created",
+        data: null,
       });
-    });
+    } catch (e) {}
   },
   // createOrganization: (req, res) => {
   //   const body = req.body;
