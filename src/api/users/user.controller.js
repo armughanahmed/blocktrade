@@ -157,12 +157,14 @@ module.exports = {
       if (result) {
         user.password = undefined;
         const jsontoken = sign({ result: user }, "blocktrade");
+        const organization = await getOrganizationByID(user.org_id);
         return res.json({
           success: 1,
           message: "login successfully",
           data: {
             organization_id: user.org_id,
             role: user.role,
+            org_type: organization.type,
           },
           token: jsontoken,
         });
