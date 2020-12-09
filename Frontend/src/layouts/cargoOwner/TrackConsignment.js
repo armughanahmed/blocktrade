@@ -13,6 +13,10 @@ class TrackConsignment extends PureComponent {
         }
     }
 
+    searchId = (id) => {
+        
+    }
+
     render() {
         return (
             <div id="wrapper">
@@ -23,7 +27,7 @@ class TrackConsignment extends PureComponent {
                         <TrackConsignmentCard/>
                     </div>
                 </div>
-                <Footer/> 
+                 <Footer/> 
             </div>
           
    </div>

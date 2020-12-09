@@ -61,6 +61,7 @@ class ShippingScheduleSearch extends PureComponent {
             arrivalDate: this.state.arrivalDate,
             currency: this.state.currency
         }
+        console.log(obj);
         this.props.searchFromChild(obj);
     }
    
