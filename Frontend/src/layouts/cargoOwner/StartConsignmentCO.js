@@ -6,6 +6,7 @@ import './StartConsignment.css';
 import NavbarCO from '../../components/NavbarCO';
 import Footer from '../../components/Footer';
 import { Link, animateScroll as scroll } from "react-scroll";
+import { Redirect } from 'react-router-dom'
 
 class StartConsignmentCO extends PureComponent {
     constructor(props) {
@@ -109,6 +110,10 @@ class StartConsignmentCO extends PureComponent {
     }
    
     render() {
+        const token = localStorage.getItem('token');
+        if (token === null || token === undefined) {
+            return(<Redirect to={{ pathname: '/login' }}/>)
+        }
         return (
             <div>
                 <NavbarCO/>

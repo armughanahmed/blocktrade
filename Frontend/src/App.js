@@ -15,12 +15,10 @@ import DashboardCO from './layouts/cargoOwner/DashboardCO';
 import StartConsignmentCO from './layouts/cargoOwner/StartConsignmentCO';
 import ViewConsignmentsCO from './layouts/cargoOwner/ViewConsignmentsCO';
 import TrackConsignment from './layouts/cargoOwner/TrackConsignment';
-
-
-    
-
+import ProtectedRoute from './ProtectedRoute';
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
+import ViewQuotations from './layouts/cargoOwner/ViewQuotations';
 
 class App extends PureComponent {
   static propTypes = {}
@@ -34,15 +32,17 @@ class App extends PureComponent {
 
   render() {
     const hist = createBrowserHistory();
+    const org_type = localStorage.getItem('org_type');
     return (
       <Router history={hist}>
       <Switch>
-        <Route path="/login" component={Login} token={this.token}/>
+        <Route path="/login" component={Login}/>
         <Route path="/register" component={Register}/>
-        <Route path="/dashboard" component={DashboardCO}/>
-        <Route path="/startConsignment" component={StartConsignmentCO}/>
-        <Route path="/viewConsignments" component={ViewConsignmentsCO}/>
-        <Route path="/trackConsignment" component={TrackConsignment}/>
+        <ProtectedRoute path="/dashboard" component={DashboardCO}/>,
+        <ProtectedRoute path="/startConsignment" component={StartConsignmentCO}/>
+        <ProtectedRoute path="/viewConsignments" component={ViewConsignmentsCO}/>
+        <ProtectedRoute path="/trackConsignment" component={TrackConsignment}/>
+        <ProtectedRoute path="/viewQuotations" component={ViewQuotations}/>
       </Switch>
 </Router>
     )

@@ -1,3 +1,6 @@
+#register-card button{
+  margin-bottom: 25px;
+}
 @media only screen and (max-width: 600px) {
     #register-card{
       margin-top:50px;
@@ -22,9 +25,27 @@
     overflow-y: hidden;
     background-image: linear-gradient( 90.9deg,  rgba(3,195,195,1) 0.3%, rgba(37,84,112,1) 87.8% );
   }
-
-  #register-card{
-      margin-top: 85px;
-      margin-bottom: 85px;
+  #register-card h3{
+    padding-top: 25px;
+    padding-bottom: 15px;
+}
+  #register-card {
+      margin-top: 80px;
+      margin-bottom: 80px;
+      padding: 25px;
       background-color: rgb(240, 241, 241);
+  }
+
+
+  @media only screen and (min-width: 601px ) and (max-width: 1000px) {
+    #register-card h3{
+      padding-top: 85px;
+      padding-bottom: 25px;
+  }
+  #register-card p{
+    padding-bottom: 55px;
+  }
+  #register-image{
+    display: none;
+  }
   }

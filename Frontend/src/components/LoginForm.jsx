@@ -39,7 +39,7 @@ class LoginForm extends PureComponent {
         return (
             <div id="login-card" className="card">
             <form action="#" onSubmit={(e) => this.validate(e)}>
-            <h3><strong>LOGIN</strong></h3>
+            <h3><strong>Login</strong></h3>
                 <div className="form-group">
                     <label>Email</label>
                     <input type="email" className="form-control" value={this.state.email} onChange={(e) => this.updateEmail(e)} placeholder="Enter email" required/>

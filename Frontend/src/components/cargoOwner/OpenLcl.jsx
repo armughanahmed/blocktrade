@@ -133,7 +133,7 @@ class OpenLcl extends React.Component {
                                         <input className="form-control" type="number" value={this.state.height} onChange={(e) => this.updateHeight(e)} name="height" min="1" id="height" placeholder="Height" required/>
                                         </div> 
                                     </div>
-                                    <div className="col-lg-1">
+                                    <div className="col-lg-2">
                                         <div className="form-group">
                                             <label for="sel2">Unit:</label>
                                             <select className="form-control" id="sel2" value={this.state.selectedValue2} onChange={(e) => this.updateUnit(e)} required>

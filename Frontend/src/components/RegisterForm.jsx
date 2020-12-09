@@ -89,9 +89,9 @@ class RegisterForm extends PureComponent {
 
     render() {
         return (
-            <div id="register-card" className="card w-125" style={{padding: 40}}>
+            <div id="register-card" className="card" style={{padding: 40}}>
             <form action="#" onSubmit={(e) =>this.sendData(e)}>
-            <h3><strong>REGISTER</strong></h3><br/>
+            <h3><strong>Register</strong></h3><br/>
             <div className="row">
                 <div className="col-lg-6">
                 <div className="form-group">
@@ -152,7 +152,7 @@ class RegisterForm extends PureComponent {
                      <a href="/login">Already have an account?</a>
                 </p>
                 <div id="button">
-                <button type="submit">Register</button>
+                <button type="submit" className="btn btn-primary">Register</button>
                 </div>
                 
                

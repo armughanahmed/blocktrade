@@ -24,7 +24,7 @@ function NavbarCO() {
             <a className="nav-link" href="/trackConsignment">Track consignments</a>
           </li>
           <li className="nav-item py-md-2 px-3">
-            <a className="nav-link" href="#">Quotations</a>
+            <a className="nav-link" href="/viewQuotations">Quotations</a>
           </li>
           <li className="nav-item py-md-2 px-3">
             <a className="nav-link" href="#">Add partner</a>
