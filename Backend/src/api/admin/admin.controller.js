@@ -87,26 +87,4 @@ module.exports = {
       });
     } catch (e) {}
   },
-  // createOrganization: (req, res) => {
-  //   const body = req.body;
-  //   const salt = genSaltSync(10);
-  //   body.password = hashSync(body.password, salt);
-  //   createOrganization(body, async (err, results) => {
-  //     if (err) {
-  //       console.log(err);
-  //       return res.status(500).json({
-  //         status: 500,
-  //         message: "Database connection errror",
-  //       });
-  //     }
-  //     const mail = await sendEmail(body.name, body.email, null);
-  //     if (!mail) {
-  //       console.log("createUser:: error in sending mail");
-  //     }
-  //     return res.status(200).json({
-  //       status: 200,
-  //       data: results,
-  //     });
-  //   });
-  // },
 };
