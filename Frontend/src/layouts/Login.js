@@ -25,9 +25,9 @@ class Login extends PureComponent {
   render() {
     return (
       <div id="login-page">
-      <div className="container-fluid">
+      <div className="container">
           <div className="row">
-            <div className="col-lg-5 offset-lg-1 col-sm-12">
+            <div className="col-lg-5 col-sm-12">
             <LoginForm verify={this.verify}/>
             <Footer/>
             </div>
