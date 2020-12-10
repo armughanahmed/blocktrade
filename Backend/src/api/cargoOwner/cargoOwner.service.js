@@ -38,10 +38,11 @@ module.exports = {
     });
   },
   createLCL: (data) => {
+    console.log(data);
     return new Promise((resolve, reject) => {
       pool.query(
-        `insert into lcl(cargo_owner_id,height, length,mode, movementType, quantity, type, unit,weight ,width,wuni) 
-                  values(?,?,?,?,?,?,?,?,?,?)`,
+        `insert into lcl(cargo_owner_id,height, length,mode, movementType, quantity, type, unit,weight ,width,wunit) 
+                  values(?,?,?,?,?,?,?,?,?,?,?)`,
         [
           data.decoded.result.org_id,
           data.height,
@@ -53,7 +54,7 @@ module.exports = {
           data.unit,
           data.weight,
           data.width,
-          data.wuni,
+          data.wunit,
         ],
         (error, results, fields) => {
           if (error) {
@@ -68,9 +69,11 @@ module.exports = {
     });
   },
   createFCL: (data) => {
+    console.log("inside createFCL");
+    console.log(data);
     return new Promise((resolve, reject) => {
       pool.query(
-        `insert into fcl(cargo_owner_id,containerDescription, containerHeight,mode, movementType, packageType, quantity) 
+        `insert into fcl(cargo_owner_id,containerDescription,containerHeight,mode, movementType, packageType, quantity) 
                   values(?,?,?,?,?,?,?)`,
         [
           data.decoded.result.org_id,

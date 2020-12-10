@@ -6,5 +6,5 @@ const {
   authOrganization,
   authCargoOwner,
 } = require("../../middleware/auth");
-router.post("/create-quotation", auth, createQuotation);
+router.post("/create-quotation", auth, authCargoOwner, createQuotation);
 module.exports = router;

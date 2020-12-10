@@ -158,7 +158,7 @@ module.exports = {
         user.password = undefined;
         const jsontoken = sign({ result: user }, "blocktrade");
         const organization = await getOrganizationByID(user.org_id);
-        return res.json({
+        return res.status(200).send({
           success: 1,
           message: "login successfully",
           data: {
@@ -169,13 +169,19 @@ module.exports = {
           token: jsontoken,
         });
       } else {
-        return res.json({
+        return res.status(400).send({
           success: 0,
           message: "Invalid login credentials",
           data: null,
         });
       }
-    } catch (e) {}
+    } catch (e) {
+      return res.status(500).send({
+        success: 0,
+        message: "Invalid login credentials",
+        data: null,
+      });
+    }
   },
   getUserByUserId: async (req, res) => {
     try {

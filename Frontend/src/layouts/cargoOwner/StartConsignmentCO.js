@@ -90,14 +90,16 @@ class StartConsignmentCO extends PureComponent {
             check4: true
         })
         const obj = {
-            lcls: lcls,
-            fcls: fcls
+            lcl: lcls,
+            fcl: fcls
         }
         this.sendQuote(obj);
         //console.log(this.state.selectedSchedule);
     }
 
     async sendQuote(obj1){
+        console.log(obj1);
+        console.log('abcdefg');
         const token = localStorage.getItem('token');
         try{ 
         const response = await axios.post('http://localhost:4000/cargo-owner/create-quotation',obj1,{
@@ -117,10 +119,10 @@ class StartConsignmentCO extends PureComponent {
 
 
     check(){
-        console.log(this.state.openLcls);
-        console.log(this.state.openLcls);
-        console.log(this.state.openFcls);
-        console.log(this.state.openFcls);
+        // console.log(this.state.openLcls);
+        // console.log(this.state.openLcls);
+        // console.log(this.state.openFcls);
+        // console.log(this.state.openFcls);
     }
 
     searchFromChild = (obj) =>{
