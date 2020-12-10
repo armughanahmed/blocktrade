@@ -33,8 +33,8 @@ const sendEmail = async (text, to, org) => {
 module.exports = {
   createOrganization: async (req, res) => {
     try {
+      console.log(req.body);
       const body = req.body;
-      console.log(body);
       const email = await getOrganizationByEmail(body.email);
       if (email) {
         return res.status(302).send({
@@ -59,7 +59,6 @@ module.exports = {
         data: null,
       });
     } catch (e) {
-      console.log(e);
       return res.status(500).send({
         success: 0,
         message: "succesfully created organization",

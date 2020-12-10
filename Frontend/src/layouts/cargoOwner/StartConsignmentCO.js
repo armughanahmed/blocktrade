@@ -7,6 +7,7 @@ import NavbarCO from '../../components/NavbarCO';
 import Footer from '../../components/Footer';
 import { Link, animateScroll as scroll } from "react-scroll";
 import { Redirect } from 'react-router-dom'
+import axios from 'axios';
 
 class StartConsignmentCO extends PureComponent {
     constructor(props) {
@@ -88,10 +89,32 @@ class StartConsignmentCO extends PureComponent {
             openLcls: lcls,
             check4: true
         })
-
-        
-        console.log(this.state.selectedSchedule);
+        const obj = {
+            lcls: lcls,
+            fcls: fcls
+        }
+        this.sendQuote(obj);
+        //console.log(this.state.selectedSchedule);
     }
+
+    async sendQuote(obj1){
+        const token = localStorage.getItem('token');
+        try{ 
+        const response = await axios.post('http://localhost:4000/cargo-owner/create-quotation',obj1,{
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        if (response.data.success === 1) {
+         // alert('helloo');
+        this.props.history.push('/login');
+         }
+       }
+        catch(e){
+         console.log(e);
+        }  
+       }
+
 
     check(){
         console.log(this.state.openLcls);

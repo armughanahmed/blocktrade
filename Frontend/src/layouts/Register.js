@@ -26,11 +26,9 @@ class Register extends PureComponent {
   
   async registerUser(obj1){
    try{ 
+    //console.log('armu' +obj1);
    const response = await axios.post('http://localhost:4000/organization',obj1)
-   if (response.data.success === 1) {
-    // alert('helloo');
-   this.props.history.push('/login');
-    }
+    console.log(response);
   }
    catch(e){
     console.log(e);

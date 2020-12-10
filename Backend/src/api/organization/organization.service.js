@@ -20,12 +20,14 @@ module.exports = {
     });
   },
   getOrganizationByEmail: (data) => {
+    console.log(data);
     return new Promise((resolve, reject) => {
       pool.query(
         `select * from organizations where email=?`,
         [data],
         (error, results, fields) => {
           if (error) {
+            console.log('getOrganizationByEmail')
             return reject(error);
           }
           console.log("getOrganizationByMail::");
@@ -54,7 +56,9 @@ module.exports = {
         ],
         (error, results, fields) => {
           if (error) {
+            console.log("createOrganization::");
             return reject(error);
+
           }
           console.log("createOrganization::");
           console.log(results);

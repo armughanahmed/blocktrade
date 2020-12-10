@@ -138,10 +138,13 @@ class RegisterForm extends PureComponent {
                 <label for="sel1">Register as</label>
                 <select className="form-control" value={this.state.type}  onChange={(e) => this.updateType(e)} id="sel1">
                     <option value="">Select type</option>
+                    
                     <option value="ocean-carrier">Ocean carrier</option>
                     <option value="port-authority">Port authority</option>
                     <option value="exporter">Exporter</option>
                     <option value="importer">Importer</option>
+                    <option value="cargo-owner">Cargo owner</option>
+                    <option value="bank">Bank</option>
                 </select>
             </div> 
             <div className="form-group">
