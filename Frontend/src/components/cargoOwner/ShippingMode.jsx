@@ -86,7 +86,7 @@ class ShippingMode extends PureComponent {
     renderComponent(){
        
         if (this.state.mode === 'open-lcl' && this.state.movementType !== '') {
-            document.getElementById("shipping-mode").style.height = "auto";
+           
             return( <div>
                  
                  <OpenLcl mode={this.state.mode} movementType={this.state.movementType} consignments={this.state.consignments} childCallback={this.childCallback} />
@@ -94,7 +94,7 @@ class ShippingMode extends PureComponent {
                 
         }
         else if (this.state.mode === 'open-fcl' && this.state.movementType !== '') {
-            document.getElementById("shipping-mode").style.height = "auto";
+        
             return <OpenFcl mode={this.state.mode} movementType={this.state.movementType} consignments1={this.state.consignments1} childCallback={this.childCallback} />
         }
     }
@@ -163,7 +163,12 @@ class ShippingMode extends PureComponent {
                                
                         ))}         */}
                     </div>
-                    <button className="btn btn-custom" onClick={this.sendConsignments}>Get quote</button>
+                    <div className="row">
+                        <div className="text-center col">
+                            <button className="btn btn-custom btn-sm" onClick={this.sendConsignments}>Get quote</button>
+                        </div>
+                    </div>
+                   
                 </div>
             </div>
             

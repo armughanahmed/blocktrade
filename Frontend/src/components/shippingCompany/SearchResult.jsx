@@ -132,7 +132,7 @@ class SearchResult extends PureComponent {
                               </div>                             
                            </div>
                            <div className="text-center">
-                                <button className="btn btn-custom text-center" onClick={this.sendSelectedSchedule}>Enter consignment details</button>
+                                <button className="btn btn-custom text-center" onClick={this.sendSelectedSchedule}>Book container</button>
                            </div>
                           
                         </div>

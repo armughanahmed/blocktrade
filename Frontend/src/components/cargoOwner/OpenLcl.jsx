@@ -88,9 +88,9 @@ class OpenLcl extends React.Component {
             <div id="shipping-mode">
                 <div className="card">
                     <div className="card-body">
-                        <form action="#" onSubmit={this.addConsignment}>
+                        <form className="form-group" action="#" onSubmit={this.addConsignment}>
                         <div className="row ">
-                                    <div className="col-lg-3">
+                                    <div className="col-lg-6">
                                         <div className="form-group">
                                             <label for="sel1">Package type:</label>
                                             <select className="form-control" id="sel1" value={this.state.selectedValue1} onChange={(e) => this.updateType(e)} required>
@@ -109,31 +109,31 @@ class OpenLcl extends React.Component {
                                             </select>
                                         </div> 
                                     </div>
-                                    <div className="col-lg-2">
+                                    <div className="col-lg-4">
                                         <div className="form-group">
                                             <label for="quantity">Quantity:</label>
                                         <input className="form-control" value={this.state.quantity} onChange={(e) => this.updateQuantity(e)} type="number" min="1" name="quantity" id="quantity" placeholder="Quantity" required/>
                                         </div> 
                                     </div>
-                                    <div className="col-lg-2">
+                                    <div className="col-lg-3">
                                         <div className="form-group">
                                             <label for="length">Length:</label>
                                         <input className="form-control" type="number" value={this.state.length} onChange={(e) => this.updateLength(e)} min="1" name="length" id="length" placeholder="Length" required/>
                                         </div> 
                                     </div>
-                                    <div className="col-lg-2">
+                                    <div className="col-lg-3">
                                         <div className="form-group">
                                             <label class for="width">Width:</label>
                                         <input className="form-control" type="number" value={this.state.width} onChange={(e) => this.updateWidth(e)} min="1" name="width" id="width" placeholder="Width" required/>
                                         </div> 
                                     </div>
-                                    <div className="col-lg-2">
+                                    <div className="col-lg-3">
                                         <div class="form-group">
                                             <label for="height">Height:</label>
                                         <input className="form-control" type="number" value={this.state.height} onChange={(e) => this.updateHeight(e)} name="height" min="1" id="height" placeholder="Height" required/>
                                         </div> 
                                     </div>
-                                    <div className="col-lg-2">
+                                    <div className="col-lg-3">
                                         <div className="form-group">
                                             <label for="sel2">Unit:</label>
                                             <select className="form-control" id="sel2" value={this.state.selectedValue2} onChange={(e) => this.updateUnit(e)} required>
@@ -145,13 +145,13 @@ class OpenLcl extends React.Component {
                                             </select>
                                         </div> 
                                     </div>
-                                    <div className="col-lg-2">
+                                    <div className="col-lg-3">
                                         <div class="form-group">
                                             <label for="weight">Weight:</label>
                                         <input className="form-control" type="number" value={this.state.weight} onChange={(e) => this.updateWeight(e)} min="1" name="weight" id="weight" placeholder="Weight" required/>
                                         </div> 
                                     </div>
-                                    <div className="col-lg-1">
+                                    <div className="col-lg-3">
                                         <div className="form-group">
                                             <label for="sel3">Unit:</label>
                                             <select className="form-control" id="sel3" value={this.state.selectedValue3} onChange={(e) => this.updateWunit(e)} required>
@@ -162,10 +162,12 @@ class OpenLcl extends React.Component {
                                             </select>
                                         </div> 
                                     </div>
-                                    <div className="col-lg-12">
-                                    <button className="btn btn-primary text-center" type="submit">Add consignment</button>
-                                    </div>    
-                            </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col text-right">
+                                            <button className="btn btn-custom  btn-sm" type="submit">Add consignment</button>
+                                        </div>
+                                    </div>     
                         </form>
                     </div>
                 </div>

@@ -1,6 +1,6 @@
 .bold{
     font-size: 18px;
-    color: #053D66;
+    color: #f0a51a;
 }
 
 
@@ -10,6 +10,18 @@
 
 #view-details strong{
     font-size: 14px;
+}
+li{
+    color: white;
+}
+
+#details .card{
+    padding: 35px 25px;
+    background-color: #1e2c3d;
+}
+
+#details h6{
+    color: white;
 }
 
 #view-details p{
@@ -26,7 +38,7 @@
     content: "";
     display: inline-block;
     width: 2px;
-    background: #053D66;
+    background: orange;
     position: absolute;
     left: 3px;
     top: 5px;
@@ -42,9 +54,14 @@
     display: inline-block;
     width: 8px;
     height: 8px;
-    background: #053D66;
+    background: orange;
     position: absolute;
     left: 0;
     top: 5px;
     border-radius: 10px;
+}
+
+#view-documents .card{
+    padding: 35px 25px;
+    background-color: #1e2c3d;
 }

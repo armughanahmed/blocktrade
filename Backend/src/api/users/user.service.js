@@ -33,7 +33,7 @@ module.exports = {
       pool.query(
         `insert into invites(emp_id,org_id,receiver_email) 
         values(?,?,?)`,
-        [data.decode.result.id, data.decode.result.org_id, data.receiver_email],
+        [data.decode.result.id, data.decode.result.org_id, data.email],
         (error, results, fields) => {
           if (error) {
             console.log("createInvite::");
@@ -49,7 +49,7 @@ module.exports = {
   create: (data) => {
     return new Promise((resolve, reject) => {
       pool.query(
-        `insert into employees(org_id,email,role,active)
+        `insert into employees(org_id,receiver_email,role,active)
                     values(?,?,?,?)`,
         [data.decode.result.org_id, data.email, data.role, 0],
         (error, results, fields) => {

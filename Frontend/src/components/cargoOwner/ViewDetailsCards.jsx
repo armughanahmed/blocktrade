@@ -20,7 +20,7 @@ class ViewDetailsCards extends PureComponent {
 
     render() {
         return (
-            
+            <div id="details">
                 <div className="row">
                     <div className="col-lg-3 offset-lg-2">
                     <div className="card">
@@ -71,6 +71,7 @@ class ViewDetailsCards extends PureComponent {
                             </ul>
                     </div>
                 </div>
+            </div>
             </div>
             </div>
         )

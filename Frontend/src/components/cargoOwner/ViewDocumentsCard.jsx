@@ -14,7 +14,7 @@ class ViewDocumentsCard extends PureComponent {
 
     render() {
         return (
-            <div className="text-center">
+            <div className="text-center" id="view-documents">
 
            
             <div className="card text-center">

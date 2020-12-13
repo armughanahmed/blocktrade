@@ -1,0 +1,12 @@
+#track .card{
+    display: flex;
+    background-color:#1e2c3d;
+    padding: 35px;
+    width: 100%;
+    justify-content: center;
+    margin-top: 70px; 
+}
+
+#track h5{
+    text-align: center;
+}

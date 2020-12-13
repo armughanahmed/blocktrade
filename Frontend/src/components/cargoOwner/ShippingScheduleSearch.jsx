@@ -114,9 +114,9 @@ class ShippingScheduleSearch extends PureComponent {
                                 <div className="card-body">
                                     <h4>When you want to ship?</h4>
                                     <div className="row">
-                                        <div className="col-lg-3 offset-lg-2">
+                                        <div className="col-lg-6 offset-lg-1">
                                             <label htmlFor="">Departure date:</label>
-                                                <DatePicker className="form-control" selected={this.state.departureDate} onChange={this.updateDepartureDate} inline/>
+                                                <DatePicker className="form-control" selected={this.state.departureDate} onChange={this.updateDepartureDate} />
                                         </div>
                                     </div>
                                 </div>
@@ -127,10 +127,10 @@ class ShippingScheduleSearch extends PureComponent {
                                 <div className="card-body">
                                     <h4>When you want the package to arrive at destination?</h4>
                                     <div className="row">
-                                        <div className="col-lg-3 offset-lg-2">
+                                        <div className="col-lg-6 offset-lg-1">
                                             <label htmlFor="">Arrival date:  </label>
                                             <br/>
-                                                <DatePicker className="form-control" selected={this.state.arrivalDate} onChange={this.updateArrivalDate}  inline/>
+                                                <DatePicker className="form-control" selected={this.state.arrivalDate} onChange={this.updateArrivalDate} />
                                         </div>
                                     </div>
                                 </div>

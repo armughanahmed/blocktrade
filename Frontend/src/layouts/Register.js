@@ -29,6 +29,10 @@ class Register extends PureComponent {
     //console.log('armu' +obj1);
    const response = await axios.post('http://localhost:4000/organization',obj1)
     console.log(response);
+    if (response.data.success === 1) {
+      // alert('helloo');
+     this.props.history.push('/login');
+      }
   }
    catch(e){
     console.log(e);
@@ -42,10 +46,9 @@ class Register extends PureComponent {
           <div className="row">
             <div className="col-lg-6 offset-lg-1 col-sm-12">
              <RegisterForm formInput={this.formInput}/>
-              <Footer/>
             </div>
             <div className="col-lg-5 col-sm-12">
-              <img id="register-image" src="https://images.unsplash.com/photo-1561702469-c4239ced3f47?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1189&q=80" height="110%" width="150%"></img>
+              <img id="register-image" src="https://images.unsplash.com/photo-1561702469-c4239ced3f47?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1189&q=80" height="100%" width="150%"></img>
             </div>
           </div>
         </div>

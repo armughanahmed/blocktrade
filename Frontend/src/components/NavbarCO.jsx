@@ -3,7 +3,7 @@ import './NavbarCO.css';
 
 function NavbarCO() {
     return (
-        <nav className="navbar navbar-expand-lg py-md-2">
+        <nav className="navbar navbar-expand-xl py-md-2">
            
         <h2 className="py-md-2"><strong>Block Trade</strong></h2>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -12,7 +12,7 @@ function NavbarCO() {
         <div className="collapse navbar-collapse" id="collapsibleNavbar">
         <ul className="navbar-nav">
           <li className="nav-item py-md-2 px-3 ml-5">
-            <a className="nav-link" href="/dashboard">Dashboard</a>
+            <a className="nav-link" href="/dashboard" active>Dashboard</a>
           </li>
           <li className="nav-item py-md-2 px-3">
             <a className="nav-link" href="startConsignment">Create consignment</a>
@@ -27,7 +27,7 @@ function NavbarCO() {
             <a className="nav-link" href="/viewQuotations">Quotations</a>
           </li>
           <li className="nav-item py-md-2 px-3">
-            <a className="nav-link" href="#">Add partner</a>
+            <a className="nav-link" href="/addPartner">Add partner</a>
           </li>
         </ul>
         <ul className="navbar-nav ml-auto nav-flex-icons">

@@ -23,7 +23,6 @@
     font-family: sans-serif;
     overflow-x: hidden;
     overflow-y: hidden;
-    background-image: linear-gradient( 90.9deg,  rgba(3,195,195,1) 0.3%, rgba(37,84,112,1) 87.8% );
   }
   #register-card h3{
     padding-top: 25px;
@@ -33,7 +32,11 @@
       margin-top: 80px;
       margin-bottom: 80px;
       padding: 25px;
-      background-color: rgb(240, 241, 241);
+      background-color: #1e2c3d;
+  }
+
+  #register-card strong{
+    color: white;
   }
 
 

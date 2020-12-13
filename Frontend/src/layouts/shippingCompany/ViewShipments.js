@@ -1,74 +1,78 @@
 import React, { PureComponent } from 'react'
-import NavbarCO from '../../components/NavbarCO';
-import Footer from '../../components/Footer';
 import MUIDataTable from "mui-datatables";
 
-class ViewQuotations extends PureComponent {
+class ViewShipments extends PureComponent {
     constructor(props) {
         super(props)
 
         this.state = {
             data : [
-                { id: 1, name: "Electronics", originCountry: "Pakistan", originCity: "Karachi", destinationCity: "Dubai",  destinationCountry: "UAE", lastCheckpoint: "Gwadar",  estimatedDeparture:"25-12-2020", estimatedArrival:"25-12-2020", totalCharges: 10000, status: "completed" },
-                { id: 2, name: "Electronics", originCountry: "Pakistan", originCity: "Karachi", destinationCity: "Dubai",  destinationCountry: "UAE", lastCheckpoint: "Gwadar",  estimatedDeparture:"25-12-2020", estimatedArrival:"25-12-2020", totalCharges: 10000, status:"abc" },
-                { id: 3, name: "Electronics", originCountry: "Pakistan", originCity: "Karachi", destinationCity: "Dubai",  destinationCountry: "UAE", lastCheckpoint: "Gwadar",  estimatedDeparture:"25-12-2020", estimatedArrival:"25-12-2020", totalCharges: 10000, status:"abc" },
-                { id: 4, name: "Electronics", originCountry: "Pakistan", originCity: "Karachi", destinationCity: "Dubai",  destinationCountry: "UAE", lastCheckpoint: "Gwadar",  estimatedDeparture:"25-12-2020", estimatedArrival:"25-12-2020", totalCharges: 10000, status:"abc" },
+                { id: 1, name: "Electronics", origin: "Karachi", destination: "Dubai", lastCheckpoint: "Gwadar", estimatedArrival:"25-12-2020", status: "completed" },
+                { id: 2, name: "Electronics", origin: "Karachi", destination: "Dubai", lastCheckpoint: "Gwadar", estimatedArrival:"25-12-2020", status:"abc" },
+                { id: 3, name: "Electronics", origin: "Karachi", destination: "Dubai", lastCheckpoint: "Gwadar", estimatedArrival:"25-12-2020", status:"abc" },
+                { id: 4, name: "Electronics", origin: "Karachi", destination: "Dubai", lastCheckpoint: "Gwadar", estimatedArrival:"25-12-2020", status:"abc" },
             ],
-            table: true
+            table: true,
+            detailsView: false,
+            selectedConsignmentId: ''
         }
+       
+        this.viewDetail = this.viewDetail.bind(this);
+    }
+
+  
+
+    viewDetail(event,id){
+        console.log(id);
+        this.setState({
+            table: false,
+            detailsView: true,
+            selectedShipmentId: id
+        })
     }
 
     render() {
         const columns = [
             {
                 name: "id",
-                label: "Quotation id",
+                label: "id",
                 options: {
                  filter: true,
                  sort: true,
                 }
                },
             {
-             name: "originCity",
-             label: "Origin city",
+             name: "name",
+             label: "Name",
              options: {
               filter: true,
               sort: true,
              }
             },
             {
-             name: "originCountry",
-             label: "Origin country",
+             name: "origin",
+             label: "Origin",
              options: {
               filter: true,
               sort: false,
              }
             },
             {
-             name: "destinationCity",
-             label: "Destination city",
+             name: "destination",
+             label: "Destination",
              options: {
               filter: true,
               sort: false,
              }
             },
             {
-             name: "destinationCountry",
-             label: "Destination country",
+             name: "lastCheckpoint",
+             label: "Last checkpoint",
              options: {
               filter: true,
               sort: false,
              },
             },
-            {
-                name: "estimatedDeparture",
-                label: "Estimated departure",
-                options: {
-                 filter: true,
-                 sort: false,
-                },
-                
-               },
             {
                 name: "estimatedArrival",
                 label: "Estimated arrival",
@@ -78,26 +82,17 @@ class ViewQuotations extends PureComponent {
                 },
                 
                },
-               {
-                name: "totalCharges",
-                label: "Total charges",
-                options: {
-                 filter: true,
-                 sort: false,
-                },
-                
-               },
+               
                {
                 name: "details",
                 label: "Details",
-                
                 options: {
                  filter: true,
                  sort: false,
                  customBodyRender: (value, tableMeta, updateValue) => {
-                     let id = tableMeta.rowData[0];
+                    let id = tableMeta.rowData[0];
                     return (
-                      <button className="btn btn-primary btn-sm" onClick={(e) => this.viewDocument(e,id)}>
+                      <button className="btn btn-primary btn-sm"  onClick={(e) => this.viewDetail(e,id)}>
                        View details
                       </button>
                     );}
@@ -126,23 +121,6 @@ class ViewQuotations extends PureComponent {
                 },
                 
                },
-               {
-                name: "approveCancel",
-                label: "Approval",
-                options: {
-                 filter: true,
-                 sort: false,
-                 customBodyRender: (value, tableMeta, updateValue) => {
-                    let id = tableMeta.rowData[0];
-                    return (
-                      <button className="btn btn-primary btn-sm"  onClick={(e) => this.viewDetail(e,id)}>
-                      Approve/Cancel
-                      </button>
-                    );}
-                },
-                
-               },
-               
            ];
            
            const options = {
@@ -156,24 +134,26 @@ class ViewQuotations extends PureComponent {
           };
         return (
             <div className="wrapper">
-                <NavbarCO/> 
                 <div className="container-fluid" id="consignments-table">
                     {
                         this.state.table === true &&
                         <MUIDataTable
-                        title={"Quotations"}
+                        title={"Shipments"}
                         data={this.state.data}
                         columns={columns}
                         options={options}
                         />
                     }
-                   
+                     {/* {
+                        this.state.detailsView === true &&
+                        <ViewDetailsCards/>
+                    } */}
                     
                 </div>
-             
             </div>  
         )
     }
 }
 
-export default ViewQuotations
+export default ViewShipments
+

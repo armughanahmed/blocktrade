@@ -109,7 +109,7 @@ class StartConsignmentCO extends PureComponent {
         })
         if (response.data.success === 1) {
          // alert('helloo');
-        this.props.history.push('/login');
+        this.props.history.push('/dashboard');
          }
        }
         catch(e){
@@ -135,15 +135,11 @@ class StartConsignmentCO extends PureComponent {
     }
    
     render() {
-        const token = localStorage.getItem('token');
-        if (token === null || token === undefined) {
-            return(<Redirect to={{ pathname: '/login' }}/>)
-        }
         return (
             <div>
                 <NavbarCO/>
                     <div className="container-fluid" id="blue-bg">
-                        <div className="container">
+                        
                                 {
                                 this.state.check1 === true &&
                                 <ShippingScheduleSearch searchFromChild={this.searchFromChild}/>  
@@ -160,8 +156,7 @@ class StartConsignmentCO extends PureComponent {
                                     this.state.check4 === true &&
                                     this.check()
                                 }
-                        </div>
-                        <Footer/>
+                        
                     </div> 
             </div>
                 

@@ -1,32 +1,35 @@
 .container-fluid{
     padding-bottom: 10px;
 }
-.card{
+#card-section .card{
     display: flex;
-    background-color: #f7f7f7;
+    background-color:#1e2c3d;
     padding: 35px;
     width: 100%;
     justify-content: center;
     margin-top: 70px;
-    height: 70%;
+    /* height: 70%; */
 }
 .card p{
     font-size: 18px;
+    color: white;
 }
 
 .card h5{
     font-size: 28px;
+    color: white;
 }
 
 #card-section{
-    background-color: #266593;
     padding-left: 55px;
     padding-right: 55px;
 }
 
 .btn-custom{
-    background-color: #C1D600;
-    color: rgb(39, 39, 39);
+    background-color: #4da8da;
+    color: #12232e;
+    
+    font-weight: bold;
     padding: 8px 25px;
 }
 

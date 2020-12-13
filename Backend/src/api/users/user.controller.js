@@ -123,7 +123,7 @@ module.exports = {
       const url = `http://localhost:4000/user/invite/${jsontoken}`;
       const mail = sendEmail(
         url,
-        body.receiver_email,
+        body.email,
         body.decode.result.org_id
       );
       if (!mail) {
@@ -132,9 +132,10 @@ module.exports = {
       return res.status(200).send({
         success: 1,
         message: "succesfully created",
-        data: results,
+        data: null,
       });
     } catch (e) {
+      console.log(e);
       return res.status(500).send({
         success: 0,
         message: "Something went wrong while creating user",

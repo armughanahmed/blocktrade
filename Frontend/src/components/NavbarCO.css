@@ -1,18 +1,19 @@
 nav{
-    background-color: white;
+    background-color:  #1e2c3d;
     
 }
 h2{
-    color: #053C66;
+    color: white;
     padding-left: 15px;
     padding-top: 20px;
 }
 a{
-    color: #053C66;
+    color: white;
 }
-a:active{
+.nav-link:active{
     color: aliceblue;
 }
 .nav-link:hover {
-    text-decoration: underline;
+    transition: 1.2s;
+    color: rgb(212, 212, 212);
 }

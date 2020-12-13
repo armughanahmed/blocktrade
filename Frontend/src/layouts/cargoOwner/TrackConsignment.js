@@ -27,10 +27,8 @@ class TrackConsignment extends PureComponent {
                         <TrackConsignmentCard/>
                     </div>
                 </div>
-                 <Footer/> 
             </div>
-          
-   </div>
+       </div>
         )
     }
 }

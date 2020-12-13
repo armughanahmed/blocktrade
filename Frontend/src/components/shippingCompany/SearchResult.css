@@ -96,6 +96,11 @@
 
 #search-results .card{
     border: 1px solid #053D66;
+    background-color: #1E2C3D;
+}
+
+#light-bg .card{
+    background-color: #1E2C3D;
 }
 
 .search-result-card strong{
