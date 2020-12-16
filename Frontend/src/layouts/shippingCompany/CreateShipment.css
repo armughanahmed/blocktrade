@@ -1,0 +1,14 @@
+#create-shipment-view .row{
+    padding: 15px 25px;
+}
+
+#create-shipment-view .details{
+    background-color: #1E2C3D;
+    padding-top: 35px;
+    padding-bottom: 35px;
+    
+}
+
+#create-shipment-view  input{
+    background-color: rgb(252, 252, 252);
+}

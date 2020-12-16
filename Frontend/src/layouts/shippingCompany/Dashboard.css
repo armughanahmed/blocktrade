@@ -1,0 +1,22 @@
+#shipping-company-dashboard .card{
+    display: flex;
+    background-color:#1e2c3d;
+    padding: 35px;
+    width: 100%;
+    justify-content: center;
+    margin-top: 70px;
+}
+
+#shipping-company-dashboard  h5{
+color: white;
+text-align: center;
+}
+
+#shipping-company-dashboard  p{
+   text-align: center;
+}
+
+#shipping-company-dashboard{
+    padding-left: 55px;
+    padding-right: 55px;
+}

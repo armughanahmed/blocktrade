@@ -1,0 +1,13 @@
+label{
+    color: white;
+}
+#track-card h6{
+    color: white;
+}
+
+#track-card .card{
+    background-color:#1e2c3d;
+    padding: 35px 25px;
+    width: 100%;
+    justify-content: center;
+}
