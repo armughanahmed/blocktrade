@@ -36,3 +36,35 @@
     border-color: #266593; 
 }
 
+.badge-primary {
+    color: #fff;
+    background-color: #97068b;
+}
+
+.allowbtn {
+    color: #fff;
+    background-color: #201148;
+    border: 1px solid #201148;   
+    font-size: .875rem;     
+}
+
+.allowbtn:hover {
+    opacity: 85%;
+    background-color: #201148;
+    border: 1px solid #201148;  
+    font-size: .875rem;   
+}
+
+.assignbtn {
+    color: #fff;
+    background-color: #4c5c02;
+    border: 1px solid #4c5c02;     
+    font-size: .875rem;   
+}
+
+.assignbtn:hover {
+    opacity: 85%;
+    background-color: #4c5c02;
+    border: 1px solid #4c5c02;
+    font-size: .875rem; 
+}

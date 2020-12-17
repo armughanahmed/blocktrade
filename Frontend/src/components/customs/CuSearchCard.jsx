@@ -19,7 +19,7 @@ class CuSearchCard extends PureComponent {
                 <div className="card">
                     <div className="card-body">
                         <div className="text-center">
-                            <h6>Seach Letter of Credit</h6>
+                            <h6>Search Consignments</h6>
                         </div>
 
                         <div class="form-group">

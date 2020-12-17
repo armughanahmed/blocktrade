@@ -13,30 +13,30 @@ function NavbarCu() {
         <ul className="navbar-nav">
 
           <li className="nav-item py-md-2 px-3 ml-5">
-            <a className="nav-link" href="/dashboardCu" active>Dashboard</a>
+            <a className="nav-link" href="/dashboardCu" active="true">Dashboard</a>
           </li>
 
-          <li class="nav-item dropdown py-md-2 px-3">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <li className="nav-item dropdown py-md-2 px-3">
+          <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Tax
           </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
-            <a class="dropdown-item" href="#">Add tax</a>
-            <a class="dropdown-item" href="#">View/Update tax</a>
+          <div className="dropdown-menu" aria-labelledby="navbarDropdown1">
+            <a className="dropdown-item" href="/cuaddtax">Add tax</a>
+            <a className="dropdown-item" href="/cuviewtax">View/Update tax</a>
           </div>
         </li>
 
-        <li class="nav-item dropdown py-md-2 px-3">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <li className="nav-item dropdown py-md-2 px-3">
+          <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Shipment
           </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
-            <a class="dropdown-item" href="#">Upcoming</a>
-            <a class="dropdown-item" href="#">Clearence pending</a>
-            <a class="dropdown-item" href="#">Tax pending</a>
-            <a class="dropdown-item" href="#">Cleared</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">All</a>
+          <div className="dropdown-menu" aria-labelledby="navbarDropdown1">
+            <a className="dropdown-item" href="/ViewConsignmentsCu#">Upcoming</a>
+            <a className="dropdown-item" href="/ViewConsignmentsCu">Clearence pending</a>
+            <a className="dropdown-item" href="/ViewConsignmentsCu">Tax pending</a>
+            <a className="dropdown-item" href="/ViewConsignmentsCu">Cleared</a>
+            <div className="dropdown-divider"></div>
+            <a className="dropdown-item" href="/ViewConsignmentsCu">All</a>
           </div>
         </li>
 

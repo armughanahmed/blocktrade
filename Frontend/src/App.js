@@ -26,7 +26,7 @@ import ViewConsignmentsCO from './layouts/cargoOwner/ViewConsignmentsCO';
 import TrackConsignment from './layouts/cargoOwner/TrackConsignment';
 import ViewQuotations from './layouts/cargoOwner/ViewQuotations';
 
-import Dashboard from './layouts/shippingCompany/Dashboard';
+import DashboardSC from './layouts/shippingCompany/Dashboard';
 import CreateShipment from './layouts/shippingCompany/CreateShipment';
 import Track from './layouts/shippingCompany/Track';
 import ViewShipments from './layouts/shippingCompany/ViewShipments';
@@ -42,6 +42,8 @@ import CuSearch from './layouts/customs/CuSearch';
 import ViewConsignmentsCu from './layouts/customs/ViewConsignmentsCu';
 import CuAddTax from './layouts/customs/CuAddTax';
 import CuViewTax from './layouts/customs/CuViewTax';
+import CuAssignTax from './layouts/customs/CuAssignTax';
+import CuAllow from './layouts/customs/CuAllow';
 
 
 
@@ -87,14 +89,14 @@ class App extends PureComponent {
               <Route path="/login" component={Login}/>
               <Route path="/register" component={Register}/>
 
-              <PrivateRoute path="/dashboard" component={DashboardCO}/>
+              <PrivateRoute path="/dashboardCO" component={DashboardCO}/>
               <PrivateRoute path="/startConsignment" component={StartConsignmentCO}/>
               <PrivateRoute path="/viewConsignments" component={ViewConsignmentsCO}/>
               <PrivateRoute path="/trackConsignment" component={TrackConsignment}/>
               <PrivateRoute path="/viewQuotations" component={ViewQuotations}/>
               <PrivateRoute path="/addPartner" component={AddPartner}/>
 
-              <PrivateRoute path="/dashboardSc" component={Dashboard}/>
+              <PrivateRoute path="/dashboardSc" component={DashboardSC}/>
               <PrivateRoute path="/createShipment" component={CreateShipment}/>
               <PrivateRoute path="/track" component={Track}/>
               <PrivateRoute path="/viewShipments" component={ViewShipments}/>
@@ -111,6 +113,8 @@ class App extends PureComponent {
               <PrivateRoute path="/viewConsignmentsCu" component={ViewConsignmentsCu}/>
               <PrivateRoute path="/cuaddtax" component={CuAddTax}/>
               <PrivateRoute path="/cuviewtax" component={CuViewTax}/>
+              <PrivateRoute path="/cuassigntax" component={CuAssignTax}/>
+              <PrivateRoute path="/cuallow" component={CuAllow}/>
 
               
             </Switch>

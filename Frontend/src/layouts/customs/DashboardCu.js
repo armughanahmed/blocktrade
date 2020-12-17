@@ -91,7 +91,7 @@ function DashboardCu() {
 
           <div className="col-lg-5 col-md-12 col-sm-12">
             <div className="card">
-              <div className="card-body my-3">
+              <div className="card-body">
                 <h5 className="card-title">View All Shipments</h5>
                 <p className="card-text">View all shipments</p>
                 <a href="/ViewConsignmentsCu" className="btn btn-custom">
