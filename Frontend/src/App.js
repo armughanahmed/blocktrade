@@ -45,6 +45,17 @@ import CuViewTax from './layouts/customs/CuViewTax';
 import CuAssignTax from './layouts/customs/CuAssignTax';
 import CuAllow from './layouts/customs/CuAllow';
 
+import DashboardTO from './layouts/TO/DashboardTO';
+import TOAddBerth from './layouts/TO/TOAddBerth';
+import TOAddYard from './layouts/TO/TOAddYard';
+import TOAssignYard from './layouts/TO/TOAssignYard';
+import TOSearch from './layouts/TO/TOSearch';
+import TOViewAllSch from './layouts/TO/TOViewAllSch';
+import TOViewBerth from './layouts/TO/TOViewBerth';
+import TOViewLoading from './layouts/TO/TOViewLoading';
+import TOViewSchReq from './layouts/TO/TOViewSchReq';
+import TOViewUnloading from './layouts/TO/TOViewUnloading';
+import TOViewYard from './layouts/TO/TOViewYard';
 
 
 
@@ -116,6 +127,18 @@ class App extends PureComponent {
               <PrivateRoute path="/cuassigntax" component={CuAssignTax}/>
               <PrivateRoute path="/cuallow" component={CuAllow}/>
 
+              
+              <PrivateRoute path="/dashboardTO" component={DashboardTO}/>
+              <PrivateRoute path="/TOAddBerth" component={TOAddBerth}/>
+              <PrivateRoute path="/TOAddYard" component={TOAddYard}/>
+              <PrivateRoute path="/TOAssignYard" component={TOAssignYard}/>
+              <PrivateRoute path="/TOSearch" component={TOSearch}/>
+              <PrivateRoute path="/TOViewAllSch" component={TOViewAllSch}/>
+              <PrivateRoute path="/TOViewBerth" component={TOViewBerth}/>
+              <PrivateRoute path="/TOViewLoading" component={TOViewLoading}/>
+              <PrivateRoute path="/TOViewSchReq" component={TOViewSchReq}/>
+              <PrivateRoute path="/TOViewUnloading" component={TOViewUnloading}/>
+              <PrivateRoute path="/TOViewYard" component={TOViewYard}/>
               
             </Switch>
           </Router>
