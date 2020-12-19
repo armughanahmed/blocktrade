@@ -29,6 +29,7 @@ class OpenFcl extends React.Component {
     }
     
     addConsignment(event){
+        var select = document.getElementById('movement-select').disabled = true;
         event.preventDefault();
         //console.log(this.state.selectedValue);
     

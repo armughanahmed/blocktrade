@@ -1,0 +1,31 @@
+#make-quotation .card{
+    background-color: #1E2C3D;
+    padding-top: 35px;
+    padding-bottom: 35px;
+}
+
+#fcl-card .card{
+    margin-top: 55px;
+    padding: 15px;
+    border: 2px solid rgb(139, 105, 40);
+}
+
+#fcl-card h5{
+    font-size: 26px;
+    text-align: center;
+    margin-bottom: 25px;
+    color: rgb(233, 233, 233);
+}
+
+#lcl-card .card{
+    margin-top: 55px;
+    padding: 15px;
+    border: 2px solid rgb(139, 105, 40);
+}
+
+#lcl-card h5{
+    font-size: 26px;
+    text-align: center;
+    margin-bottom: 25px;
+    color: rgb(233, 233, 233);
+}

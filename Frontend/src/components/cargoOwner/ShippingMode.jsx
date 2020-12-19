@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
 import OpenLcl from './OpenLcl';
 import OpenFcl from './OpenFcl';
 import './ShippingMode.css'
@@ -15,7 +14,13 @@ class ShippingMode extends PureComponent {
             mode: '',
             movementType: '',
             consignments: [],
-            consignments1: []
+            consignments1: [],
+            pickupCountry: '',
+            pickupCity: '',
+            pickupAddress: '',
+            deliverCountry: '',
+            deliverCity: '',
+            deliverAddress: ''
         }
     }
 
@@ -23,8 +28,7 @@ class ShippingMode extends PureComponent {
 
     childCallback = () =>{
         this.setState({
-            mode: '',
-            movementType: ''
+            mode: ''
         });
     }
 
@@ -33,7 +37,15 @@ class ShippingMode extends PureComponent {
     }
 
     updateMovementType(event){
-        this.setState({movementType: event.target.value})
+        this.setState({
+            movementType: event.target.value,
+            pickupCountry: '',
+            pickupCity: '',
+            pickupAddress: '',
+            deliverCountry: '',
+            deliverCity: '',
+            deliverAddress: ''
+        })
     }
 
     displayLcl(con){
@@ -79,13 +91,58 @@ class ShippingMode extends PureComponent {
         );
     }
 
+    updatePickupCountry(event){
+        this.setState({
+            pickupCountry: event.target.value
+        })
+    }
+
+    updatePickupCity(event){
+        this.setState({
+            pickupCity: event.target.value
+        })
+    }
+
+    updatePickupAddress(event){
+        this.setState({
+            pickupAddress: event.target.value
+        })
+    }
+
+    updateDeliverCountry(event){
+        this.setState({
+            deliverCountry: event.target.value
+        })
+    }
+
+    updateDeliverCity(event){
+        this.setState({
+            deliverCity: event.target.value
+        })
+    }
+
+    updateDeliverAddress(event){
+        this.setState({
+            deliverAddress: event.target.value
+        })
+    }
+
     sendConsignments =()=> {
-        this.props.getConsignments(this.state.consignments,this.state.consignments1)
+        const obj = {
+            pickupCountry: this.state.pickupCountry,
+            pickupCity: this.state.pickupCity,
+            pickupAddress: this.state.pickupAddress,
+            deliverCountry: this.state.deliverCountry,
+            deliverCity: this.state.deliverCity,
+            deliverAddress: this.state.deliverAddress
+        }
+        console.log(obj);
+        this.props.getConsignments(this.state.consignments,this.obj,this.state.consignments1)
     }
 
     renderComponent(){
        
-        if (this.state.mode === 'open-lcl' && this.state.movementType !== '') {
+        if (this.state.mode === 'ocean-lcl') {
            
             return( <div>
                  
@@ -93,12 +150,87 @@ class ShippingMode extends PureComponent {
             </div> )
                 
         }
-        else if (this.state.mode === 'open-fcl' && this.state.movementType !== '') {
+        else if (this.state.mode === 'ocean-fcl' ) {
         
             return <OpenFcl mode={this.state.mode} movementType={this.state.movementType} consignments1={this.state.consignments1} childCallback={this.childCallback} />
         }
     }
     
+    showPickupInlandDetails(){
+        return(
+            <div id="pickup">
+                <div className="row">
+                    <div className="col-lg-3 offset-lg-2">
+                         <label>Pickup:</label>
+                    </div>
+                    <div className="col-lg-5">
+                        <input className="form-control" value={this.state.pickupCountry} onChange={(e) => this.updatePickupCountry(e)} placeholder="Country"/>
+                        <br/>
+                     </div>
+                </div>
+                <div className="row">
+                    <div className="col-lg-3 offset-lg-2"></div>
+                        <div className="col-lg-5">
+                            <input className="form-control" value={this.state.pickupCity} onChange={(e) => this.updatePickupCity(e)} placeholder="City"/>
+                            <br/>
+                        </div>
+                    </div>
+                     <div className="row">
+                        <div className="col-lg-3 offset-lg-2"></div>
+                            <div className="col-lg-5">
+                                <textarea cols="79" className="form-control" value={this.state.pickupAddress} onChange={(e) => this.updatePickupAddress(e)} placeholder="Enter pickup address" required></textarea>
+                                <br/>
+                            </div>
+                        </div>
+                     </div>
+        )
+    }
+
+    showDestinationInlandDetails(){
+        return(
+        <div>
+        <div className="row">
+            
+                                    <div className="col-lg-3 offset-lg-2">
+                                        <label>Deliver:</label>
+                                    </div>
+                                    <div className="col-lg-5">
+                                        <input className="form-control" value={this.state.deliverCountry} onChange={(e) => this.updateDeliverCountry(e)} placeholder="Country"/>
+                                        <br/>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-lg-3 offset-lg-2">
+                                    
+                                    </div>
+                                    <div className="col-lg-5">
+                                        <input className="form-control" value={this.state.deliverCity} onChange={(e) => this.updateDeliverCity(e)} placeholder="City"/>
+                                        <br/>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-lg-3 offset-lg-2">
+                                    
+                                    </div>
+                                    <div className="col-lg-5">
+                                    <textarea cols="79" className="form-control" value={this.state.deliverAddress} onChange={(e) => this.updateDeliverAddress(e)} placeholder="Enter delivery address" required></textarea>
+                                    <br/>
+                                    </div>
+                                </div>
+            </div>
+        )
+    }
+
+    show(){
+        return(
+            <div className="row">
+                <div className="col text-center" id="no-inland">
+                    <p>No inland details</p>
+                </div>
+            </div>
+            
+        )
+    }
 
     render() {
         return (
@@ -113,15 +245,15 @@ class ShippingMode extends PureComponent {
                                     <label for="sel1">Mode:</label>
                                     <select class="form-control" id="sel1" value={this.state.mode} onChange={(e) => this.updateMode(e)} required>
                                         <option value="">Select mode</option>
-                                        <option value="open-lcl">Open LCL</option>
-                                        <option value="open-fcl">Open FCL</option>
+                                        <option value="ocean-lcl">Ocean LCL</option>
+                                        <option value="ocean-fcl">Ocean FCL</option>
                                     </select>
                                 </div> 
                             </div>
                             <div className="col-lg-6">
                                 <div class="form-group">
                                         <label for="sel2">Movement type:</label>
-                                        <select class="form-control" id="sel2" value={this.state.movementType} onChange={(e) => this.updateMovementType(e)} required>
+                                        <select class="form-control" id="movement-select" value={this.state.movementType} onChange={(e) => this.updateMovementType(e)} required>
                                             <option value="">Select movement type</option>
                                             <option value="d2d">Door to Door</option>
                                             <option value="p2d">Port to Door</option>
@@ -131,12 +263,36 @@ class ShippingMode extends PureComponent {
                                 </div> 
                             </div>
                         </div>
+                     
+                            {
+                                    this.state.movementType === "p2d" &&
+                                    this.showDestinationInlandDetails() 
+                                }
+                                 {
+                                    this.state.movementType === "d2p" &&
+                                    this.showPickupInlandDetails() 
+                                }
+
+                                 {
+                                    this.state.movementType === "d2d"
+                                       ? [this.showDestinationInlandDetails(), this.showPickupInlandDetails()] 
+                                       : null
+                                }
+                                {
+                                    this.state.movementType === null &&
+                                    this.show()
+                                }
+                                {
+                                    this.state.movementType === "p2p" &&
+                                    this.show()
+                                }
+                        
                         
                     </form>
                     {this.renderComponent()}
                     {this.state.consignments.length > 0 &&
                     <div className="main-added-consignments">
-                         <h3>Open LCLs</h3>
+                         <h3>Ocean LCLs</h3>
                     <div className="row">
                         {this.state.consignments.map((con) => (
                           this.displayLcl(con)  
@@ -146,7 +302,7 @@ class ShippingMode extends PureComponent {
                     }
                     {this.state.consignments1.length > 0 &&
                      <div className="main-added-consignments">
-                         <h3>Open FCLs</h3>
+                         <h3>Ocean FCLs</h3>
                     <div className="row">
                         
                         {this.state.consignments1.map((con) => (

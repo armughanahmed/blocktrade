@@ -1,0 +1,22 @@
+#ocean-carrier-dashboard .card{
+    display: flex;
+    background-color:#1e2c3d;
+    padding: 35px;
+    width: 100%;
+    justify-content: center;
+    margin-top: 70px;
+}
+
+#ocean-carrier-dashboard  h5{
+color: white;
+text-align: center;
+}
+
+#ocean-carrier-dashboard  p{
+   text-align: center;
+}
+
+#ocean-carrier-dashboard{
+    padding-left: 55px;
+    padding-right: 55px;
+}

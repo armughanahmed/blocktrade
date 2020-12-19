@@ -20,12 +20,20 @@ import ProtectedRoute from './ProtectedRoute';
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import ViewQuotations from './layouts/cargoOwner/ViewQuotations';
-import AddPartner from './layouts/AddPartner';
+
 import Dashboard from './layouts/shippingCompany/Dashboard';
 import CreateShipment from './layouts/shippingCompany/CreateShipment';
 import Track from './layouts/shippingCompany/Track';
 import ViewShipments from './layouts/shippingCompany/ViewShipments';
 import BookContainer from './layouts/shippingCompany/BookContainer';
+import ViewContainers from './layouts/shippingCompany/ViewContainers';
+import MakeQuotations from './layouts/shippingCompany/MakeQuotations';
+import AddPartner from './layouts/cargoOwner/AddPartner';
+import AddPartnerSc from './layouts/shippingCompany/AddPartnerSc';
+import PartnerRequests from './layouts/cargoOwner/PartnerRequests';
+import ViewPartner from './layouts/cargoOwner/ViewPartner';
+import DashboardOC from './layouts/oceanCarrier/DashboardOC';
+import CreateSchedule from './layouts/oceanCarrier/CreateSchedule';
 
 
 
@@ -76,12 +84,21 @@ class App extends PureComponent {
               <PrivateRoute path="/viewConsignments" component={ViewConsignmentsCO}/>
               <PrivateRoute path="/trackConsignment" component={TrackConsignment}/>
               <PrivateRoute path="/viewQuotations" component={ViewQuotations}/>
-              <PrivateRoute path="/addPartner" component={AddPartner}/>
+              <PrivateRoute path="/addPartnerCO" component={AddPartner}/>
+              <PrivateRoute path="/requestsCO" component={PartnerRequests}/>
+              <PrivateRoute path="/viewPartnerCO" component={ViewPartner}/>
+              <PrivateRoute path="/addPartnerSc" component={AddPartnerSc}/>
+              //shippingCompany
               <PrivateRoute path="/dashboardSc" component={Dashboard}/>
               <PrivateRoute path="/createShipment" component={CreateShipment}/>
               <PrivateRoute path="/track" component={Track}/>
               <PrivateRoute path="/viewShipments" component={ViewShipments}/>
               <PrivateRoute path="/bookContainer" component={BookContainer}/>
+              <PrivateRoute path="/viewContainer" component={ViewContainers}/>
+              <PrivateRoute path="/makeQuotation" component={MakeQuotations}/>
+              //oceanCarrier
+              <PrivateRoute path="/dashboardOc" component={DashboardOC}/>
+              <PrivateRoute path="/createSchedule" component={CreateSchedule}/>
             </Switch>
           </Router>
         </div>

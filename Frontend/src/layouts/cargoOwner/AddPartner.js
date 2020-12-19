@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import NavbarCO from '../components/NavbarCO';
+import NavbarCO from '../../components/NavbarCO';
 import './AddPartner.css'
 import axios from 'axios'
 
@@ -8,54 +8,63 @@ class AddPartner extends PureComponent {
         super(props)
 
         this.state = {
-            role: 'employee',
-            email: '' 
+            selectedPartner: '',
+           
         }
         
     }
 
-    updateEmail(event){
+
+    updateSelectedPartner(event){
         this.setState({
-            email: event.target.value
+            selectedPartner: event.target.value
         })
+        // const obj = {
+        //     email: event.target.value
+        // }
+        console.log('hello')
+      //  this.sendRequest(obj)
     }
 
-    async sendInvite(event){
+    async sendRequest(event){
         //console.log(obj1);
+        event.preventDefault();
         const obj = {
-            email: this.state.email,
-            role: this.state.role
+            email: this.state.selectedPartner
         }
         console.log(obj);
         //console.log('abcdefg');
         const token = localStorage.getItem('token');
         try{ 
-        const response = await axios.post('http://localhost:4000/user',obj,{
+        const response = await axios.post('http://localhost:4000/organization/addPartner',obj,{
             headers: {
                 'Authorization': `Bearer ${token}`
             }
         })
+        console.log(response);
        }
         catch(e){
          console.log(e);
         }  
     }
+
+  
    
 
     render() {
         return (
     <div>
-            <NavbarCO/>
+          <NavbarCO/>
         <div className="container" id="add-partner">    
             <div className="row">
                 <div className="col text-center">
                     <div className="card">
                         <div className="card-body">
-                            <form className="form-group" action="#" onSubmit={(e) => this.sendInvite(e)}>
-                                <label>Email: </label>
-                                <div className="row">
-                                    <input className="form-control" value={this.state.email} onChange={(e) => this.updateEmail(e)} placeholder="Enter partner email" type="mail" required></input>
-                                </div>
+                            <form className="form-group" action="#" onSubmit={(e) => this.sendRequest(e)}>
+                                    <div className="form-group">
+                                            <label htmlFor="sel1">Email:</label>
+                                            <input className="form-control" value={this.state.selectedPartner} type="mail" onChange={(e) => this.updateSelectedPartner(e)} placeholder="Enter partner email"></input>
+                                    </div>
                                 <br/>
                                 <div className="row">
                                     <div className="col text-right">

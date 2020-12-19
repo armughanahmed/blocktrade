@@ -14,21 +14,25 @@ function NavbarCO() {
           <li className="nav-item py-md-2 px-3 ml-5">
             <a className="nav-link" href="/dashboard" active>Dashboard</a>
           </li>
-          <li className="nav-item py-md-2 px-3">
-            <a className="nav-link" href="startConsignment">Create consignment</a>
-          </li>
-          <li className="nav-item py-md-2 px-3">
-            <a className="nav-link" href="/viewConsignments">Consignments</a>
-          </li>
-          <li className="nav-item py-md-2 px-3">
-            <a className="nav-link" href="/trackConsignment">Track consignments</a>
-          </li>
+          <li class="nav-item dropdown py-md-2 px-3 ml-4">
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Consignments</a>
+                    <div class="dropdown-menu">
+                        <a href="startConsignment" class="dropdown-item">Create</a>
+                        <a href="/viewConsignments" class="dropdown-item">View</a>
+                        <a href="/trackConsignment" class="dropdown-item">Track</a>
+                    </div>
+            </li>
           <li className="nav-item py-md-2 px-3">
             <a className="nav-link" href="/viewQuotations">Quotations</a>
           </li>
-          <li className="nav-item py-md-2 px-3">
-            <a className="nav-link" href="/addPartner">Add partner</a>
-          </li>
+          <li class="nav-item dropdown py-md-2 px-3 ml-3">
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Partner</a>
+                    <div class="dropdown-menu">
+                        <a href="/addPartnerCO" class="dropdown-item">Add</a>
+                        <a href="/requestsCO" class="dropdown-item">Pending requests</a>
+                        <a href="/viewPartnerCO" class="dropdown-item">View</a>
+                    </div>
+            </li>
         </ul>
         <ul className="navbar-nav ml-auto nav-flex-icons">
         <li className="nav-item dropdown">
