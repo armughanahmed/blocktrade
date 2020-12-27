@@ -58,6 +58,10 @@ import TOViewUnloading from './layouts/TO/TOViewUnloading';
 import TOViewYard from './layouts/TO/TOViewYard';
 
 
+import DashboardIT from './layouts/inlandT/DashboardIT';
+import ITSearch from './layouts/inlandT/ITSearch';
+import ITShipment from './layouts/inlandT/ITViewShipment';
+import ITAddRoute from './layouts/inlandT/ITAddRoute';
 
 
 const checkSignIn = () =>{
@@ -140,6 +144,14 @@ class App extends PureComponent {
               <PrivateRoute path="/TOViewUnloading" component={TOViewUnloading}/>
               <PrivateRoute path="/TOViewYard" component={TOViewYard}/>
               
+
+              
+              <PrivateRoute path="/dashboardIT" component={DashboardIT}/>
+              <PrivateRoute path="/itSearch" component={ITSearch}/>
+              <PrivateRoute path="/itViewShipment" component={ITShipment}/>
+              <PrivateRoute path="/itaddroute" component={ITAddRoute}/>
+              
+
             </Switch>
           </Router>
         </div>
