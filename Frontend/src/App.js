@@ -39,6 +39,37 @@ import ViewShips from './layouts/oceanCarrier/ViewShips';
 import AddContainer from './layouts/oceanCarrier/AddContainer';
 import ViewContainersOC from './layouts/oceanCarrier/ViewContainersOC';
 
+import DashboardFI from './layouts/FI/DashboardFI';
+import LCPrevious from './layouts/FI/LCPrevious';
+import LCRequests from './layouts/FI/LCRequests';
+import LCSearch from './layouts/FI/LCSearch';
+
+import DashboardCu from './layouts/customs/DashboardCu';
+import CuSearch from './layouts/customs/CuSearch';
+import ViewConsignmentsCu from './layouts/customs/ViewConsignmentsCu';
+import CuAddTax from './layouts/customs/CuAddTax';
+import CuViewTax from './layouts/customs/CuViewTax';
+import CuAssignTax from './layouts/customs/CuAssignTax';
+import CuAllow from './layouts/customs/CuAllow';
+
+import DashboardTO from './layouts/TO/DashboardTO';
+import TOAddBerth from './layouts/TO/TOAddBerth';
+import TOAddYard from './layouts/TO/TOAddYard';
+import TOAssignYard from './layouts/TO/TOAssignYard';
+import TOSearch from './layouts/TO/TOSearch';
+import TOViewAllSch from './layouts/TO/TOViewAllSch';
+import TOViewBerth from './layouts/TO/TOViewBerth';
+import TOViewLoading from './layouts/TO/TOViewLoading';
+import TOViewSchReq from './layouts/TO/TOViewSchReq';
+import TOViewUnloading from './layouts/TO/TOViewUnloading';
+import TOViewYard from './layouts/TO/TOViewYard';
+
+
+import DashboardIT from './layouts/inlandT/DashboardIT';
+import ITSearch from './layouts/inlandT/ITSearch';
+import ITShipment from './layouts/inlandT/ITViewShipment';
+import ITAddRoute from './layouts/inlandT/ITAddRoute';
+
 
 
 
@@ -47,10 +78,10 @@ import ViewContainersOC from './layouts/oceanCarrier/ViewContainersOC';
 const checkSignIn = () =>{
   const isAuthenticated = localStorage.getItem('token');
   if (isAuthenticated === null || isAuthenticated === undefined) {
-      return false;
+      return true;
   }
   else{
-    return true;
+    return false;
   }
 }
 
@@ -107,6 +138,40 @@ class App extends PureComponent {
               <PrivateRoute path="/viewShip" component={ViewShips}/>
               <PrivateRoute path="/addContainer" component={AddContainer}/>
               <PrivateRoute path="/viewContainerOC" component={ViewContainersOC}/>
+            
+              <PrivateRoute path="/dashboardFI" component={DashboardFI}/>
+              <PrivateRoute path="/lcPrevious" component={LCPrevious}/>
+              <PrivateRoute path="/lcRequests" component={LCRequests}/>
+              <PrivateRoute path="/lcSearch" component={LCSearch}/>
+
+              
+              <PrivateRoute path="/dashboardCu" component={DashboardCu}/>
+              <PrivateRoute path="/cuSearch" component={CuSearch}/>
+              <PrivateRoute path="/viewConsignmentsCu" component={ViewConsignmentsCu}/>
+              <PrivateRoute path="/cuaddtax" component={CuAddTax}/>
+              <PrivateRoute path="/cuviewtax" component={CuViewTax}/>
+              <PrivateRoute path="/cuassigntax" component={CuAssignTax}/>
+              <PrivateRoute path="/cuallow" component={CuAllow}/>
+
+              
+              <PrivateRoute path="/dashboardTO" component={DashboardTO}/>
+              <PrivateRoute path="/TOAddBerth" component={TOAddBerth}/>
+              <PrivateRoute path="/TOAddYard" component={TOAddYard}/>
+              <PrivateRoute path="/TOAssignYard" component={TOAssignYard}/>
+              <PrivateRoute path="/TOSearch" component={TOSearch}/>
+              <PrivateRoute path="/TOViewAllSch" component={TOViewAllSch}/>
+              <PrivateRoute path="/TOViewBerth" component={TOViewBerth}/>
+              <PrivateRoute path="/TOViewLoading" component={TOViewLoading}/>
+              <PrivateRoute path="/TOViewSchReq" component={TOViewSchReq}/>
+              <PrivateRoute path="/TOViewUnloading" component={TOViewUnloading}/>
+              <PrivateRoute path="/TOViewYard" component={TOViewYard}/>
+              
+
+              
+              <PrivateRoute path="/dashboardIT" component={DashboardIT}/>
+              <PrivateRoute path="/itSearch" component={ITSearch}/>
+              <PrivateRoute path="/itViewShipment" component={ITShipment}/>
+              <PrivateRoute path="/itaddroute" component={ITAddRoute}/>
             </Switch>
           </Router>
         </div>
