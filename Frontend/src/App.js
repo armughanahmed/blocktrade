@@ -34,6 +34,10 @@ import PartnerRequests from './layouts/cargoOwner/PartnerRequests';
 import ViewPartner from './layouts/cargoOwner/ViewPartner';
 import DashboardOC from './layouts/oceanCarrier/DashboardOC';
 import CreateSchedule from './layouts/oceanCarrier/CreateSchedule';
+import AddShip from './layouts/oceanCarrier/AddShip';
+import ViewShips from './layouts/oceanCarrier/ViewShips';
+import AddContainer from './layouts/oceanCarrier/AddContainer';
+import ViewContainersOC from './layouts/oceanCarrier/ViewContainersOC';
 
 
 
@@ -99,6 +103,10 @@ class App extends PureComponent {
               //oceanCarrier
               <PrivateRoute path="/dashboardOc" component={DashboardOC}/>
               <PrivateRoute path="/createSchedule" component={CreateSchedule}/>
+              <PrivateRoute path="/addShip" component={AddShip}/>
+              <PrivateRoute path="/viewShip" component={ViewShips}/>
+              <PrivateRoute path="/addContainer" component={AddContainer}/>
+              <PrivateRoute path="/viewContainerOC" component={ViewContainersOC}/>
             </Switch>
           </Router>
         </div>
