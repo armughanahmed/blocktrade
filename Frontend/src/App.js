@@ -12,39 +12,20 @@ import {
 } from "react-router-dom";
 import Register from './layouts/Register';
 import Login from './layouts/Login';
-<<<<<<< HEAD
-
-
-import ProtectedRoute from './ProtectedRoute';
-import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
-
-import AddPartner from './layouts/AddPartner';
-
-=======
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
 import DashboardCO from './layouts/cargoOwner/DashboardCO';
 import StartConsignmentCO from './layouts/cargoOwner/StartConsignmentCO';
 import ViewConsignmentsCO from './layouts/cargoOwner/ViewConsignmentsCO';
 import TrackConsignment from './layouts/cargoOwner/TrackConsignment';
-<<<<<<< HEAD
-import ViewQuotations from './layouts/cargoOwner/ViewQuotations';
-
-import DashboardSC from './layouts/shippingCompany/Dashboard';
-=======
 import ProtectedRoute from './ProtectedRoute';
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import ViewQuotations from './layouts/cargoOwner/ViewQuotations';
 
 import Dashboard from './layouts/shippingCompany/Dashboard';
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
 import CreateShipment from './layouts/shippingCompany/CreateShipment';
 import Track from './layouts/shippingCompany/Track';
 import ViewShipments from './layouts/shippingCompany/ViewShipments';
 import BookContainer from './layouts/shippingCompany/BookContainer';
-<<<<<<< HEAD
-=======
 import ViewContainers from './layouts/shippingCompany/ViewContainers';
 import MakeQuotations from './layouts/shippingCompany/MakeQuotations';
 import AddPartner from './layouts/cargoOwner/AddPartner';
@@ -57,7 +38,6 @@ import AddShip from './layouts/oceanCarrier/AddShip';
 import ViewShips from './layouts/oceanCarrier/ViewShips';
 import AddContainer from './layouts/oceanCarrier/AddContainer';
 import ViewContainersOC from './layouts/oceanCarrier/ViewContainersOC';
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
 
 import DashboardFI from './layouts/FI/DashboardFI';
 import LCPrevious from './layouts/FI/LCPrevious';
@@ -91,15 +71,6 @@ import ITShipment from './layouts/inlandT/ITViewShipment';
 import ITAddRoute from './layouts/inlandT/ITAddRoute';
 
 
-<<<<<<< HEAD
-const checkSignIn = () =>{
-  const isAuthenticated = localStorage.getItem('token');
-  if (isAuthenticated === null || isAuthenticated === undefined) {
-      return false;
-  }
-  else{
-    return true;
-=======
 
 
 
@@ -111,7 +82,6 @@ const checkSignIn = () =>{
   }
   else{
     return false;
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
   }
 }
 
@@ -144,35 +114,21 @@ class App extends PureComponent {
             <Switch>
               <Route path="/login" component={Login}/>
               <Route path="/register" component={Register}/>
-<<<<<<< HEAD
-
-              <PrivateRoute path="/dashboardCO" component={DashboardCO}/>
-=======
               <PrivateRoute path="/dashboard" component={DashboardCO}/>
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
               <PrivateRoute path="/startConsignment" component={StartConsignmentCO}/>
               <PrivateRoute path="/viewConsignments" component={ViewConsignmentsCO}/>
               <PrivateRoute path="/trackConsignment" component={TrackConsignment}/>
               <PrivateRoute path="/viewQuotations" component={ViewQuotations}/>
-<<<<<<< HEAD
-              <PrivateRoute path="/addPartner" component={AddPartner}/>
-
-              <PrivateRoute path="/dashboardSc" component={DashboardSC}/>
-=======
               <PrivateRoute path="/addPartnerCO" component={AddPartner}/>
               <PrivateRoute path="/requestsCO" component={PartnerRequests}/>
               <PrivateRoute path="/viewPartnerCO" component={ViewPartner}/>
               <PrivateRoute path="/addPartnerSc" component={AddPartnerSc}/>
               //shippingCompany
               <PrivateRoute path="/dashboardSc" component={Dashboard}/>
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
               <PrivateRoute path="/createShipment" component={CreateShipment}/>
               <PrivateRoute path="/track" component={Track}/>
               <PrivateRoute path="/viewShipments" component={ViewShipments}/>
               <PrivateRoute path="/bookContainer" component={BookContainer}/>
-<<<<<<< HEAD
-
-=======
               <PrivateRoute path="/viewContainer" component={ViewContainers}/>
               <PrivateRoute path="/makeQuotation" component={MakeQuotations}/>
               //oceanCarrier
@@ -183,7 +139,6 @@ class App extends PureComponent {
               <PrivateRoute path="/addContainer" component={AddContainer}/>
               <PrivateRoute path="/viewContainerOC" component={ViewContainersOC}/>
             
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
               <PrivateRoute path="/dashboardFI" component={DashboardFI}/>
               <PrivateRoute path="/lcPrevious" component={LCPrevious}/>
               <PrivateRoute path="/lcRequests" component={LCRequests}/>
@@ -217,11 +172,6 @@ class App extends PureComponent {
               <PrivateRoute path="/itSearch" component={ITSearch}/>
               <PrivateRoute path="/itViewShipment" component={ITShipment}/>
               <PrivateRoute path="/itaddroute" component={ITAddRoute}/>
-<<<<<<< HEAD
-              
-
-=======
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
             </Switch>
           </Router>
         </div>
