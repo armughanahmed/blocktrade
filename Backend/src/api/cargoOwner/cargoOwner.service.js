@@ -1,4 +1,5 @@
 const { compareSync } = require("bcrypt");
+<<<<<<< HEAD
 const pool = require("../../db/mysql");
 
 module.exports = {
@@ -13,6 +14,23 @@ module.exports = {
             return reject(error);
           }
           console.log("getQuotationByOrganizationId::");
+=======
+const { reject } = require("lodash");
+const pool = require("../../db/mysql");
+
+module.exports = {
+  removeQuotation: (data) => {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `delete from quotations where quotation_id=?`,
+        [data],
+        (error, results, fields) => {
+          if (error) {
+            console.log("removeQuotation::");
+            return reject(error);
+          }
+          console.log("removeQuotation::");
+>>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
           console.log(results);
           resolve(results);
         }
@@ -22,9 +40,15 @@ module.exports = {
   createQuotation: (data) => {
     return new Promise((resolve, reject) => {
       pool.query(
+<<<<<<< HEAD
         `insert into quotations(lcl_id,fcl_id,cargo_owner_id) 
                   values(?,?,?)`,
         [data.lcl_id, data.fcl_id, data.decoded.result.org_id],
+=======
+        `insert into quotations(cargo_owner_id) 
+                  values(?)`,
+        [data.org_id],
+>>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
         (error, results, fields) => {
           if (error) {
             console.log("createQuotation::");
@@ -41,10 +65,16 @@ module.exports = {
     console.log(data);
     return new Promise((resolve, reject) => {
       pool.query(
+<<<<<<< HEAD
         `insert into lcl(cargo_owner_id,height, length,mode, movementType, quantity, type, unit,weight ,width,wunit) 
                   values(?,?,?,?,?,?,?,?,?,?,?)`,
         [
           data.decoded.result.org_id,
+=======
+        `insert into lcl(height, length,mode, movementType, quantity, type, unit,weight ,width,wunit,quotation_id) 
+                  values(?,?,?,?,?,?,?,?,?,?,?)`,
+        [
+>>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
           data.height,
           data.length,
           data.mode,
@@ -55,6 +85,10 @@ module.exports = {
           data.weight,
           data.width,
           data.wunit,
+<<<<<<< HEAD
+=======
+          data.quotation_id,
+>>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
         ],
         (error, results, fields) => {
           if (error) {
@@ -73,16 +107,26 @@ module.exports = {
     console.log(data);
     return new Promise((resolve, reject) => {
       pool.query(
+<<<<<<< HEAD
         `insert into fcl(cargo_owner_id,containerDescription,containerHeight,mode, movementType, packageType, quantity) 
                   values(?,?,?,?,?,?,?)`,
         [
           data.decoded.result.org_id,
+=======
+        `insert into fcl(containerDescription,containerHeight,mode, movementType, packageType, quantity,quotation_id) 
+                  values(?,?,?,?,?,?,?)`,
+        [
+>>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
           data.containerDescription,
           data.containerHeight,
           data.mode,
           data.movementType,
           data.packageType,
           data.quantity,
+<<<<<<< HEAD
+=======
+          data.quotation_id,
+>>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
         ],
         (error, results, fields) => {
           if (error) {
@@ -96,4 +140,222 @@ module.exports = {
       );
     });
   },
+<<<<<<< HEAD
+=======
+  viewQuotations: (data) => {
+    console.log(data);
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `select * from quotations where cargo_owner_id=?`,
+        [data],
+        (error, results, fields) => {
+          if (error) {
+            console.log("viewQuotations::");
+            return reject(error);
+          }
+          console.log("viewQuotations::");
+          console.log(results);
+          resolve(results);
+        }
+      );
+    });
+  },
+  viewQuotationById: (data) => {
+    console.log(data);
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `select * from quotations where quotation_id=?`,
+        [data],
+        (error, results, fields) => {
+          if (error) {
+            console.log("viewQuotationById::");
+            return reject(error);
+          }
+          console.log("viewQuotationById::");
+          console.log(results);
+          resolve(results[0]);
+        }
+      );
+    });
+  },
+  viewFCL: (data) => {
+    console.log(data);
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `select * from lcl where quotation_id=?`,
+        [data],
+        (error, results, fields) => {
+          if (error) {
+            console.log("viewFCL::");
+            return reject(error);
+          }
+          console.log("viewFCL::");
+          console.log(results);
+          resolve(results);
+        }
+      );
+    });
+  },
+  viewLCL: (data) => {
+    console.log(data);
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `select * from lcl where quotation_id=?`,
+        [data],
+        (error, results, fields) => {
+          if (error) {
+            console.log("viewLCL::");
+            return reject(error);
+          }
+          console.log("viewLCL::");
+          console.log(results);
+          resolve(results);
+        }
+      );
+    });
+  },
+  approveQuotation: (data) => {
+    console.log(data);
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `update quotations set quote_status=? where quotation_id=?`,
+        ["approve-owner", data],
+        (error, results, fields) => {
+          if (error) {
+            console.log("approveQuotation::");
+            return reject(error);
+          }
+          console.log("approveQuotation::");
+          console.log(results);
+          resolve(results);
+        }
+      );
+    });
+  },
+  createConsignment: (data) => {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `update quotations set quote_status=? where quotation_id=?`,
+        ["approve-owner", data],
+        (error, results, fields) => {
+          if (error) {
+            console.log("approveQuotation::");
+            return reject(error);
+          }
+          console.log("approveQuotation::");
+          console.log(results);
+          resolve(results);
+        }
+      );
+    });
+  },
+  getSchedule: (data) => {
+    console.log(data)
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `select * from schedules where origin_country=? and destination_country=? and departure_date>=? and arrival_date<=?`,
+        [
+          data.originCountry,
+          data.destinationCountry,
+          data.departureDate,
+          data.arrivalDate,
+        ],
+        (error, results, fields) => {
+          if (error) {
+            console.log("getSchedule::");
+            return reject(error);
+          }
+          console.log("getSchedule::");
+          console.log(results);
+          resolve(results);
+        }
+      );
+    });
+  },
+  getBRContainerBySchedule_Id: (data) => {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `select * from bookingrequests where schedule_id=? and status=?`,
+        [data, 1],
+        (error, results, fields) => {
+          if (error) {
+            console.log("getBRContainerBySchedule_Id::");
+            return reject(error);
+          }
+          console.log("getBRContainerBySchedule_Id::");
+          console.log(results);
+          resolve(results);
+        }
+      );
+    });
+  },
+  getPortsByPort_id: (data) => {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `select * from ports where port_id=?`,
+        [data],
+        (error, results, fields) => {
+          if (error) {
+            console.log("getPortsByPort_id::");
+            return reject(error);
+          }
+          console.log("getPortsByPort_id::");
+          console.log(results);
+          resolve(results[0]);
+        }
+      );
+    });
+  },
+  getStopsBySchedule_Id: (data) => {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `select * from stops where schedule_id=?`,
+        [data],
+        (error, results, fields) => {
+          if (error) {
+            console.log("getStopsBySchedule_Id::");
+            return reject(error);
+          }
+          console.log("getStopsBySchedule_Id::");
+          console.log(results);
+          resolve(results);
+        }
+      );
+    });
+  },
+  getOceanCarrierById: (data) => {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `select * from oceancarriers where ocean_carrier_id=?`,
+        [data],
+        (error, results, fields) => {
+          if (error) {
+            console.log("getOceanCarrierById::");
+            return reject(error);
+          }
+          console.log("getOceanCarrierById::");
+          console.log(results);
+          resolve(results[0]);
+        }
+      );
+    });
+  },
+  getShippingCompanyById: (data) => {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `select * from shippingcompanies where shipping_company_id=?`,
+        [data],
+        (error, results, fields) => {
+          if (error) {
+            console.log("getShippingCompanyById::");
+            return reject(error);
+          }
+          console.log("getShippingCompanyById::");
+          console.log(results);
+          resolve(results);
+        }
+      );
+    });
+  },
+>>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
 };

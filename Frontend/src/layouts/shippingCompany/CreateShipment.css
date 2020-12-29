@@ -11,4 +11,11 @@
 
 #create-shipment-view  input{
     background-color: rgb(252, 252, 252);
+<<<<<<< HEAD
+=======
+}
+
+#no-inland p{
+    color: white;
+>>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
 }
