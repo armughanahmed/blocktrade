@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import './AddContainer.css'
+import NavbarOC from '../../components/NavbarOC'
 
 class AddContainer extends PureComponent {
     static propTypes = {}
@@ -32,6 +33,8 @@ class AddContainer extends PureComponent {
 
     render() {
         return (
+            <div className="wrapper">
+                <NavbarOC/>
             <div className="container" id="add-container">
                 <form className="form-group" onSubmit={(e) => this.addContainer(e)} action="#">
                     <div className="card">
@@ -73,6 +76,7 @@ class AddContainer extends PureComponent {
                         </div>
                     </div>
                 </form>
+            </div>
             </div>
         )
     }

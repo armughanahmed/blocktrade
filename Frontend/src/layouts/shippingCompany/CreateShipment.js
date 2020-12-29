@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react'
 import './CreateShipment.css'
+import NavbarSC from '../../components/NavbarSC'
+
 class CreateShipment extends PureComponent {
     constructor(props) {
         super(props)
@@ -265,8 +267,9 @@ class CreateShipment extends PureComponent {
 
     render() {
             return (
-                <div id="create-shipment-view">
-                    <div className="container">
+                <div className="wrapper">
+                    <NavbarSC/>
+                    <div className="container-fluid" id="create-shipment-view">
                             <div className="details">
                               <form action="#" onSubmit={(e) => this.confirmBooking(e)}>
                               <div className="row">

@@ -3,6 +3,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import './BookContainer.css'
 import SearchResult from '../../components/shippingCompany/SearchResult'
+import NavbarSc from '../../components/NavbarSC'
 
 class BookContainer extends PureComponent {
     constructor(props) {
@@ -125,6 +126,8 @@ class BookContainer extends PureComponent {
 
     render() {
         return (
+            <div className="wrapper">
+                <NavbarSc/>
             <div className="container" id="book-container">
                 <h3>Book container</h3>
                 <form className="form-group" action="#" onSubmit={(e) => this.search(e)}>
@@ -227,6 +230,7 @@ class BookContainer extends PureComponent {
                     this.state.check === true &&
                     <SearchResult  searchResult={this.state.searchResult} />  
                 }
+            </div>
             </div>
         )
     }

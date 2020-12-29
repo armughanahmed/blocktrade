@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import MUIDataTable from "mui-datatables";
+import NavbarOC from '../../components/NavbarOC'
 
 class ViewShips extends PureComponent {
     constructor(props) {
@@ -123,6 +124,7 @@ class ViewShips extends PureComponent {
           };
         return (
             <div className="wrapper">
+                <NavbarOC/>
                 <div className="container-fluid" id="consignments-table">
                     {
                         this.state.table === true &&

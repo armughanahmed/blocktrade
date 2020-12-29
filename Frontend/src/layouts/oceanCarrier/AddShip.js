@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import './AddShip.css'
+import NavbarOC from '../../components/NavbarOC'
 import axios from 'axios'
 
 class AddShip extends PureComponent {
@@ -72,6 +73,8 @@ class AddShip extends PureComponent {
 
     render() {
         return (
+            <div className="wrapper">
+                <NavbarOC/>
             <div className="container" id="add-ship">
                 <div className="card">
                     <div className="card-body">
@@ -123,6 +126,7 @@ class AddShip extends PureComponent {
                         </form>
                     </div>
                 </div>
+            </div>
             </div>
         )
     }

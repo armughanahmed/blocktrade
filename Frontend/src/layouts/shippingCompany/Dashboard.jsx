@@ -13,7 +13,7 @@ function Dashboard() {
                         <div className="card-body">
                             <h5 className="card-title">Create shipment</h5>
                             <p className="card-text">Ready for the next shipment?</p>
-                            <a href="/startConsignment" className="btn btn-custom"><strong>Create</strong></a>
+                            <a href="/createShipment" className="btn btn-custom"><strong>Create</strong></a>
                         </div>
                     </div>
                 </div>
@@ -22,7 +22,7 @@ function Dashboard() {
                         <div className="card-body">
                             <h5 className="card-title">View shipments</h5>
                             <p className="card-text">Current and completed shipments</p>
-                            <a href="/startConsignment" className="btn btn-custom"><strong>View</strong></a>
+                            <a href="/viewShipments" className="btn btn-custom"><strong>View</strong></a>
                         </div>
                     </div>
                 </div>
@@ -33,7 +33,7 @@ function Dashboard() {
                         <div className="card-body">
                             <h5 className="card-title">View consignments</h5>
                             <p className="card-text">Current and completed consignments</p>
-                            <a href="/startConsignment" className="btn btn-custom"><strong>View</strong></a>
+                            <a href="/viewConsignments" className="btn btn-custom"><strong>View</strong></a>
                         </div>
                     </div>
                 </div>
@@ -42,7 +42,7 @@ function Dashboard() {
                         <div className="card-body">
                             <h5 className="card-title">Track shipment</h5>
                             <p className="card-text">Track the status of shipment</p>
-                            <a href="/startConsignment" className="btn btn-custom"><strong>Track</strong></a>
+                            <a href="/trackConsignment" className="btn btn-custom"><strong>Track</strong></a>
                         </div>
                     </div>
                 </div>
@@ -53,7 +53,7 @@ function Dashboard() {
                         <div className="card-body">
                             <h5 className="card-title">Book container</h5>
                             <p className="card-text">Book container according to the schedules available</p>
-                            <a href="/startConsignment" className="btn btn-custom"><strong>Create</strong></a>
+                            <a href="/bookContainer" className="btn btn-custom"><strong>Create</strong></a>
                         </div>
                     </div>
                 </div>
@@ -62,7 +62,7 @@ function Dashboard() {
                         <div className="card-body">
                             <h5 className="card-title">View conatiners</h5>
                             <p className="card-text">View booked containers</p>
-                            <a href="/startConsignment" className="btn btn-custom"><strong>View</strong></a>
+                            <a href="/viewContainer" className="btn btn-custom"><strong>View</strong></a>
                         </div>
                     </div>
                 </div>
@@ -82,7 +82,7 @@ function Dashboard() {
                         <div className="card-body">
                             <h5 className="card-title">Quotations</h5>
                             <p className="card-text">View pending and approved quotations</p>
-                            <a href="/startConsignment" className="btn btn-custom"><strong>View</strong></a>
+                            <a href="/makeQuotation" className="btn btn-custom"><strong>View</strong></a>
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import './MakeQuotations.css'
+import NavbarSC from '../../components/NavbarSC'
 
 class MakeQuotations extends PureComponent {
     constructor(props) {
@@ -99,7 +100,9 @@ class MakeQuotations extends PureComponent {
 
     render() {
         return (
-            <div className="container" id="make-quotation">
+            <div className="wrapper">
+                <NavbarSC/>
+            <div className="container-fluid" id="make-quotation">
                 <div className="row">
                     <div className="col">
                         <div className="card">
@@ -131,6 +134,7 @@ class MakeQuotations extends PureComponent {
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         )
     }

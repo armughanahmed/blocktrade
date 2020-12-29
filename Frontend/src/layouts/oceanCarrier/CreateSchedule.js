@@ -5,6 +5,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios'
 import Stop from '../../components/oceanCarrier/Stops'
+import NavbarOC from '../../components/NavbarOC'
+import NavbarCO from '../../components/NavbarCO';
 
 class CreateSchedule extends PureComponent {
     static propTypes = {}
@@ -194,6 +196,8 @@ class CreateSchedule extends PureComponent {
 
     render() {
         return (
+            <div className="wrapper">
+                <NavbarCO/>
             <div className="container" id="create-schedule">
                 <form className="form-group" action="#" onSubmit={(e) => this.create(e)}>
                     <div className="card">
@@ -321,6 +325,7 @@ class CreateSchedule extends PureComponent {
                     </div>
                    
                 </form> 
+            </div>
             </div>
         )
     }
