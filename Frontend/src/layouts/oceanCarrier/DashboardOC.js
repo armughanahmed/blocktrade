@@ -1,10 +1,12 @@
 import React from 'react'
 import './DashboardOc.css'
+import NavbarOC from '../../components/NavbarOC'
 
 function DashboardOC() {
     return (
-        <div id="ocean-carrier-dashboard">
-        <div className="container-fluid">
+        <div className="wrapper" >
+        <NavbarOC/>    
+        <div className="container-fluid" id="ocean-carrier-dashboard">
             <div className="row text-center">
                 <div className="col-lg-5 offset-lg-1">
                     <div className="card">
