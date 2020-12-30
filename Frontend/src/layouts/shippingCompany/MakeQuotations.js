@@ -102,7 +102,7 @@ class MakeQuotations extends PureComponent {
         return (
             <div className="wrapper">
                 <NavbarSC/>
-            <div className="container-fluid" id="make-quotation">
+            <div className="container" id="make-quotation">
                 <div className="row">
                     <div className="col">
                         <div className="card">

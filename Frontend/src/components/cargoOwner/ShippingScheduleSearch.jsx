@@ -116,6 +116,7 @@ class ShippingScheduleSearch extends PureComponent {
                                     <div className="row">
                                         <div className="col-lg-6 offset-lg-1">
                                             <label htmlFor="">Departure date:</label>
+                                            <br/>
                                                 <DatePicker className="form-control" selected={this.state.departureDate} onChange={this.updateDepartureDate} />
                                         </div>
                                     </div>
