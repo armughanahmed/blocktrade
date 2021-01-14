@@ -57,7 +57,7 @@ class AddPartner extends PureComponent {
           <NavbarCO/>
         <div className="container" id="add-partner">    
             <div className="row">
-                <div className="col text-center">
+                <div className="col-lg-6 offset-lg-3 text-center">
                     <div className="card">
                         <div className="card-body">
                             <form className="form-group" action="#" onSubmit={(e) => this.sendRequest(e)}>

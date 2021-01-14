@@ -20,7 +20,7 @@ const sendEmail = async (text, to, org) => {
     service: "gmail",
     auth: {
       user: "armughancr7@gmail.com",
-      pass: "kiunbataon",
+      pass: "blocktrade",
     },
   });
 
@@ -148,7 +148,6 @@ module.exports = {
   },
   deleteRequest: async (req, res) => {
     try {
-      console.log('abc');
       let body = req.body;
       body.decoded = req.decoded;
       let partner = await deletePartner(body);

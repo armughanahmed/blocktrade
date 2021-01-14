@@ -11,6 +11,8 @@ const {
   updateContainer,
   getContainerIdFromBR,
   getPortByName,
+  getPort,
+  getShipsBytype,
 } = require("./oceanCarrier.service");
 const { getOrganizationByID } = require("../organization/organization.service");
 const { getUserByUserId } = require("../users/user.service");
@@ -22,7 +24,7 @@ const sendEmail = async (text, to, org) => {
     service: "gmail",
     auth: {
       user: "armughancr7@gmail.com",
-      pass: "kiunbataon",
+      pass: "blocktrade",
     },
   });
 
@@ -46,29 +48,29 @@ module.exports = {
     try {
       let body = req.body;
       body.decoded = req.decoded;
-      const departurePort=await getPortByName(body);
-      if(!departurePort){
+      const departurePort = await getPortByName(body);
+      if (!departurePort) {
         res.status(404).send({
-          success:0,
-          message:"Departure port not found",
-          data:null
-        })
+          success: 0,
+          message: "Departure port not found",
+          data: null,
+        });
       }
-      const destinationPort=await getPortByName(body);
-      if(!destinationPort){
+      const destinationPort = await getPortByName(body);
+      if (!destinationPort) {
         res.status(404).send({
-          success:0,
-          message:"no destination port not found",
-          data:null
-        })
+          success: 0,
+          message: "no destination port not found",
+          data: null,
+        });
       }
-      body.departurePortId=departurePort.port_id
-      body.destinationPortId=destinationPort.port_id
-      
+      body.departurePortId = departurePort.port_id;
+      body.destinationPortId = destinationPort.port_id;
+
       const createdSchedule = await createSchedule(body);
-      if(body.stops.length){
-        for(let i=0;i<body.stops.length;i++){
-          body.stops[i].schedule_id=createdSchedule.insertId;
+      if (body.stops.length) {
+        for (let i = 0; i < body.stops.length; i++) {
+          body.stops[i].schedule_id = createdSchedule.insertId;
           await createStop(body.stops[i]);
         }
       }
@@ -106,13 +108,13 @@ module.exports = {
       });
     }
   },
-  acceptBRequest: async(req,res)=>{
+  acceptBRequest: async (req, res) => {
     try {
       let body = req.body;
       body.decoded = req.decoded;
       const updatedSchedule = await updateBRequest(body);
       //add affected row logic
-      const containerId=await getContainerIdFromBR(body.bRequest_id)
+      const containerId = await getContainerIdFromBR(body.bRequest_id);
       const updatedContainer = await updateContainer(containerId.container_id);
       res.status(202).send({
         success: 1,
@@ -123,8 +125,7 @@ module.exports = {
       console.log(e);
       return res.status(502).send({
         success: 0,
-        message:
-          "something went wrong while accepting BookingRequests",
+        message: "something went wrong while accepting BookingRequests",
         data: null,
       });
     }
@@ -223,6 +224,58 @@ module.exports = {
       return res.status(502).send({
         success: 0,
         message: "something went wrong while getting BookingContainers",
+        data: null,
+      });
+    }
+  },
+  getPort: async (req, res) => {
+    try {
+      let body = req.body;
+      body.decoded = req.decoded;
+      const ports = await getPort(body);
+      if (!ports.length) {
+        return res.status(404).send({
+          success: 1,
+          message: "no ports",
+          data: null,
+        });
+      }
+      res.status(202).send({
+        success: 1,
+        message: "succesfully got ports",
+        data: ports,
+      });
+    } catch (e) {
+      console.log(e);
+      return res.status(502).send({
+        success: 0,
+        message: "something went wrong while getting ports",
+        data: null,
+      });
+    }
+  },
+  getShipsByType: async (req, res) => {
+    try {
+      let body = req.body;
+      body.decoded = req.decoded;
+      const ships = await getShipsBytype(body);
+      if (!ships.length) {
+        return res.status(404).send({
+          success: 0,
+          message: "no ships",
+          data: null,
+        });
+      }
+      res.status(202).send({
+        success: 1,
+        message: "succesfully got ships",
+        data: ships,
+      });
+    } catch (e) {
+      console.log(e);
+      return res.status(502).send({
+        success: 0,
+        message: "something went wrong while getting ships",
         data: null,
       });
     }

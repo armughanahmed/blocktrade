@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import './SearchResult.css';
+import './SearchResultCO.css';
 
 
-class SearchResult extends PureComponent {
+class SearchResultCO extends PureComponent {
     static propTypes = {}
 
     constructor(props) {
@@ -17,6 +17,10 @@ class SearchResult extends PureComponent {
     }
     
     componentDidMount(){
+        console.log(this.props.searchResult);
+    }
+
+    componentWillUnmount(){
         this.setState({
             selectedSchedule: this.props.searchResult[0],
             stops: this.props.searchResult[0].stops
@@ -37,18 +41,18 @@ class SearchResult extends PureComponent {
             return(
                 
                 <ul>
-                   <li><strong className="bold">{this.state.selectedSchedule.departurePort}</strong> 
+                   <li><strong className="bold-src">{this.state.selectedSchedule.departurePort}</strong> 
                     <p><strong>Departure date: </strong>
                         <span> {this.state.selectedSchedule.departureDate}</span>
                     </p>
                    </li> 
                     {this.state.stops.map((stop) =>
-                        <li>{stop.portName}  
+                        <li>{stop.name}  
                           <p><strong>Arrival date: </strong><span> {stop.arrivalDate} </span>
                           <strong>Departure date: </strong><span> {stop.departureDate}</span></p>
                         </li>
                         )}
-                    <li><strong className="bold">{this.state.selectedSchedule.arrivalPort}</strong>
+                    <li><strong className="bold-src">{this.state.selectedSchedule.arrivalPort}</strong>
                     <p><strong>Arrival date: </strong>
                         <span> {this.state.selectedSchedule.arrivalDate}</span>
                     </p>
@@ -66,7 +70,7 @@ class SearchResult extends PureComponent {
 
     displaySchedules(result,index){
         return (
-            <div className="card" onClick={() => this.setSelectedSchedule(index)}>
+            <div className="card schedules" onClick={() => this.setSelectedSchedule(index)}>
                 <div className="card-body">
                     <div  className="search-result-card">
                         <div className="row">
@@ -83,18 +87,18 @@ class SearchResult extends PureComponent {
                         <div className="row">
                             <div className="col-lg-12">
                             <br/>
-                                <p><strong>Shipping time: </strong>{result.noOfDays} Days</p>
+                                <p id="schedules-p"><strong>Shipping time: </strong>{result.noOfDays} Days</p>
                             </div>
                             <div className="col-lg-12 col-sm-4">
-                                <p><strong>Number of stops: </strong>{result.noOfStops} Transfers</p>
+                                <p id="schedules-p1"><strong>Number of stops: </strong>{result.noOfStops} Transfers</p>
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-lg-6">
-                                <p><strong>Ocean carrier: </strong>{result.oceanCarrier}</p>
+                                <p id="schedules-p2"><strong>Ocean carrier: </strong>{result.oceanCarrier}</p>
                             </div>
                             <div className="col-lg-6">
-                                <p><strong>Shipping company: </strong>{result.shippingCompany}</p>
+                                <p id="schedules-p3"><strong>Shipping company: </strong>{result.shippingCompany}</p>
                             </div>
                         </div>
                     </div>
@@ -107,7 +111,7 @@ class SearchResult extends PureComponent {
         return (
             <div id="light-bg">
 <div className="row">
-                <div className="col-lg-6 col-sm-12">
+                <div className="col-lg-4  offset-lg-1 col-sm-12">
                 <div id="search-results">
                 
                     {this.props.searchResult.map((result,index) => (
@@ -117,11 +121,11 @@ class SearchResult extends PureComponent {
                 </div>
                 </div>
                 <div className="col-lg-6 col-sm-6">
-                  <div className="card">
+                  <div className="card" id="selected">
                       <div className="card-body">
                           <h4 className="text-center" id="header">Selected schedule details</h4>
                           <div className="row">
-                              <div className="col-lg-5 " id="selected-dates">
+                              <div className="col-lg-3 offset-lg-1 " id="selected-dates">
                                 <strong> Departure date: </strong><p>{this.state.selectedSchedule.departureDate}</p>
                                 <strong>Arrival date: </strong><p>{this.state.selectedSchedule.arrivalDate}</p>
                               </div>
@@ -145,4 +149,4 @@ class SearchResult extends PureComponent {
     }
 }
 
-export default SearchResult
+export default SearchResultCO

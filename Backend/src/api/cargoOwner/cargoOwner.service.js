@@ -205,10 +205,9 @@ module.exports = {
     });
   },
   getSchedule: (data) => {
-    console.log(data)
     return new Promise((resolve, reject) => {
       pool.query(
-        `select * from schedules where origin_country=? and destination_country=? and departure_date>=? and arrival_date<=?`,
+        `select * from schedules where origin_country=? and destination_country=? and departure_date<=? and arrival_date<=?`,
         [
           data.originCountry,
           data.destinationCountry,

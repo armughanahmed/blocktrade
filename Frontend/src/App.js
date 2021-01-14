@@ -71,29 +71,6 @@ import ITShipment from './layouts/inlandT/ITViewShipment';
 import ITAddRoute from './layouts/inlandT/ITAddRoute';
 
 
-
-
-
-
-const checkSignIn = () =>{
-  const isAuthenticated = localStorage.getItem('token');
-  if (isAuthenticated === null || isAuthenticated === undefined) {
-      return true;
-  }
-  else{
-    return false;
-  }
-}
-
-const PrivateRoute = ({ component: Component, ...rest }) => (
-
-  <Route {...rest} render={(props) => (
-    checkSignIn() ?
-      <Component {...props} />
-      : <Redirect to='/login' />
-  )} />
-)
-
 class App extends PureComponent {
   static propTypes = {}
 
@@ -104,7 +81,28 @@ class App extends PureComponent {
     }
   }
 
+  
+
   render() {
+    const checkSignIn = () =>{
+      const isAuthenticated = localStorage.getItem('token');
+      if (isAuthenticated === null || isAuthenticated === undefined || isAuthenticated === '') {
+          return false;
+      }
+      else{
+        return true;
+      }
+    }
+    
+    const PrivateRoute = ({ component: Component, ...rest }) => (
+    
+      <Route {...rest} render={(props) => (
+        checkSignIn() ?
+          <Component {...props} />
+          : <Redirect to='/login' />
+      )} />
+    )
+    
     const hist = createBrowserHistory();
     const org_type = localStorage.getItem('org_type');
     return (

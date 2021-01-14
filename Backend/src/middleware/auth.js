@@ -77,4 +77,28 @@ module.exports = {
       });
     }
   },
+  authOceanCarrier: async (req, res, next) => {
+    const org = await getOrganizationByID(req.decoded.result.org_id);
+    if (org.type == "ocean-carrier") {
+      next();
+    } else {
+      return res.status(401).send({
+        success: 0,
+        message: "Access Denied! Unauthorized organization",
+        data: null,
+      });
+    }
+  },
+  authShippingComapny: async (req, res, next) => {
+    const org = await getOrganizationByID(req.decoded.result.org_id);
+    if (org.type == "shipping-company") {
+      next();
+    } else {
+      return res.status(401).send({
+        success: 0,
+        message: "Access Denied! Unauthorized organization",
+        data: null,
+      });
+    }
+  },
 };

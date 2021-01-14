@@ -22,9 +22,9 @@ const {
   viewPartnerSender,
 } = require("../organization/organization.service");
 const { getUserByUserId } = require("../users/user.service");
-// const {
-//   getBookingContainers,
-// } = require("../oceanCarrier/oceanCarrier.service");
+const {
+  getBookingContainers,
+} = require("../oceanCarrier/oceanCarrier.service");
 const { hashSync, genSaltSync, compareSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
@@ -33,7 +33,7 @@ const sendEmail = async (text, to, org) => {
     service: "gmail",
     auth: {
       user: "armughancr7@gmail.com",
-      pass: "kiunbataon",
+      pass: "blocktrade",
     },
   });
 
@@ -51,7 +51,6 @@ const sendEmail = async (text, to, org) => {
   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
   return info;
 };
-
 module.exports = {
   createQuotation: async (req, res) => {
     try {
@@ -232,12 +231,17 @@ module.exports = {
   getSchedule: async (req, res) => {
     try {
       let body = req.body;
-      console.log(body)
+      body.decoded = req.decoded;
       body.departureDate = body.departureDate.split("T")[0];
       body.arrivalDate = body.arrivalDate.split("T")[0];
-      console.log(body);
-      body.decoded = req.decoded;
       const schedules = await getSchedule(body);
+      if (!schedules.length) {
+        return res.status(404).send({
+          success: 1,
+          message: "no schedules found",
+          data: null,
+        });
+      }
       let arrivalPort = [];
       let departurePort = [];
       let stops = [];
@@ -261,8 +265,10 @@ module.exports = {
         stopsPort.push([]);
         for (let j = 0; j < stops[i].length; j++) {
           stopsPort[i][j] = await getPortsByPort_id(stops[i][j].port_id);
-          stopsPort[i][j].arrivalDate = stops[i][j].arrival_date;
-          stopsPort[i][j].departureDate = stops[i][j].departure_date;
+          stopsPort[i][j].arrivalDate = stops[i][j].arrival_date.toDateString();
+          stopsPort[i][j].departureDate = stops[i][
+            j
+          ].departure_date.toDateString();
         }
       }
       for (let i = 0; i < schedules.length; i++) {
@@ -293,10 +299,14 @@ module.exports = {
         result[i].shippingCompany = shippingCompany[i].name;
         result[i].oceanCarrier = oceanCarrier[i].name;
         result[i].noOfDays =
-          parseInt(result[i].arrivalDate.split("-")[2]) -
-          parseInt(result[i].departureDate.split("-")[2]);
+          parseInt(result[i].arrivalDate.toUTCString().split(" ")[1]) -
+          parseInt(result[i].departureDate.toUTCString().split(" ")[1]);
         result[i].stops = stopsPort[i];
+        result[i].departureDate = result[i].departureDate.toDateString();
+        result[i].arrivalDate = result[i].arrivalDate.toDateString();
       }
+      console.log("aaaa");
+      console.log(result[0]);
       res.status(200).send({
         success: 1,
         message: "succesfully got schedules",
@@ -307,6 +317,31 @@ module.exports = {
       res.status(502).send({
         success: 0,
         message: "something went wrong while getting schedules",
+        data: null,
+      });
+    }
+  },
+  checkDate: async (req, res) => {
+    try {
+      let body = req.body;
+      body.decoded = req.decoded;
+      if (body.arrivalDate < body.departureDate) {
+        return res.status(400).send({
+          success: 0,
+          message: "Incorrect date",
+          data: null,
+        });
+      }
+      return res.status(200).send({
+        success: 1,
+        message: "correct date",
+        data: null,
+      });
+    } catch (e) {
+      console.log(e);
+      res.status(502).send({
+        success: 0,
+        message: "something went wrong while checking schedules",
         data: null,
       });
     }

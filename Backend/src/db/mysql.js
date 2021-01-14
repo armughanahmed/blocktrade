@@ -7,7 +7,7 @@ const pool = createPool({
   password: "",
   database: "blocktrade",
   connectionLimit: 10,
-  dateStrings: true
+  timezone: "utc",
 });
 
 module.exports = pool;

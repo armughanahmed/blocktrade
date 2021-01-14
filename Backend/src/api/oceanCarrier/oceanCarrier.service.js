@@ -60,7 +60,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       pool.query(
         `insert into ships(	total_capacity,	type,	length,	width,ocean_carrier_id) 
-        values(?,?,?,?,?)`,
+        values(?,?,?,?,?,?)`,
         [
           data.total_capacity,
           data.type,
@@ -221,6 +221,40 @@ module.exports = {
           console.log("getPortByName::");
           console.log(results);
           resolve(results[0]);
+        }
+      );
+    });
+  },
+  getPort: (data) => {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `select * from ports where city=?`,
+        [data.container_id],
+        (error, results, fields) => {
+          if (error) {
+            console.log("getPort::");
+            return reject(error);
+          }
+          console.log("getPort::");
+          console.log(results);
+          resolve(results);
+        }
+      );
+    });
+  },
+  getShipsBytype: (data) => {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `select * from ships where type=? and ocean_carrier_id=?`,
+        [data.type, data.decoded.result.org_id],
+        (error, results, fields) => {
+          if (error) {
+            console.log("getShipsBytype::");
+            return reject(error);
+          }
+          console.log("getShipsBytype::");
+          console.log(results);
+          resolve(results);
         }
       );
     });
