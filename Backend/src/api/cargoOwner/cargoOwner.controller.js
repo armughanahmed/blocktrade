@@ -272,31 +272,39 @@ module.exports = {
         }
       }
       for (let i = 0; i < schedules.length; i++) {
+        shippingCompany.push([]);
         partner[i] = await viewPartnerReceiver(oceanCarrier[i].id);
         partners[i] = partner[i].concat(
           await viewPartnerSender(oceanCarrier[i].id)
         );
+        console.log("for oc")
+        console.log(oceanCarrier[i].id)
         for (let j = 0; j < partners[i].length; j++) {
-          shippingCompany.push([]);
           if (partners[i][j].sender_org_id == oceanCarrier[i].id) {
-            shippingCompany[i] = await getOrganizationByID(
+            shippingCompany[i][j] = await getOrganizationByID(
               partners[i][j].receiver_org_id
             );
-          } else {
-            shippingCompany[i] = await getOrganizationByID(
+          } else if(partners[i][j].receiver_org_id == oceanCarrier[i].id){
+            shippingCompany[i][j] = await getOrganizationByID(
               partners[i][j].sender_org_id
             );
           }
         }
       }
+      
+
       for (let i = 0; i < schedules.length; i++) {
         result.push({});
+        result[i].shippingCompany=[];
+        result[i].scheduleId = schedules[i].schedule_id;
         result[i].departurePort = departurePort[i].name;
         result[i].arrivalPort = arrivalPort[i].name;
         result[i].departureDate = schedules[i].departure_date;
         result[i].arrivalDate = schedules[i].arrival_date;
         result[i].noOfStops = stops[i].length;
-        result[i].shippingCompany = shippingCompany[i].name;
+        for(let j=0;j<shippingCompany[i].length;j++){
+          result[i].shippingCompany[j] = {id:shippingCompany[i][j].id,name:shippingCompany[i][j].name};
+        }
         result[i].oceanCarrier = oceanCarrier[i].name;
         result[i].noOfDays =
           parseInt(result[i].arrivalDate.toUTCString().split(" ")[1]) -
@@ -305,8 +313,8 @@ module.exports = {
         result[i].departureDate = result[i].departureDate.toDateString();
         result[i].arrivalDate = result[i].arrivalDate.toDateString();
       }
-      console.log("aaaa");
-      console.log(result[0]);
+      console.log("checkkk")
+      console.log(result)
       res.status(200).send({
         success: 1,
         message: "succesfully got schedules",

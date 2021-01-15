@@ -98,7 +98,9 @@ class SearchResultCO extends PureComponent {
                                 <p id="schedules-p2"><strong>Ocean carrier: </strong>{result.oceanCarrier}</p>
                             </div>
                             <div className="col-lg-6">
-                                <p id="schedules-p3"><strong>Shipping company: </strong>{result.shippingCompany}</p>
+                                <p id="schedules-p3"><strong>Shipping company: </strong>{result.shippingCompany.map((company) => (
+                                    <p id="schedules-p3">{company.name}</p>
+                                ))}</p>
                             </div>
                         </div>
                     </div>

@@ -40,10 +40,12 @@ class StartConsignmentCO extends PureComponent {
             openLcls: lcls,
             check4: true
         })
+        //console.log(this.state.selectedSchedule.scheduleId)
         const obj = {
             lcl: lcls,
             fcl: fcls,
-            addressDetails: addressDetails
+            addressDetails: addressDetails,
+            scheduleId: this.state.selectedSchedule.scheduleId
         }
         this.sendQuote(obj);
         //console.log(this.state.selectedSchedule);
@@ -98,7 +100,7 @@ class StartConsignmentCO extends PureComponent {
             'Authorization': `Bearer ${token}`
             }
         })
-        console.log(response.data.data);
+        console.log(response);
         this.setState({
             searchResult: response.data.data,
             check2: true

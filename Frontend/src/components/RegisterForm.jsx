@@ -144,6 +144,7 @@ class RegisterForm extends PureComponent {
                     <option value="exporter">Exporter</option>
                     <option value="importer">Importer</option>
                     <option value="cargo-owner">Cargo owner</option>
+                    <option value="shipping-company">Shipping company</option>
                     <option value="bank">Bank</option>
                 </select>
             </div> 
