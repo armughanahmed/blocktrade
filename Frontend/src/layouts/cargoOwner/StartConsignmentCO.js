@@ -48,7 +48,7 @@ class StartConsignmentCO extends PureComponent {
             fcl: fcls,
             addressDetails: addressDetails,
             scheduleId: this.state.selectedSchedule.scheduleId,
-            shippingCompanyId: this.state.shippingCompany        
+            shippingCompanyId: parseInt(this.state.shippingCompany)        
         }
         this.sendQuote(obj);
         //console.log(this.state.selectedSchedule);

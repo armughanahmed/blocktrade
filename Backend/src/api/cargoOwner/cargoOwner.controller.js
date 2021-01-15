@@ -63,7 +63,7 @@ module.exports = {
       const org_details = await getOrganizationByID(body.decoded.result.org_id);
       creatingQuotation.org_id = org_details.id;
       creatingQuotation.scheduleId = body.scheduleId;
-      creatingQuotation.shippingCompanyId = parseInt(body.shippingComapnyId);
+      creatingQuotation.shippingCompanyId = parseInt(body.shippingCompanyId);
       const createdQuotation = await createQuotation(creatingQuotation);
       if (!lcl.length && !fcl.length) {
         await removeQuotation(createdQuotation.insertId);

@@ -15,6 +15,7 @@ class MakeQuotations extends PureComponent {
             schedule: '',
             quote: false,
             showSchedule: false,
+            charges: false
 
         }
     }
@@ -22,12 +23,14 @@ class MakeQuotations extends PureComponent {
     updateSelectedQuotation(event){
         if (event.target.value === "") {
             this.setState({
-                showSchedule: false
+                showSchedule: false,
+                charges: false
             })
         }
         else{
             this.setState({
-                showSchedule: true
+                showSchedule: true,
+                charges: true
             })
         }
         this.setState({
@@ -99,6 +102,7 @@ class MakeQuotations extends PureComponent {
                     <div className="card">
                         <div className="card-body">
                             <h5>Ocean FCL</h5>
+                            <p>Id: {fcl.fcl_id}</p>
                             <p>Quantity:  {fcl.quantity}</p>
                             <p>Container height:  {fcl.containerHeight}</p>
                             <p>Container description:  {fcl.containerDescription}</p>
@@ -120,13 +124,39 @@ class MakeQuotations extends PureComponent {
                         <p>Length:  {lcl.length}</p>
                         <p>Width:  {lcl.width}</p>
                         <p>Height:  {lcl.height}</p>
-                        <p>Package type:  {lcl.packageType}</p>
+                        <p>Package type:  {lcl.type}</p>
                     </div>
                 </div>
             </div>
         )
         }
     }
+
+    fclCharges(fcl,index){
+        return (
+            <div className="row">
+                <div className="col-lg-4 offset-lg-4">
+                    <label>Charges FCL id {fcl.fcl_id}</label>
+                    <input className="form-control" placeholder="Enter charges"/>
+                    <br/>
+                </div>
+                
+            </div>
+        )
+    }
+
+    lclCharges(lcl,index){
+        return (
+            <div className="row">
+                <div className="col-lg-4 offset-lg-4">
+                <label>Charges LCL id {lcl.lcl_id}</label>
+                <input className="form-control" placeholder="Enter charges"/>
+                <br/>
+                </div>
+            </div>
+        )
+    }
+
 
     render() {
         return (
@@ -176,7 +206,29 @@ class MakeQuotations extends PureComponent {
                                             </div>
                                         </div>
                                     }
+                                    <br/>
+                                    {
+                                        this.state.charges === true&&
+                                        <h3>Charges</h3>
+                                    }
                                     
+                                
+                                        {
+                                            this.state.charges === true&&
+                                            this.state.fcl.map((fcl,index) =>(
+                                                this.fclCharges(fcl,index)
+                                            ))
+                                        }
+                                   
+                                    <br/>
+                                
+                                        {
+                                            this.state.charges === true&&
+                                            this.state.lcl.map((lcl,index) =>(
+                                                this.lclCharges(lcl,index)
+                                            ))
+                                        }
+                                   
                                 </div> 
                             </div>
                         </div>
