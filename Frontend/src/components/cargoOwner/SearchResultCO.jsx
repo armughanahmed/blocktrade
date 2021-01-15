@@ -11,7 +11,8 @@ class SearchResultCO extends PureComponent {
 
         this.state = {
             selectedSchedule: this.props.searchResult[0],
-            stops: this.props.searchResult[0].stops
+            stops: this.props.searchResult[0].stops,
+            shippingCompany: 0,
         }
         this.sendSelectedSchedule = this.sendSelectedSchedule.bind(this);
     }
@@ -27,6 +28,12 @@ class SearchResultCO extends PureComponent {
         })
     }
 
+    updateShippingCompany(event){
+        this.setState({
+            shippingCompany: event.target.value
+        })
+    }
+
     setSelectedSchedule(index){
         this.setState({
             selectedSchedule: this.props.searchResult[index],
@@ -39,33 +46,46 @@ class SearchResultCO extends PureComponent {
         //console.log(this.state.selectedSchedule);
         if (this.state.selectedSchedule !== null) {
             return(
-                
-                <ul>
-                   <li><strong className="bold-src">{this.state.selectedSchedule.departurePort}</strong> 
-                    <p><strong>Departure date: </strong>
-                        <span> {this.state.selectedSchedule.departureDate}</span>
-                    </p>
-                   </li> 
-                    {this.state.stops.map((stop) =>
-                        <li>{stop.name}  
-                          <p><strong>Arrival date: </strong><span> {stop.arrivalDate} </span>
-                          <strong>Departure date: </strong><span> {stop.departureDate}</span></p>
-                        </li>
-                        )}
-                    <li><strong className="bold-src">{this.state.selectedSchedule.arrivalPort}</strong>
-                    <p><strong>Arrival date: </strong>
-                        <span> {this.state.selectedSchedule.arrivalDate}</span>
-                    </p>
-                    </li>  
-                </ul>
-                                                                       
+                <div>
+                    <ul>
+                    <li><strong className="bold-src">{this.state.selectedSchedule.departurePort}</strong> 
+                        <p><strong>Departure date: </strong>
+                            <span> {this.state.selectedSchedule.departureDate}</span>
+                        </p>
+                    </li> 
+                        {this.state.stops.map((stop) =>
+                            <li>{stop.name}  
+                            <p><strong>Arrival date: </strong><span> {stop.arrivalDate} </span>
+                            <strong>Departure date: </strong><span> {stop.departureDate}</span></p>
+                            </li>
+                            )}
+                        <li><strong className="bold-src">{this.state.selectedSchedule.arrivalPort}</strong>
+                        <p><strong>Arrival date: </strong>
+                            <span> {this.state.selectedSchedule.arrivalDate}</span>
+                        </p>
+                        </li>  
+                    </ul>
+                    <div className="form-group">
+                    <label for="sel1">Select shipping company</label>
+                    <select className="form-control" value={this.state.shippingCompany} onChange={(e) => this.updateShippingCompany(e)} id="sel1">
+                    <option value={0}>Select shipping company</option>
+                        {
+                            this.state.selectedSchedule.shippingCompany.map((company) =>
+                            (
+                                <option value={company.id}>{company.name}</option>
+                            )
+                            )
+                        }
+                    </select>
+                </div>
+             </div>                                                  
              )
         }
        
     }
 
     sendSelectedSchedule(){
-        this.props.getSelectedSchedule(this.state.selectedSchedule)
+        this.props.getSelectedSchedule(this.state.selectedSchedule,this.state.shippingCompany)
     }
 
     displaySchedules(result,index){

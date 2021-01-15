@@ -1,66 +1,96 @@
 import React, { PureComponent } from 'react'
 import './MakeQuotations.css'
 import NavbarSC from '../../components/NavbarSC'
+import axios from 'axios'
 
 class MakeQuotations extends PureComponent {
     constructor(props) {
         super(props)
 
         this.state = {
-            quotations : [
-                {
-                    id: 1
-                },
-                {
-                    id: 2
-                }
-            ],
+            quotations : [],
             selectedQuotation: '',
-            fcl : [
-                {
-                    containerDescription: 'abd',
-                    containerHeight: '45ft',
-                    quantity: 50
-                },
-                {
-                    containerDescription: 'abcd',
-                    containerHeight: '25ft',
-                    quantity: 50
-                }
-            ],
-            lcl : [
-                {
-                    height: 150,
-                    width: 100,
-                    length: 200,
-                    packageType: 'Boxes',
-                    quantity: 50
-                },
-                {
-                    height: 150,
-                    width: 100,
-                    length: 200,
-                    packageType: 'Crates',
-                    quantity: 50
-                }
-            ],
-            quote: false
+            fcl : [],
+            lcl : [],
+            schedule: '',
+            quote: false,
+            showSchedule: false,
 
         }
     }
 
     updateSelectedQuotation(event){
+        if (event.target.value === "") {
+            this.setState({
+                showSchedule: false
+            })
+        }
+        else{
+            this.setState({
+                showSchedule: true
+            })
+        }
         this.setState({
             selectedQuotation: event.target.value,
             quote: true
         })
+        console.log(typeof(event.target.value));
+        const obj = {
+            quotation_id: parseInt(event.target.value)
+        }
+        this.getDetails(obj);
     }
 
     showQuotations(quotation){
         return (
-            <option key={quotation.id} value={quotation.id}>{quotation.id}</option>
+            <option key={quotation.quotation_id} value={quotation.quotation_id}>{quotation.quotation_id}</option>
         )
     }
+
+    async getDetails(obj1){
+        console.log(obj1);
+        const token = localStorage.getItem('token');
+        try{
+            const response = await axios.post('http://localhost:4000/shippingCompany/viewQuotationsDetails',obj1,{
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            console.log(response);
+            this.setState({
+                lcl: response.data.data.lcl,
+                fcl: response.data.data.fcl,
+                schedule: response.data.data.schedule
+            })
+        }
+        catch(e){
+            console.log(e);
+           } 
+    }
+
+    componentDidMount(){
+        this.getQuotations();
+    }
+
+    async getQuotations(){
+        const token = localStorage.getItem('token');
+        try{ 
+        const response = await axios.get('http://localhost:4000/shippingCompany/viewQuotations',{
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+    
+        console.log(response.data.data);
+        this.setState({
+            quotations: response.data.data
+        })
+         //this.props.history.push('/dashboard');
+       }
+        catch(e){
+         console.log(e);
+        }  
+       }
 
     showFcl(fcl){
         if (this.state.quote === true) {
@@ -129,6 +159,24 @@ class MakeQuotations extends PureComponent {
                                             this.showLcl(lcl)  
                                         ))}
                                     </div>
+                                    {
+                                        this.state.showSchedule === true &&
+                                        <div className="row">
+                                            <div className="col-lg-5 offset-lg-4" id="schedule-details">
+                                                <h3>Schedule details</h3>
+                                            <ul>
+                                                <li><strong>Schedule id: </strong>{this.state.schedule.schedule_id}</li>
+                                                <li><strong>Origin country: </strong>{this.state.schedule.origin_country}</li>
+                                                <li><strong>Origin city: </strong>{this.state.schedule.origin_city}</li>
+                                                <li><strong>Departure date: </strong>{this.state.schedule.departure_date}</li>
+                                                <li><strong>Arrival country: </strong>{this.state.schedule.destination_country}</li>
+                                                <li><strong>Arrival city: </strong>{this.state.schedule.destination_city}</li>
+                                                <li><strong>Arrival date: </strong>{this.state.schedule.arrival_date}</li>
+                                            </ul>
+                                            </div>
+                                        </div>
+                                    }
+                                    
                                 </div> 
                             </div>
                         </div>

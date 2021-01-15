@@ -23,9 +23,9 @@ module.exports = {
   createQuotation: (data) => {
     return new Promise((resolve, reject) => {
       pool.query(
-        `insert into quotations(cargo_owner_id) 
-                  values(?)`,
-        [data.org_id],
+        `insert into quotations(cargo_owner_id,shipping_company_id,schedule_id) 
+                  values(?,?,?)`,
+        [data.org_id, data.shippingCompanyId, data.scheduleId],
         (error, results, fields) => {
           if (error) {
             console.log("createQuotation::");
@@ -137,7 +137,7 @@ module.exports = {
     console.log(data);
     return new Promise((resolve, reject) => {
       pool.query(
-        `select * from lcl where quotation_id=?`,
+        `select * from fcl where quotation_id=?`,
         [data],
         (error, results, fields) => {
           if (error) {

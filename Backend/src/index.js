@@ -6,6 +6,7 @@ const user_router = require("./api/users/user.router");
 const admin_router = require("./api/admin/admin.router");
 const cargo_owner = require("./api/cargoOwner/cargoOwner.router");
 const ocean_carrier = require("./api/oceanCarrier/oceanCarrier.router");
+const shipping_company = require("./api/shippingComapny/shippingCompany.router");
 const app = express();
 const port = process.env.PORT || 4000;
 app.use(cors());
@@ -15,6 +16,7 @@ app.use("/user", user_router);
 app.use("/admin", admin_router);
 app.use("/cargo-owner", cargo_owner);
 app.use("/oceanCarrier", ocean_carrier);
+app.use("/shippingCompany", shipping_company);
 app.listen(port, () => {
   console.log("Server running on port " + port);
 });

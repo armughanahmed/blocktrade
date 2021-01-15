@@ -17,6 +17,7 @@ class StartConsignmentCO extends PureComponent {
         check2: false,
         check3: false,
         searchResult:[],
+        shippingCompany: '',
           selectedSchedule: '',
           openLcls: '',
           openFcls: '',
@@ -24,9 +25,10 @@ class StartConsignmentCO extends PureComponent {
         }
     }
  
-    getSelectedSchedule = (schedule) =>{
+    getSelectedSchedule = (schedule,shippingCompany) =>{
        this.setState({
            selectedSchedule: schedule,
+           shippingCompany: shippingCompany,
            check1: false,
            check2: false,
            check3: true
@@ -45,7 +47,8 @@ class StartConsignmentCO extends PureComponent {
             lcl: lcls,
             fcl: fcls,
             addressDetails: addressDetails,
-            scheduleId: this.state.selectedSchedule.scheduleId
+            scheduleId: this.state.selectedSchedule.scheduleId,
+            shippingCompanyId: this.state.shippingCompany        
         }
         this.sendQuote(obj);
         //console.log(this.state.selectedSchedule);
@@ -63,7 +66,8 @@ class StartConsignmentCO extends PureComponent {
         })
         if (response.data.success === 1) {
          // alert('helloo');
-        this.props.history.push('/dashboard');
+        console.log(response);
+         //this.props.history.push('/dashboard');
          }
        }
         catch(e){
