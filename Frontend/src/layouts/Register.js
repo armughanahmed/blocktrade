@@ -20,12 +20,12 @@ class Register extends PureComponent {
    console.log(obj1);
     this.setState({
       obj:obj1
-    })  
+    })
     this.registerUser(obj1);
   }
-  
+
   async registerUser(obj1){
-   try{ 
+   try{
     //console.log('armu' +obj1);
    const response = await axios.post('http://localhost:4000/organization',obj1)
     console.log(response);
@@ -36,7 +36,7 @@ class Register extends PureComponent {
   }
    catch(e){
     console.log(e);
-   }  
+   }
   }
 
   render() {

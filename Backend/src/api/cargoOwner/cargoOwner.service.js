@@ -1,20 +1,4 @@
 const { compareSync } = require("bcrypt");
-<<<<<<< HEAD
-const pool = require("../../db/mysql");
-
-module.exports = {
-  getQuotationByOrganizationId: (data) => {
-    return new Promise((resolve, reject) => {
-      pool.query(
-        `select * from quotations where cargo_owner_id=?`,
-        [data.result.org_id],
-        (error, results, fields) => {
-          if (error) {
-            console.log("getQuotationByOrganizationId::");
-            return reject(error);
-          }
-          console.log("getQuotationByOrganizationId::");
-=======
 const { reject } = require("lodash");
 const pool = require("../../db/mysql");
 
@@ -30,7 +14,6 @@ module.exports = {
             return reject(error);
           }
           console.log("removeQuotation::");
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
           console.log(results);
           resolve(results);
         }
@@ -40,15 +23,9 @@ module.exports = {
   createQuotation: (data) => {
     return new Promise((resolve, reject) => {
       pool.query(
-<<<<<<< HEAD
-        `insert into quotations(lcl_id,fcl_id,cargo_owner_id) 
-                  values(?,?,?)`,
-        [data.lcl_id, data.fcl_id, data.decoded.result.org_id],
-=======
         `insert into quotations(cargo_owner_id) 
                   values(?)`,
         [data.org_id],
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
         (error, results, fields) => {
           if (error) {
             console.log("createQuotation::");
@@ -65,16 +42,9 @@ module.exports = {
     console.log(data);
     return new Promise((resolve, reject) => {
       pool.query(
-<<<<<<< HEAD
-        `insert into lcl(cargo_owner_id,height, length,mode, movementType, quantity, type, unit,weight ,width,wunit) 
-                  values(?,?,?,?,?,?,?,?,?,?,?)`,
-        [
-          data.decoded.result.org_id,
-=======
         `insert into lcl(height, length,mode, movementType, quantity, type, unit,weight ,width,wunit,quotation_id) 
                   values(?,?,?,?,?,?,?,?,?,?,?)`,
         [
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
           data.height,
           data.length,
           data.mode,
@@ -85,10 +55,7 @@ module.exports = {
           data.weight,
           data.width,
           data.wunit,
-<<<<<<< HEAD
-=======
           data.quotation_id,
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
         ],
         (error, results, fields) => {
           if (error) {
@@ -107,26 +74,16 @@ module.exports = {
     console.log(data);
     return new Promise((resolve, reject) => {
       pool.query(
-<<<<<<< HEAD
-        `insert into fcl(cargo_owner_id,containerDescription,containerHeight,mode, movementType, packageType, quantity) 
-                  values(?,?,?,?,?,?,?)`,
-        [
-          data.decoded.result.org_id,
-=======
         `insert into fcl(containerDescription,containerHeight,mode, movementType, packageType, quantity,quotation_id) 
                   values(?,?,?,?,?,?,?)`,
         [
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
           data.containerDescription,
           data.containerHeight,
           data.mode,
           data.movementType,
           data.packageType,
           data.quantity,
-<<<<<<< HEAD
-=======
           data.quotation_id,
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
         ],
         (error, results, fields) => {
           if (error) {
@@ -140,8 +97,6 @@ module.exports = {
       );
     });
   },
-<<<<<<< HEAD
-=======
   viewQuotations: (data) => {
     console.log(data);
     return new Promise((resolve, reject) => {
@@ -357,5 +312,4 @@ module.exports = {
       );
     });
   },
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
 };

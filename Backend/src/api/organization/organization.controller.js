@@ -2,8 +2,6 @@ const {
   createOrganization,
   getOrganizationByEmail,
   createEmployees,
-<<<<<<< HEAD
-=======
   addPartner,
   checkPartner,
   acceptPartner,
@@ -13,7 +11,6 @@ const {
   viewPartnerReceiver,
   viewPartnerSender,
   removePartner,
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
 } = require("./organization.service");
 const { hashSync, genSaltSync, compareSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
@@ -70,10 +67,7 @@ module.exports = {
         data: null,
       });
     } catch (e) {
-<<<<<<< HEAD
-=======
       console.log(e);
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
       return res.status(500).send({
         success: 0,
         message: "error in creating organization",
@@ -81,8 +75,6 @@ module.exports = {
       });
     }
   },
-<<<<<<< HEAD
-=======
   addPartner: async (req, res) => {
     try {
       let body = req.body;
@@ -295,5 +287,4 @@ module.exports = {
       });
     }
   },
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
 };

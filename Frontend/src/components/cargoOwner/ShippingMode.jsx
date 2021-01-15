@@ -1,8 +1,4 @@
 import React, { PureComponent } from 'react'
-<<<<<<< HEAD
-import PropTypes from 'prop-types'
-=======
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
 import OpenLcl from './OpenLcl';
 import OpenFcl from './OpenFcl';
 import './ShippingMode.css'
@@ -18,9 +14,6 @@ class ShippingMode extends PureComponent {
             mode: '',
             movementType: '',
             consignments: [],
-<<<<<<< HEAD
-            consignments1: []
-=======
             consignments1: [],
             pickupCountry: '',
             pickupCity: '',
@@ -28,7 +21,6 @@ class ShippingMode extends PureComponent {
             deliverCountry: '',
             deliverCity: '',
             deliverAddress: ''
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
         }
     }
 
@@ -36,12 +28,7 @@ class ShippingMode extends PureComponent {
 
     childCallback = () =>{
         this.setState({
-<<<<<<< HEAD
-            mode: '',
-            movementType: ''
-=======
             mode: ''
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
         });
     }
 
@@ -50,9 +37,6 @@ class ShippingMode extends PureComponent {
     }
 
     updateMovementType(event){
-<<<<<<< HEAD
-        this.setState({movementType: event.target.value})
-=======
         this.setState({
             movementType: event.target.value,
             pickupCountry: '',
@@ -62,7 +46,6 @@ class ShippingMode extends PureComponent {
             deliverCity: '',
             deliverAddress: ''
         })
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
     }
 
     displayLcl(con){
@@ -108,10 +91,6 @@ class ShippingMode extends PureComponent {
         );
     }
 
-<<<<<<< HEAD
-    sendConsignments =()=> {
-        this.props.getConsignments(this.state.consignments,this.state.consignments1)
-=======
     updatePickupCountry(event){
         this.setState({
             pickupCountry: event.target.value
@@ -159,16 +138,11 @@ class ShippingMode extends PureComponent {
         }
         console.log(obj);
         this.props.getConsignments(this.state.consignments,this.obj,this.state.consignments1)
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
     }
 
     renderComponent(){
        
-<<<<<<< HEAD
-        if (this.state.mode === 'open-lcl' && this.state.movementType !== '') {
-=======
         if (this.state.mode === 'ocean-lcl') {
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
            
             return( <div>
                  
@@ -176,18 +150,12 @@ class ShippingMode extends PureComponent {
             </div> )
                 
         }
-<<<<<<< HEAD
-        else if (this.state.mode === 'open-fcl' && this.state.movementType !== '') {
-=======
         else if (this.state.mode === 'ocean-fcl' ) {
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
         
             return <OpenFcl mode={this.state.mode} movementType={this.state.movementType} consignments1={this.state.consignments1} childCallback={this.childCallback} />
         }
     }
     
-<<<<<<< HEAD
-=======
     showPickupInlandDetails(){
         return(
             <div id="pickup">
@@ -263,7 +231,6 @@ class ShippingMode extends PureComponent {
             
         )
     }
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
 
     render() {
         return (
@@ -278,24 +245,15 @@ class ShippingMode extends PureComponent {
                                     <label for="sel1">Mode:</label>
                                     <select class="form-control" id="sel1" value={this.state.mode} onChange={(e) => this.updateMode(e)} required>
                                         <option value="">Select mode</option>
-<<<<<<< HEAD
-                                        <option value="open-lcl">Open LCL</option>
-                                        <option value="open-fcl">Open FCL</option>
-=======
                                         <option value="ocean-lcl">Ocean LCL</option>
                                         <option value="ocean-fcl">Ocean FCL</option>
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
                                     </select>
                                 </div> 
                             </div>
                             <div className="col-lg-6">
                                 <div class="form-group">
                                         <label for="sel2">Movement type:</label>
-<<<<<<< HEAD
-                                        <select class="form-control" id="sel2" value={this.state.movementType} onChange={(e) => this.updateMovementType(e)} required>
-=======
                                         <select class="form-control" id="movement-select" value={this.state.movementType} onChange={(e) => this.updateMovementType(e)} required>
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
                                             <option value="">Select movement type</option>
                                             <option value="d2d">Door to Door</option>
                                             <option value="p2d">Port to Door</option>
@@ -305,8 +263,6 @@ class ShippingMode extends PureComponent {
                                 </div> 
                             </div>
                         </div>
-<<<<<<< HEAD
-=======
                      
                             {
                                     this.state.movementType === "p2d" &&
@@ -331,17 +287,12 @@ class ShippingMode extends PureComponent {
                                     this.show()
                                 }
                         
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
                         
                     </form>
                     {this.renderComponent()}
                     {this.state.consignments.length > 0 &&
                     <div className="main-added-consignments">
-<<<<<<< HEAD
-                         <h3>Open LCLs</h3>
-=======
                          <h3>Ocean LCLs</h3>
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
                     <div className="row">
                         {this.state.consignments.map((con) => (
                           this.displayLcl(con)  
@@ -351,11 +302,7 @@ class ShippingMode extends PureComponent {
                     }
                     {this.state.consignments1.length > 0 &&
                      <div className="main-added-consignments">
-<<<<<<< HEAD
-                         <h3>Open FCLs</h3>
-=======
                          <h3>Ocean FCLs</h3>
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
                     <div className="row">
                         
                         {this.state.consignments1.map((con) => (

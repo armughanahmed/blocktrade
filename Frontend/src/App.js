@@ -69,6 +69,7 @@ import DashboardIT from './layouts/inlandT/DashboardIT';
 import ITSearch from './layouts/inlandT/ITSearch';
 import ITShipment from './layouts/inlandT/ITViewShipment';
 import ITAddRoute from './layouts/inlandT/ITAddRoute';
+import ITAddVehicle from './layouts/inlandT/ITAddVehicle';
 
 
 
@@ -81,7 +82,7 @@ const checkSignIn = () =>{
       return true;
   }
   else{
-    return false;
+    return true;
   }
 }
 
@@ -172,6 +173,7 @@ class App extends PureComponent {
               <PrivateRoute path="/itSearch" component={ITSearch}/>
               <PrivateRoute path="/itViewShipment" component={ITShipment}/>
               <PrivateRoute path="/itaddroute" component={ITAddRoute}/>
+              <PrivateRoute path="/itaddvehicle" component={ITAddVehicle}/>
             </Switch>
           </Router>
         </div>

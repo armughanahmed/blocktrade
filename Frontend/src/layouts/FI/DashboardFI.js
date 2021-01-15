@@ -10,6 +10,9 @@ function DashboardFI() {
             <div className="wrapper">
                  <NavbarFI/> 
             <div className="container-fluid" id="card-section">
+            <div>
+                <h2>Welcome Financial Institution</h2>
+            </div>
                 <div className="row text-center">
                     <div className="col-lg-5 offset-lg-1 col-md-12 col-sm-12">
                         <div className="card">

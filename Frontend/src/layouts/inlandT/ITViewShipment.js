@@ -98,6 +98,23 @@ class ITViewShipment extends PureComponent {
                 
                },
                {
+                name: "assign",
+                label: "Assign",
+                
+                options: {
+                 filter: true,
+                 sort: false,
+                 customBodyRender: (value, tableMeta, updateValue) => {
+                     let id = tableMeta.rowData[0];
+                    return (
+                        <a href="/itassignitshipment" className="btn btn-primary assignbtn">
+                        Assign
+                      </a>
+                    );}
+                },
+                
+               },
+               {
                 name: "documents",
                 label: "Documents",
                 

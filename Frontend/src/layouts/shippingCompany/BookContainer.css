@@ -4,13 +4,10 @@
     width: 100%;
     justify-content: center;
     margin-top: 70px; 
-<<<<<<< HEAD
-=======
     border-radius: 3px;
 }
 
 #book-container h3{
     color: white;
     margin-bottom: 45px;
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
 }

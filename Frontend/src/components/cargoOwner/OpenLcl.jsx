@@ -53,11 +53,8 @@ class OpenLcl extends React.Component {
     }
     
     addConsignment(event){
-<<<<<<< HEAD
-=======
         var select = document.getElementById('movement-select').disabled = true;
 
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
         event.preventDefault();
         //console.log(this.state.selectedValue);
     

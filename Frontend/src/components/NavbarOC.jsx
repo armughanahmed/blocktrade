@@ -1,7 +1,6 @@
-import React from 'react';
-import './NavbarCO.css';
+import React from 'react'
 
-function NavbarCO() {
+function NavbarOC() {
     return (
         <nav className="navbar navbar-expand-xl py-md-2">
            
@@ -15,22 +14,28 @@ function NavbarCO() {
             <a className="nav-link" href="/dashboard" active>Dashboard</a>
           </li>
           <li class="nav-item dropdown py-md-2 px-3 ml-4">
-                    <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown">Consignments</a>
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Schedules</a>
                     <div class="dropdown-menu">
                         <a href="startConsignment" class="dropdown-item">Create</a>
-                        <a href="/viewConsignments" class="dropdown-item">View</a>
-                        <a href="/trackConsignment" class="dropdown-item">Track</a>
+                        <a href="/viewConsignments" class="dropdown-item">Update</a>
+                        <a href="/trackConsignment" class="dropdown-item">View</a>
                     </div>
             </li>
           <li className="nav-item py-md-2 px-3">
-            <a className="nav-link" href="/viewQuotations">Quotations</a>
+            <a className="nav-link" href="/viewQuotations">Shipments</a>
           </li>
           <li class="nav-item dropdown py-md-2 px-3 ml-3">
-                    <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown">Partner</a>
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Containers</a>
                     <div class="dropdown-menu">
                         <a href="/addPartnerCO" class="dropdown-item">Add</a>
-                        <a href="/requestsCO" class="dropdown-item">Pending requests</a>
-                        <a href="/viewPartnerCO" class="dropdown-item">View</a>
+                        <a href="/requestsCO" class="dropdown-item">View</a>
+                    </div>
+            </li>
+            <li class="nav-item dropdown py-md-2 px-3 ml-3">
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Ships</a>
+                    <div class="dropdown-menu">
+                        <a href="/addPartnerCO" class="dropdown-item">Add</a>
+                        <a href="/requestsCO" class="dropdown-item">View</a>
                     </div>
             </li>
         </ul>
@@ -49,8 +54,9 @@ function NavbarCO() {
         </div>
       </nav>
        
-        
     )
 }
 
-export default NavbarCO;
+export default NavbarOC
+
+

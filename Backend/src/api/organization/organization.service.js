@@ -5,11 +5,7 @@ module.exports = {
   getOrganizationByID: (data) => {
     return new Promise((resolve, reject) => {
       pool.query(
-<<<<<<< HEAD
-        `select * from Organizations where id=?`,
-=======
         `select * from organizations where id=?`,
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
         [data],
         (error, results, fields) => {
           if (error) {
@@ -94,8 +90,6 @@ module.exports = {
       );
     });
   },
-<<<<<<< HEAD
-=======
   addPartner: (data) => {
     return new Promise((resolve, reject) => {
       pool.query(
@@ -242,5 +236,4 @@ module.exports = {
       );
     });
   },
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
 };

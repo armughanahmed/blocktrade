@@ -1,8 +1,4 @@
 const router = require("express").Router();
-<<<<<<< HEAD
-const { createOrganization } = require("./organization.controller");
-router.post("/", createOrganization);
-=======
 const {
   createOrganization,
   addPartner,
@@ -20,5 +16,4 @@ router.patch("/acceptPartner", auth, acceptPartner);
 router.post("/deleteRequest", auth, deleteRequest);
 router.get("/getPartners", auth, viewPartner);
 router.post("/removePartner", auth, deletePartner);
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
 module.exports = router;

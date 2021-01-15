@@ -14,11 +14,7 @@ class ConsignmentDetails extends PureComponent {
 
     render() {
         return (
-<<<<<<< HEAD
-            <div></div>
-=======
             
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
         )
     }
 }

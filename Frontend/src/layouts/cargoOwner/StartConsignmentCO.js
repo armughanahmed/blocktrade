@@ -4,13 +4,7 @@ import ShippingScheduleSearch from '../../components/cargoOwner/ShippingSchedule
 import SearchResult from '../../components/cargoOwner/SearchResult';
 import './StartConsignment.css';
 import NavbarCO from '../../components/NavbarCO';
-<<<<<<< HEAD
-import Footer from '../../components/Footer';
 import { Link, animateScroll as scroll } from "react-scroll";
-import { Redirect } from 'react-router-dom'
-=======
-import { Link, animateScroll as scroll } from "react-scroll";
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
 import axios from 'axios';
 
 class StartConsignmentCO extends PureComponent {
@@ -87,11 +81,7 @@ class StartConsignmentCO extends PureComponent {
        console.log(schedule);
     }
 
-<<<<<<< HEAD
-    getConsignments = (lcls,fcls) =>{
-=======
     getConsignments = (lcls,addressDetails,fcls) =>{
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
         this.setState({
             openFcls: fcls,
             openLcls: lcls,
@@ -99,12 +89,8 @@ class StartConsignmentCO extends PureComponent {
         })
         const obj = {
             lcl: lcls,
-<<<<<<< HEAD
-            fcl: fcls
-=======
             fcl: fcls,
             addressDetails: addressDetails
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
         }
         this.sendQuote(obj);
         //console.log(this.state.selectedSchedule);
@@ -143,11 +129,6 @@ class StartConsignmentCO extends PureComponent {
             search: obj,
             check2: true
         });
-<<<<<<< HEAD
-        scroll.scrollToBottom();
-        //console.log(obj);
-    }
-=======
         this.getSchedule(obj);
         scroll.scrollToBottom();
         //console.log(obj);
@@ -170,7 +151,6 @@ class StartConsignmentCO extends PureComponent {
          console.log(e);
         }  
     }
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
    
     render() {
         return (

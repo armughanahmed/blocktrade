@@ -1,13 +1,4 @@
 const {
-<<<<<<< HEAD
-  getQuotationByOrganizationId,
-  createQuotation,
-  createFCL,
-  createLCL,
-} = require("./cargoOwner.service");
-const { getOrganizationByID } = require("../organization/organization.service");
-const { getUserByUserId } = require("../users/user.service");
-=======
   createQuotation,
   createFCL,
   createLCL,
@@ -34,7 +25,6 @@ const { getUserByUserId } = require("../users/user.service");
 // const {
 //   getBookingContainers,
 // } = require("../oceanCarrier/oceanCarrier.service");
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
 const { hashSync, genSaltSync, compareSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
@@ -67,27 +57,6 @@ module.exports = {
     try {
       let body = req.body;
       body.decoded = req.decoded;
-<<<<<<< HEAD
-      console.log("far");
-      console.log(req.body);
-      console.log("***");
-      const lcl = req.body.lcl;
-      const fcl = req.body.fcl;
-      let created_lcl = [];
-      let created_fcl = [];
-      let length;
-      let creatingQuotation = {};
-      console.log("***");
-      console.log(body.decoded);
-      console.log("***");
-      const org_details = await getOrganizationByID(body.decoded.result.org_id);
-      creatingQuotation.decoded = { result: { org_id: org_details.id } };
-
-      if (!lcl.length && !fcl.length) {
-        res.status(502).send({
-          success: 0,
-          message: "something went wrong while creating quotations",
-=======
       console.log(req.body.fcl);
       const lcl = req.body.lcl;
       const fcl = req.body.fcl;
@@ -100,79 +69,32 @@ module.exports = {
         return res.status(502).send({
           success: 0,
           message: "lcl and fcl both are empty",
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
           data: null,
         });
       } else if (!lcl.length) {
         console.log("inside no lcl");
         for (let i = 0; i < fcl.length; i++) {
-<<<<<<< HEAD
-          fcl[i].decoded = { result: { org_id: org_details.id } };
-          created_fcl[i] = await createFCL(fcl[i]);
-        }
-        length = fcl.length;
-        for (let i = 0; i < length; i++) {
-          creatingQuotation.fcl_id = created_fcl[i].insertId;
-          creatingQuotation.lcl_id = null;
-          await createQuotation(creatingQuotation);
-=======
           fcl[i].quotation_id = createdQuotation.insertId;
           await createFCL(fcl[i]);
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
         }
       } else if (!fcl.length) {
         console.log("inside no fcl");
         for (let i = 0; i < lcl.length; i++) {
-<<<<<<< HEAD
-          lcl[i].decoded = { result: { org_id: org_details.id } };
-          created_lcl[i] = await createLCL(lcl[i]);
-        }
-        console.log(created_lcl[0]);
-        length = lcl.length;
-        for (let i = 0; i < length; i++) {
-          creatingQuotation.lcl_id = created_lcl[i].insertId;
-          creatingQuotation.fcl_id = null;
-          await createQuotation(creatingQuotation);
-=======
           lcl[i].quotation_id = createdQuotation.insertId;
           await createLCL(lcl[i]);
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
         }
       } else {
         if (lcl.length) {
           for (let i = 0; i < lcl.length; i++) {
-<<<<<<< HEAD
-            lcl[i].decoded = { result: { org_id: org_details.id } };
-            created_lcl[i] = await createLCL(lcl[i]);
-=======
             lcl[i].quotation_id = createdQuotation.insertId;
             await createLCL(lcl[i]);
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
           }
         }
         if (fcl.length) {
           for (let i = 0; i < fcl.length; i++) {
-<<<<<<< HEAD
-            fcl[i].decoded = { result: { org_id: org_details.id } };
-            created_fcl[i] = await createFCL(fcl[i]);
-          }
-        }
-        lcl.length >= fcl.length
-          ? (length = lcl.length)
-          : (length = fcl.length);
-        for (let i = 0; i < length; i++) {
-          if (lcl[i]) {
-            creatingQuotation.lcl_id = created_lcl[i].insertId;
-          }
-          if (fcl[i]) {
-            creatingQuotation.fcl_id = created_fcl[i].insertId;
-          }
-          await createQuotation(creatingQuotation);
-=======
             fcl[i].quotation_id = createdQuotation.insertId;
             await createFCL(fcl[i]);
           }
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
         }
       }
       const user_details = await getUserByUserId(body.decoded.result.id);
@@ -184,40 +106,20 @@ module.exports = {
       if (!mail) {
         console.log("error in sending mail");
       }
-<<<<<<< HEAD
-      res.status(202).send({
-=======
       return res.status(202).send({
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
         success: 1,
         message: "quotation has been received",
         data: null,
       });
     } catch (e) {
       console.log(e);
-<<<<<<< HEAD
-      res.status(502).send({
-=======
       return res.status(502).send({
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
         success: 0,
         message: "something went wrong while creating quotations",
         data: null,
       });
     }
   },
-<<<<<<< HEAD
-  getQuotationByOrganizationId: async (req, res) => {
-    try {
-      let body = req.body;
-      body.decoded = req.decoded;
-      const org_details = await getOrganizationByID(body.decoded.result.org_id);
-      const getQuotation = await getQuotationByOrganizationId(org_details.id);
-      res.status(202).send({
-        success: 1,
-        message: "succesfully got quotation",
-        data: getQuotation,
-=======
   viewQuotations: async (req, res) => {
     try {
       let body = req.body;
@@ -259,7 +161,6 @@ module.exports = {
         success: 1,
         message: "succesfully got quotations",
         data: quotations,
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
       });
     } catch (e) {
       console.log(e);
@@ -270,8 +171,6 @@ module.exports = {
       });
     }
   },
-<<<<<<< HEAD
-=======
   viewLCL: async (req, res) => {
     try {
       let body = req.body;
@@ -412,5 +311,4 @@ module.exports = {
       });
     }
   },
->>>>>>> fe3be23895be1fb6986ed3493f852dac303d46c6
 };

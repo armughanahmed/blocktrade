@@ -1,10 +1,15 @@
 import React from 'react'
 import './Dashboard.css'
+import NavbarSC from '../../components/NavbarSC'
 
 function Dashboard() {
     return (
-        <div id="shipping-company-dashboard">
-        <div className="container-fluid">
+        <div className="wrapper">
+            <NavbarSC/>
+        <div className="container-fluid" id="shipping-company-dashboard">
+        <div>
+                <h2>Welcome Shipping Company</h2>
+        </div>
             <div className="row text-center">
                 <div className="col-lg-5 offset-lg-1">
                     <div className="card">

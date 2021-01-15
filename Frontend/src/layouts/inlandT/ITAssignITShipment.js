@@ -1,10 +1,10 @@
 import React, { PureComponent } from "react";
 import NavbarIT from "../../components/NavbarIT";
 import Footer from "../../components/Footer";
-import "./ITAddRoute.css";
-import ITAddVehicleCard from "../../components/inlandT/ITAddVehicleCard";
+import "./ITAssignITShipment.css";
+import ITAssignITShipmentCard from "../../components/inlandT/ITAssignITShipmentCard";
 
-class ITAddVehicle extends PureComponent {
+class ITAssignITShipment extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -18,11 +18,11 @@ class ITAddVehicle extends PureComponent {
       <div id="wrapper">
         <NavbarIT />
         <div className="container-fluid" id="track-consignment">
-          <ITAddVehicleCard />
+          <ITAssignITShipmentCard />
         </div>
       </div>
     );
   }
 }
 
-export default ITAddVehicle;
+export default ITAssignITShipment;

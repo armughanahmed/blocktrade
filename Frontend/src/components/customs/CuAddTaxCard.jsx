@@ -50,7 +50,7 @@ class CuAddTaxCard extends PureComponent {
                             <label htmlFor="">Percentage on value:</label>
                             <input type="text" className="form-control mb-3" placeholder="Enter percentage"/> 
                         </div>
-
+white orange blue green brown
                         <div class="form-group">
                             <label for="sel1">Tax payer:</label>
                             <select class="form-control">
