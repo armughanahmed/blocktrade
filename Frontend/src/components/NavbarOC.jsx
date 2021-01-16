@@ -11,7 +11,10 @@ function NavbarOC() {
         <div className="collapse navbar-collapse" id="collapsibleNavbar">
         <ul className="navbar-nav">
           <li className="nav-item py-md-2 px-3 ml-5">
-            <a className="nav-link" href="/dashboard" active>Dashboard</a>
+            <a className="nav-link" href="/dashboardoc" active>Dashboard</a>
+          </li>
+          <li className="nav-item py-md-2 px-3">
+            <a className="nav-link" href="/viewshipments">Shipments</a>
           </li>
           <li class="nav-item dropdown py-md-2 px-3 ml-4">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Schedules</a>
@@ -21,9 +24,6 @@ function NavbarOC() {
                         <a href="/trackConsignment" class="dropdown-item">View</a>
                     </div>
             </li>
-          <li className="nav-item py-md-2 px-3">
-            <a className="nav-link" href="/viewQuotations">Shipments</a>
-          </li>
           <li class="nav-item dropdown py-md-2 px-3 ml-3">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Containers</a>
                     <div class="dropdown-menu">

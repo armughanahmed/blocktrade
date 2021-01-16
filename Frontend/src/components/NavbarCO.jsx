@@ -14,6 +14,9 @@ function NavbarCO() {
           <li className="nav-item py-md-2 px-3 ml-5">
             <a className="nav-link" href="/dashboard" active>Dashboard</a>
           </li>
+          <li className="nav-item py-md-2 px-3">
+            <a className="nav-link" href="/viewQuotations">Quotations</a>
+          </li>
           <li class="nav-item dropdown py-md-2 px-3 ml-4">
                     <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown">Consignments</a>
                     <div class="dropdown-menu">
@@ -22,9 +25,6 @@ function NavbarCO() {
                         <a href="/trackConsignment" class="dropdown-item">Track</a>
                     </div>
             </li>
-          <li className="nav-item py-md-2 px-3">
-            <a className="nav-link" href="/viewQuotations">Quotations</a>
-          </li>
           <li class="nav-item dropdown py-md-2 px-3 ml-3">
                     <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown">Partner</a>
                     <div class="dropdown-menu">

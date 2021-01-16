@@ -21,8 +21,8 @@ function NavbarIT() {
           Vehicle
           </a>
           <div className="dropdown-menu" aria-labelledby="navbarDropdown1">
-            <a className="dropdown-item" href="/cuaddtax">Add Vehicle</a>
-            <a className="dropdown-item" href="/cuviewtax">View Vehicles</a>
+            <a className="dropdown-item" href="/itaddvehicle">Add Vehicle</a>
+            <a className="dropdown-item" href="/itviewvehicle">View Vehicles</a>
           </div>
         </li>
 
@@ -32,8 +32,8 @@ function NavbarIT() {
           Route
           </a>
           <div className="dropdown-menu" aria-labelledby="navbarDropdown1">
-            <a className="dropdown-item" href="/cuaddtax">Add Route</a>
-            <a className="dropdown-item" href="/cuviewtax">View/Update Routes</a>
+            <a className="dropdown-item" href="/itaddroute">Add Route</a>
+            <a className="dropdown-item" href="/itviewroute">View/Update Routes</a>
           </div>
         </li>
 
