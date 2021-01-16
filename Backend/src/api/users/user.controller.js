@@ -19,13 +19,13 @@ const sendEmail = async (text, to, org) => {
   let transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "armughancr7@gmail.com",
-      pass: "kiunbataon",
+      user: "armughance7@gmail.com",
+      pass: "blocktrade",
     },
   });
 
   let mailOptions = {
-    from: "armughancr7@gmail.com",
+    from: "armughancr7",
     to: to,
     subject: "invite link",
     // cc: org,

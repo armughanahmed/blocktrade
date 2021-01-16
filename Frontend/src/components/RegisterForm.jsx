@@ -140,11 +140,12 @@ class RegisterForm extends PureComponent {
                     <option value="">Select type</option>
                     
                     <option value="ocean-carrier">Ocean carrier</option>
-                    <option value="port-authority">Port authority</option>
-                    <option value="exporter">Exporter</option>
-                    <option value="importer">Importer</option>
+                    <option value="shipping-company">Shipping Company</option>
+                    <option value="inland-transporter">Inland Transporter</option>
+                    <option value="terminal-operator">Terminal Operator</option>
                     <option value="cargo-owner">Cargo owner</option>
-                    <option value="bank">Bank</option>
+                    <option value="financial-institution">Financial institution</option>
+                    <option value="custom">Customs</option>
                 </select>
             </div> 
             <div className="form-group">

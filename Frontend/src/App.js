@@ -28,10 +28,12 @@ import ViewShipments from './layouts/shippingCompany/ViewShipments';
 import BookContainer from './layouts/shippingCompany/BookContainer';
 import ViewContainers from './layouts/shippingCompany/ViewContainers';
 import MakeQuotations from './layouts/shippingCompany/MakeQuotations';
+
 import AddPartner from './layouts/cargoOwner/AddPartner';
 import AddPartnerSc from './layouts/shippingCompany/AddPartnerSc';
 import PartnerRequests from './layouts/cargoOwner/PartnerRequests';
 import ViewPartner from './layouts/cargoOwner/ViewPartner';
+
 import DashboardOC from './layouts/oceanCarrier/DashboardOC';
 import CreateSchedule from './layouts/oceanCarrier/CreateSchedule';
 import AddShip from './layouts/oceanCarrier/AddShip';
@@ -70,6 +72,7 @@ import ITSearch from './layouts/inlandT/ITSearch';
 import ITShipment from './layouts/inlandT/ITViewShipment';
 import ITAddRoute from './layouts/inlandT/ITAddRoute';
 import ITAddVehicle from './layouts/inlandT/ITAddVehicle';
+import ITAssignITShipment from './layouts/inlandT/ITAssignITShipment';
 
 
 
@@ -174,6 +177,7 @@ class App extends PureComponent {
               <PrivateRoute path="/itViewShipment" component={ITShipment}/>
               <PrivateRoute path="/itaddroute" component={ITAddRoute}/>
               <PrivateRoute path="/itaddvehicle" component={ITAddVehicle}/>
+              <PrivateRoute path="/itassignitshipment" component={ITAssignITShipment}/>
             </Switch>
           </Router>
         </div>
