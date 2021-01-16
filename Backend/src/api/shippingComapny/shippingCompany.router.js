@@ -3,6 +3,7 @@ const {
   createShipment,
   viewQuotations,
   viewQuotationsDetails,
+  makeQuotation,
 } = require("./shippingCompany.controller");
 const { auth, authShippingComapny } = require("../../middleware/auth");
 // router.post("/create-shipment", auth, authShippingComapny, createShipment);
@@ -13,4 +14,5 @@ router.post(
   authShippingComapny,
   viewQuotationsDetails
 );
+router.post("/makeQuotation", auth, authShippingComapny, makeQuotation);
 module.exports = router;

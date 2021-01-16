@@ -71,4 +71,90 @@ module.exports = {
       );
     });
   },
+  updateFclPrice: (data) => {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `update fcl set price=? where fcl_id=?`,
+        [data.charges, data.fcl_id],
+        (error, results, fields) => {
+          if (error) {
+            console.log("updateFclPrice::");
+            return reject(error);
+          }
+          console.log("updateFclPrice::");
+          console.log(results);
+          resolve(results);
+        }
+      );
+    });
+  },
+  updateLclPrice: (data) => {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `update lcl set price=? where lcl_id=?`,
+        [data.charges, data.lcl_id],
+        (error, results, fields) => {
+          if (error) {
+            console.log("updateLclPrice::");
+            return reject(error);
+          }
+          console.log("updateLclPrice::");
+          console.log(results);
+          resolve(results);
+        }
+      );
+    });
+  },
+  updateQuotationPriceAndStatus: (data) => {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `update quotations set price=?,quote_status=? where quotation_id=?`,
+        [data.totalPrice, "cargo-owner-pending", data.quotationId],
+        (error, results, fields) => {
+          if (error) {
+            console.log("updateQuotationPriceAndStatus::");
+            return reject(error);
+          }
+          console.log("updateQuotationPriceAndStatus::");
+          console.log(results);
+          resolve(results);
+        }
+      );
+    });
+  },
+  createDocument: (data) => {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `insert into documents(name,location,hash,type) 
+        values(?,?,?,?)`,
+        [data.name, data.location, data.hash, data.type],
+        (error, results, fields) => {
+          if (error) {
+            console.log("createDocument::");
+            return reject(error);
+          }
+          console.log("createDocument::");
+          console.log(results);
+          resolve(results);
+        }
+      );
+    });
+  },
+  updateQuotationDocument: (data) => {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `update quotations set document_id=? where quotation_id=?`,
+        [data.document_id, data.quotationId],
+        (error, results, fields) => {
+          if (error) {
+            console.log("updateQuotationDocument::");
+            return reject(error);
+          }
+          console.log("updateQuotationDocument::");
+          console.log(results);
+          resolve(results);
+        }
+      );
+    });
+  },
 };

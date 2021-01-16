@@ -18,7 +18,7 @@ module.exports = {
           data.arrivalDate,
           data.departurePortId,
           data.destinationPortId,
-          data.decode.result.ocean_carrier_id,
+          data.ocean_carrier_id,
         ],
         (error, results, fields) => {
           if (error) {
@@ -83,9 +83,14 @@ module.exports = {
   createBRequest: (data) => {
     return new Promise((resolve, reject) => {
       pool.query(
-        `insert into bookingrequests(container_id,	schedule_id) 
-        values(?,?,?,?,?,?,?,?,?,?)`,
-        [data.container_id, data.schedule_id],
+        `insert into bookingrequests(container_id,schedule_id,shipping_company_id,price) 
+        values(?,?,?,?)`,
+        [
+          data.container_id,
+          data.schedule_id,
+          data.shipping_company_id,
+          data.price,
+        ],
         (error, results, fields) => {
           if (error) {
             console.log("createBRequest::");
@@ -152,13 +157,12 @@ module.exports = {
   createContainer: (data) => {
     return new Promise((resolve, reject) => {
       pool.query(
-        `insert into containers(ocean_carrier_id,	type,	size,	status_booked,	total_space ,	empty_weight) 
-        values(?,?,?,?,?,?,?,?)`,
+        `insert into containers(ocean_carrier_id,	type,	size,	total_space ,	empty_weight) 
+        values(?,?,?,?,?)`,
         [
           data.decode.result.ocean_carrier_id,
           data.type,
           data.size,
-          data.status_booked,
           data.total_space,
           data.empty_weight,
         ],
@@ -242,6 +246,23 @@ module.exports = {
       );
     });
   },
+  getPortById: (data) => {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `select * from ports where port_id=?`,
+        [data],
+        (error, results, fields) => {
+          if (error) {
+            console.log("getPortById::");
+            return reject(error);
+          }
+          console.log("getPortById::");
+          console.log(results[0]);
+          resolve(results[0]);
+        }
+      );
+    });
+  },
   getShipsBytype: (data) => {
     return new Promise((resolve, reject) => {
       pool.query(
@@ -253,6 +274,23 @@ module.exports = {
             return reject(error);
           }
           console.log("getShipsBytype::");
+          console.log(results);
+          resolve(results);
+        }
+      );
+    });
+  },
+  getBookingRequestsForRejection: (data) => {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `select * from bookingrequests where schedule_id=? and container_id=? and status=?`,
+        [data.schedule_id, data.container_id, 0],
+        (error, results, fields) => {
+          if (error) {
+            console.log("getBookingRequestsForRejection::");
+            return reject(error);
+          }
+          console.log("getBookingRequestsForRejection::");
           console.log(results);
           resolve(results);
         }

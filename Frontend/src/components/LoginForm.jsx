@@ -10,8 +10,24 @@ class LoginForm extends PureComponent {
 
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            invalid: false,
+            exist: true,
         }
+    }
+
+    invalid = () =>{
+        this.setState({
+            invalid: true,
+            exist: true
+          })
+    }
+
+    exists = () =>{
+        this.setState({
+            exist: false,
+            invalid: false
+          })
     }
 
     updateEmail(event){
@@ -49,7 +65,14 @@ class LoginForm extends PureComponent {
                     <label>Password</label>
                     <input type="password" className="form-control" value={this.state.password} placeholder="Enter password" onChange={(e) => this.updatePassword(e)} required />
                 </div>
-
+                {
+                this.state.invalid === true&&
+                  <p className="invalid">Invalid login credentials!</p>
+              }
+              {
+                this.state.exist === false&&
+                <p className="not-exist">User doesn't exist!</p>
+              }
                 <div className="form-group">
                     <div className="custom-control custom-checkbox">
                         <input type="checkbox" className="custom-control-input" id="customCheck1" />
@@ -66,6 +89,7 @@ class LoginForm extends PureComponent {
                 <p className="forgot-password text-right">
                      <a href="/register">Don't have an account?</a>
                 </p>
+                
             </form>
         </div>  
         )

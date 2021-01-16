@@ -15,7 +15,10 @@ class MakeQuotations extends PureComponent {
             schedule: '',
             quote: false,
             showSchedule: false,
-            charges: false
+            charges: false,
+            quoteCharges: '',
+            lclCharges: [],
+            fclCharges: [],
 
         }
     }
@@ -95,6 +98,149 @@ class MakeQuotations extends PureComponent {
         }  
        }
 
+       checking1(event,id,mode){
+        const obj = {
+            lcl_id: id,
+            charges: parseInt(event.target.value),
+            mode: mode,
+        }
+        this.state.lclCharges.push(obj);
+        console.log(this.state.lclCharges);
+       }
+
+       updateLclCharges(event,id,mode){
+        if(this.state.lclCharges.length !== 0){
+            let temp = id;
+            //console.log(temp);
+            let i = -1;
+            let array = this.state.lclCharges;
+            console.log(array);
+             for (let index = 0; index < array.length; index++) {
+                 
+                 if (temp == array[index].lcl_id) {
+                     i = index;
+                     //flag = 1;
+                     break;       
+                 }
+                 // else{
+                 //     temp = array[index].lcl_id;
+                 // }
+                 
+             }
+
+        if (i > -1) {
+            array[i].charges = parseInt(event.target.value);
+            this.setState({
+                lclCharges: []
+            })
+            this.setState({
+                lclCharges: array
+            })
+        }
+
+        else if(i == -1){
+            //alert('bhai bhao');
+            this.checking1(event,id,mode)
+        }
+
+             
+        }
+        else{
+         const obj = {
+             lcl_id: id,
+             charges: parseInt(event.target.value),
+             mode: mode,
+         }
+         this.state.lclCharges.push(obj);
+         console.log(this.state.lclCharges);
+         }
+       }
+
+       checking(event,id,mode){
+        const obj = {
+            fcl_id: id,
+            charges: parseInt(event.target.value),
+            mode: mode,
+        }
+        this.state.fclCharges.push(obj);
+        console.log(this.state.fclCharges);
+       }
+
+       updateFclCharges(event,id,mode){
+           if(this.state.fclCharges.length !== 0){
+               let temp = id;
+               //console.log(temp);
+               let i = -1;
+               let array = this.state.fclCharges;
+               console.log(array);
+                for (let index = 0; index < array.length; index++) {
+                    
+                    if (temp == array[index].fcl_id) {
+                        i = index;
+                        //flag = 1;
+                        break;       
+                    }
+                    // else{
+                    //     temp = array[index].fcl_id;
+                    // }
+                    
+                }
+
+           if (i > -1) {
+               array[i].charges = parseInt(event.target.value);
+               this.setState({
+                   fclCharges: []
+               })
+               this.setState({
+                   fclCharges: array
+               })
+           }
+
+           else if(i == -1){
+               //alert('bhai bhao');
+               this.checking(event,id,mode)
+           }
+
+                
+           }
+           else{
+            const obj = {
+                fcl_id: id,
+                charges: parseInt(event.target.value),
+                mode: mode,
+            }
+            this.state.fclCharges.push(obj);
+            console.log(this.state.fclCharges);
+            }
+       }
+
+        async makeQuote(event){
+            event.preventDefault();
+           const obj = {
+               lcl: this.state.lclCharges,
+               fcl: this.state.fclCharges,
+               quotationId: parseInt(this.state.selectedQuotation),
+               scheduleId: this.state.schedule.schedule_id
+           }
+           console.log(obj);
+           const token = localStorage.getItem('token');
+           try{
+               const response = await axios.post('http://localhost:4000/shippingCompany/makeQuotation',obj,{
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            console.log(response);
+           }
+           catch(e){
+               console.log(e.response);
+           }
+       }
+
+
+
+     
+
     showFcl(fcl){
         if (this.state.quote === true) {
             return (
@@ -106,6 +252,8 @@ class MakeQuotations extends PureComponent {
                             <p>Quantity:  {fcl.quantity}</p>
                             <p>Container height:  {fcl.containerHeight}</p>
                             <p>Container description:  {fcl.containerDescription}</p>
+                            <label>Charges:</label>
+                            <input className="form-control" placeholder="Enter charges" type="number" min="0" onBlur={(e)=> this.updateFclCharges(e,fcl.fcl_id,fcl.mode)} required/>
                         </div>
                     </div>
                 </div>
@@ -120,11 +268,14 @@ class MakeQuotations extends PureComponent {
                 <div className="card">
                     <div className="card-body">
                         <h5>Ocean LCL</h5>
+                        <p>Id: {lcl.lcl_id}</p>
                         <p>Quantity:  {lcl.quantity}</p>
                         <p>Length:  {lcl.length}</p>
                         <p>Width:  {lcl.width}</p>
                         <p>Height:  {lcl.height}</p>
                         <p>Package type:  {lcl.type}</p>
+                        <label>Charges:</label>
+                        <input className="form-control" placeholder="Enter charges" onBlur={(e) => this.updateLclCharges(e,lcl.lcl_id,lcl.mode)} required/>
                     </div>
                 </div>
             </div>
@@ -132,30 +283,7 @@ class MakeQuotations extends PureComponent {
         }
     }
 
-    fclCharges(fcl,index){
-        return (
-            <div className="row">
-                <div className="col-lg-4 offset-lg-4">
-                    <label>Charges FCL id {fcl.fcl_id}</label>
-                    <input className="form-control" placeholder="Enter charges"/>
-                    <br/>
-                </div>
-                
-            </div>
-        )
-    }
 
-    lclCharges(lcl,index){
-        return (
-            <div className="row">
-                <div className="col-lg-4 offset-lg-4">
-                <label>Charges LCL id {lcl.lcl_id}</label>
-                <input className="form-control" placeholder="Enter charges"/>
-                <br/>
-                </div>
-            </div>
-        )
-    }
 
 
     render() {
@@ -179,20 +307,10 @@ class MakeQuotations extends PureComponent {
                                             </select>
                                         </div>
                                     </div>
-                                    <div className="row" id="fcl-row">
-                                        {this.state.fcl.map((fcl) => (
-                                            this.showFcl(fcl)  
-                                        ))}
-                                    </div>
-                                    <div className="row" id="lcl-row">
-                                        {this.state.lcl.map((lcl) => (
-                                            this.showLcl(lcl)  
-                                        ))}
-                                    </div>
                                     {
                                         this.state.showSchedule === true &&
                                         <div className="row">
-                                            <div className="col-lg-5 offset-lg-4" id="schedule-details">
+                                            <div className="col-lg-6 offset-lg-3" id="schedule-details">
                                                 <h3>Schedule details</h3>
                                             <ul>
                                                 <li><strong>Schedule id: </strong>{this.state.schedule.schedule_id}</li>
@@ -206,29 +324,23 @@ class MakeQuotations extends PureComponent {
                                             </div>
                                         </div>
                                     }
-                                    <br/>
-                                    {
-                                        this.state.charges === true&&
-                                        <h3>Charges</h3>
-                                    }
-                                    
-                                
-                                        {
-                                            this.state.charges === true&&
-                                            this.state.fcl.map((fcl,index) =>(
-                                                this.fclCharges(fcl,index)
-                                            ))
-                                        }
-                                   
-                                    <br/>
-                                
-                                        {
-                                            this.state.charges === true&&
-                                            this.state.lcl.map((lcl,index) =>(
-                                                this.lclCharges(lcl,index)
-                                            ))
-                                        }
-                                   
+                                    <form className="form-group" onSubmit={(e) => this.makeQuote(e)}> 
+                                        <div className="row" id="fcl-row">
+                                            {this.state.fcl.map((fcl) => (
+                                                this.showFcl(fcl)  
+                                            ))}
+                                        </div>
+                                        <div className="row" id="lcl-row">
+                                            {this.state.lcl.map((lcl) => (
+                                                this.showLcl(lcl)  
+                                            ))}
+                                        </div>
+                                        <div className="row text-center" id="make-quote-btn">
+                                            <div className="col">
+                                                <button className="btn btn-custom" type="submit">Make Quote</button>
+                                            </div>
+                                        </div>
+                                    </form>                           
                                 </div> 
                             </div>
                         </div>

@@ -28,6 +28,7 @@
     "mysql": "^2.18.1",
     "node-cron": "^2.0.3",
     "nodemailer": "^6.4.16",
+    "pdf-creator-node": "^1.4.2",
     "prompt": "^1.0.0"
   }
 }

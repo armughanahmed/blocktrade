@@ -120,6 +120,16 @@
     }
   }
 
+  #login-card .invalid {
+    color: rgb(255, 73, 73);
+    font-size: 14px;
+    letter-spacing: 0.7px;
+  }
 
+  #login-card .not-exist {
+    color: rgb(255, 73, 73);
+    font-size: 14px;
+    letter-spacing: 0.7px;
+  }
 
 

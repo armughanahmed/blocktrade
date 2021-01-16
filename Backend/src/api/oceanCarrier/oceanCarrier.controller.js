@@ -13,12 +13,17 @@ const {
   getPortByName,
   getPort,
   getShipsBytype,
+  getPortById,
+  getBookingRequestsForRejection,
+  getBookingRequestsById,
 } = require("./oceanCarrier.service");
 const { getOrganizationByID } = require("../organization/organization.service");
+const { emailService } = require("../constants/functions");
 const { getUserByUserId } = require("../users/user.service");
 const { hashSync, genSaltSync, compareSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
+const { getShippingCompanyById } = require("../cargoOwner/cargoOwner.service");
 const sendEmail = async (text, to, org) => {
   let transporter = nodemailer.createTransport({
     service: "gmail",
@@ -48,26 +53,34 @@ module.exports = {
     try {
       let body = req.body;
       body.decoded = req.decoded;
-      const departurePort = await getPortByName(body);
+      const departurePort = await getPortById(body.departurePortId);
       if (!departurePort) {
-        res.status(404).send({
+        return res.status(404).send({
           success: 0,
           message: "Departure port not found",
           data: null,
         });
       }
-      const destinationPort = await getPortByName(body);
+      const destinationPort = await getPortById(body.destinationPortId);
       if (!destinationPort) {
-        res.status(404).send({
+        return res.status(404).send({
           success: 0,
           message: "no destination port not found",
           data: null,
         });
       }
-      body.departurePortId = departurePort.port_id;
-      body.destinationPortId = destinationPort.port_id;
-
-      const createdSchedule = await createSchedule(body);
+      let result = {};
+      result.ship_id = body.ship_id;
+      result.departureCountry = body.departureCountry;
+      result.departureCity = body.departureCity;
+      result.destinationCountry = body.destinationCountry;
+      result.destinationCity = body.destinationCity;
+      result.departureDate = body.departureDate.split("T")[0];
+      result.arrivalDate = body.arrivalDate.split("T")[0];
+      result.departurePortId = departurePort.port_id;
+      result.destinationPortId = destinationPort.port_id;
+      result.ocean_carrier_id = body.decoded.result.ocean_carrier_id;
+      const createdSchedule = await createSchedule(result);
       if (body.stops.length) {
         for (let i = 0; i < body.stops.length; i++) {
           body.stops[i].schedule_id = createdSchedule.insertId;
@@ -112,10 +125,31 @@ module.exports = {
     try {
       let body = req.body;
       body.decoded = req.decoded;
+
       const updatedSchedule = await updateBRequest(body);
+      const shippingCompany = await getOrganizationByID(
+        body.shipping_company_id
+      );
       //add affected row logic
+      const htmlAcceptContainerBooking = `<h3>thank you ${shippingCompany.name} for using blocktrade for sending booking request</h3><br>
+      <h3>your request has been accepted.</h3>`;
       const containerId = await getContainerIdFromBR(body.bRequest_id);
       const updatedContainer = await updateContainer(containerId.container_id);
+      const requestedContainer = await getBookingRequestsById(body.bRequest_id);
+      const mail = emailService(
+        shippingCompany.email,
+        "k173696@nu.edu.pk",
+        "Container booking Request",
+        htmlAcceptContainerBooking
+      );
+      if (!mail) {
+        console.log("error in sending mail");
+      }
+      body.container_id = containerId.container_id;
+      const rejectingRequests = await getBookingRequestsForRejection(body);
+      let htmlRejectContainerBooking = `<h3>thank you ${shippingCompany.name} for using blocktrade for sending booking request</h3><br>
+      <h3>your request has been accepted.</h3>`;
+
       res.status(202).send({
         success: 1,
         message: "BookingRequests successfully accepted",

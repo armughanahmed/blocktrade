@@ -169,7 +169,7 @@ module.exports = {
           token: jsontoken,
         });
       } else {
-        return res.status(400).send({
+        return res.status(201).send({
           success: 0,
           message: "Invalid login credentials",
           data: null,

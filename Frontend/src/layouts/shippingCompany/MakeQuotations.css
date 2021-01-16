@@ -48,3 +48,7 @@
     letter-spacing: 0.1em;
     color: rgb(208, 207, 207);
 }
+
+#make-quote-btn{
+    margin-top: 25px;
+}

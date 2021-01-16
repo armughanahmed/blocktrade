@@ -69,6 +69,7 @@ import DashboardIT from './layouts/inlandT/DashboardIT';
 import ITSearch from './layouts/inlandT/ITSearch';
 import ITShipment from './layouts/inlandT/ITViewShipment';
 import ITAddRoute from './layouts/inlandT/ITAddRoute';
+import Error from './layouts/Error';
 
 
 class App extends PureComponent {
@@ -84,8 +85,10 @@ class App extends PureComponent {
   
 
   render() {
+
     const checkSignIn = () =>{
       const isAuthenticated = localStorage.getItem('token');
+      const org_type = localStorage.getItem('org_type');
       if (isAuthenticated === null || isAuthenticated === undefined || isAuthenticated === '') {
           return false;
       }
@@ -102,7 +105,47 @@ class App extends PureComponent {
           : <Redirect to='/login' />
       )} />
     )
+
+    const checkCargoOwner = () =>{
+      const isAuthenticated = localStorage.getItem('token');
+      const org_type = localStorage.getItem('org_type');
+      if (org_type !== 'cargo-owner') {
+          return false;
+      }
+      else{
+        return true;
+      }
+    }
     
+    const CargoOwner = ({ component: Component, ...rest }) => (
+    
+      <Route {...rest} render={(props) => (
+        checkCargoOwner() ?
+          <Component {...props} />
+          : <Redirect to='/error' />
+      )} />
+    )
+    
+    const checkShippingCompany = () =>{
+      const isAuthenticated = localStorage.getItem('token');
+      const org_type = localStorage.getItem('org_type');
+      if (org_type !== 'shipping-company') {
+          return false;
+      }
+      else{
+        return true;
+      }
+    }
+    
+    const ShippingCompany = ({ component: Component, ...rest }) => (
+    
+      <Route {...rest} render={(props) => (
+        checkShippingCompany() ?
+          <Component {...props} />
+          : <Redirect to='/error' />
+      )} />
+    )
+
     const hist = createBrowserHistory();
     const org_type = localStorage.getItem('org_type');
     return (
@@ -112,26 +155,27 @@ class App extends PureComponent {
             <Switch>
               <Route path="/login" component={Login}/>
               <Route path="/register" component={Register}/>
-              <PrivateRoute path="/dashboard" component={DashboardCO}/>
-              <PrivateRoute path="/startConsignment" component={StartConsignmentCO}/>
-              <PrivateRoute path="/viewConsignments" component={ViewConsignmentsCO}/>
-              <PrivateRoute path="/trackConsignment" component={TrackConsignment}/>
-              <PrivateRoute path="/viewQuotations" component={ViewQuotations}/>
-              <PrivateRoute path="/addPartnerCO" component={AddPartner}/>
-              <PrivateRoute path="/requestsCO" component={PartnerRequests}/>
-              <PrivateRoute path="/viewPartnerCO" component={ViewPartner}/>
-              <PrivateRoute path="/addPartnerSc" component={AddPartnerSc}/>
+              <Route path="/error" component={Error} />
+              <CargoOwner path="/dashboard" component={DashboardCO}/>
+              <CargoOwner path="/startConsignment" component={StartConsignmentCO}/>
+              <CargoOwner path="/viewConsignments" component={ViewConsignmentsCO}/>
+              <CargoOwner path="/trackConsignment" component={TrackConsignment}/>
+              <CargoOwner path="/viewQuotations" component={ViewQuotations}/>
+              <CargoOwner path="/addPartnerCO" component={AddPartner}/>
+              <CargoOwner path="/requestsCO" component={PartnerRequests}/>
+              <CargoOwner path="/viewPartnerCO" component={ViewPartner}/>
+              <CargoOwner path="/addPartnerSc" component={AddPartnerSc}/>
               //shippingCompany
-              <PrivateRoute path="/dashboardSc" component={Dashboard}/>
-              <PrivateRoute path="/createShipment" component={CreateShipment}/>
-              <PrivateRoute path="/track" component={Track}/>
-              <PrivateRoute path="/viewShipments" component={ViewShipments}/>
-              <PrivateRoute path="/bookContainer" component={BookContainer}/>
-              <PrivateRoute path="/viewContainer" component={ViewContainers}/>
-              <PrivateRoute path="/makeQuotation" component={MakeQuotations}/>
+              <ShippingCompany path="/dashboardSc" component={Dashboard}/>
+              <ShippingCompany path="/createShipment" component={CreateShipment}/>
+              <ShippingCompany path="/track" component={Track}/>
+              <ShippingCompany path="/viewShipments" component={ViewShipments}/>
+              <ShippingCompany path="/bookContainer" component={BookContainer}/>
+              <ShippingCompany path="/viewContainer" component={ViewContainers}/>
+              <ShippingCompany path="/makeQuotation" component={MakeQuotations}/>
               //oceanCarrier
-              <PrivateRoute path="/dashboardOc" component={DashboardOC}/>
-              <PrivateRoute path="/createSchedule" component={CreateSchedule}/>
+              {/* <PrivateRoute path="/dashboardOc" component={DashboardOC}/> */}
+              {/* <PrivateRoute path="/createSchedule" component={CreateSchedule}/>
               <PrivateRoute path="/addShip" component={AddShip}/>
               <PrivateRoute path="/viewShip" component={ViewShips}/>
               <PrivateRoute path="/addContainer" component={AddContainer}/>
@@ -169,7 +213,7 @@ class App extends PureComponent {
               <PrivateRoute path="/dashboardIT" component={DashboardIT}/>
               <PrivateRoute path="/itSearch" component={ITSearch}/>
               <PrivateRoute path="/itViewShipment" component={ITShipment}/>
-              <PrivateRoute path="/itaddroute" component={ITAddRoute}/>
+              <PrivateRoute path="/itaddroute" component={ITAddRoute}/> */}
             </Switch>
           </Router>
         </div>
