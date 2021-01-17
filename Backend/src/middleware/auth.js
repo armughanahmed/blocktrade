@@ -77,32 +77,4 @@ module.exports = {
       });
     }
   },
-
-  authInlandTransporter: async (req, res, next) => {
-    const org = await getOrganizationByID(req.decoded.result.org_id);
-    console.log(org.type);
-    if (org.type == "inland-transporter") {
-      next();
-    } else {
-      return res.status(401).send({
-        success: 0,
-        message: "Access Denied! Unauthorized organization",
-        data: null,
-      });
-    }
-  },
-
-  authTerminalOperator: async (req, res, next) => {
-    const org = await getOrganizationByID(req.decoded.result.org_id);
-    console.log(org.type);
-    if (org.type == "terminal-operator") {
-      next();
-    } else {
-      return res.status(401).send({
-        success: 0,
-        message: "Access Denied! Unauthorized organization",
-        data: null,
-      });
-    }
-  },
 };

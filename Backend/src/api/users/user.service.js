@@ -33,7 +33,7 @@ module.exports = {
       pool.query(
         `insert into invites(emp_id,org_id,receiver_email) 
         values(?,?,?)`,
-        [data.decode.result.id, data.decode.result.org_id, data.email],
+        [data.decode.result.id, data.decode.result.org_id, data.receiver_email],
         (error, results, fields) => {
           if (error) {
             console.log("createInvite::");
@@ -49,7 +49,7 @@ module.exports = {
   create: (data) => {
     return new Promise((resolve, reject) => {
       pool.query(
-        `insert into employees(org_id,receiver_email,role,active)
+        `insert into employees(org_id,email,role,active)
                     values(?,?,?,?)`,
         [data.decode.result.org_id, data.email, data.role, 0],
         (error, results, fields) => {
@@ -67,7 +67,7 @@ module.exports = {
   getUserByUserEmail: (data) => {
     return new Promise((resolve, reject) => {
       pool.query(
-        `select * from employees where email = ?`,
+        `select * from Employees where email = ?`,
         [data],
         (error, results, fields) => {
           if (error) {
@@ -84,7 +84,7 @@ module.exports = {
   getUserByUserId: (id) => {
     return new Promise((resolve, reject) => {
       pool.query(
-        `select * from employees where id = ?`,
+        `select * from Employees where id = ?`,
         [id],
         (error, results, fields) => {
           if (error) {
@@ -118,7 +118,7 @@ module.exports = {
   updateUser: (data) => {
     return new Promise((resolve, reject) => {
       pool.query(
-        `update employees set name=? , email=?, country=?, city=?, password=?, role=? where id = ?`,
+        `update Employees set name=? , email=?, country=?, city=?, password=?, role=? where id = ?`,
         [
           data.name,
           data.email,
@@ -143,7 +143,7 @@ module.exports = {
   deleteUser: (data) => {
     return new Promise((resolve, reject) => {
       pool.query(
-        `delete from employees where id = ?`,
+        `delete from Employees where id = ?`,
         [data.id],
         (error, results, fields) => {
           if (error) {

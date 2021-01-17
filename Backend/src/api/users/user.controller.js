@@ -20,12 +20,12 @@ const sendEmail = async (text, to, org) => {
     service: "gmail",
     auth: {
       user: "armughancr7@gmail.com",
-      pass: "blocktrade",
+      pass: "kiunbataon",
     },
   });
 
   let mailOptions = {
-    from: "armughancr7",
+    from: "armughancr7@gmail.com",
     to: to,
     subject: "invite link",
     // cc: org,
@@ -123,7 +123,7 @@ module.exports = {
       const url = `http://localhost:4000/user/invite/${jsontoken}`;
       const mail = sendEmail(
         url,
-        body.email,
+        body.receiver_email,
         body.decode.result.org_id
       );
       if (!mail) {
@@ -132,10 +132,9 @@ module.exports = {
       return res.status(200).send({
         success: 1,
         message: "succesfully created",
-        data: null,
+        data: results,
       });
     } catch (e) {
-      console.log(e);
       return res.status(500).send({
         success: 0,
         message: "Something went wrong while creating user",
