@@ -13,6 +13,7 @@ class SearchResultCO extends PureComponent {
             selectedSchedule: this.props.searchResult[0],
             stops: this.props.searchResult[0].stops,
             shippingCompany: 0,
+            warning: false
         }
         this.sendSelectedSchedule = this.sendSelectedSchedule.bind(this);
     }
@@ -78,6 +79,14 @@ class SearchResultCO extends PureComponent {
                         }
                     </select>
                 </div>
+                <div className="row text-right">
+                    <div className="col">
+                        {
+                            this.state.warning === true&&
+                            <p>Please enter shipping company</p>
+                        }
+                    </div>
+                </div>
              </div>                                                  
              )
         }
@@ -85,7 +94,14 @@ class SearchResultCO extends PureComponent {
     }
 
     sendSelectedSchedule(){
+        if(this.state.shippingCompany === 0){
+            this.setState({
+                warning: true,
+            })
+        }
+        else{
         this.props.getSelectedSchedule(this.state.selectedSchedule,this.state.shippingCompany)
+        }
     }
 
     displaySchedules(result,index){
