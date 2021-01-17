@@ -170,7 +170,6 @@ module.exports = {
     });
   },
   approveQuotation: (data) => {
-    console.log(data);
     return new Promise((resolve, reject) => {
       pool.query(
         `update quotations set quote_status=? where quotation_id=?`,
@@ -181,6 +180,23 @@ module.exports = {
             return reject(error);
           }
           console.log("approveQuotation::");
+          console.log(results);
+          resolve(results);
+        }
+      );
+    });
+  },
+  rejectQuotation: (data) => {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `update quotations set quote_status=? where quotation_id=?`,
+        ["owner-rejected", data],
+        (error, results, fields) => {
+          if (error) {
+            console.log("rejectQuotation::");
+            return reject(error);
+          }
+          console.log("rejectQuotation::");
           console.log(results);
           resolve(results);
         }
@@ -308,6 +324,23 @@ module.exports = {
           console.log("getShippingCompanyById::");
           console.log(results);
           resolve(results);
+        }
+      );
+    });
+  },
+  getDocumentById: (data) => {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `select * from documents where document_id=?`,
+        [data],
+        (error, results, fields) => {
+          if (error) {
+            console.log("getDocumentById::");
+            return reject(error);
+          }
+          console.log("getDocumentById::");
+          console.log(results[0]);
+          resolve(results[0]);
         }
       );
     });

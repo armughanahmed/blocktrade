@@ -146,6 +146,106 @@ class App extends PureComponent {
       )} />
     )
 
+    const checkOceanCarrier = () =>{
+      const isAuthenticated = localStorage.getItem('token');
+      const org_type = localStorage.getItem('org_type');
+      if (org_type !== 'ocean-carrier') {
+          return false;
+      }
+      else{
+        return true;
+      }
+    }
+    
+    const OceanCarrier = ({ component: Component, ...rest }) => (
+    
+      <Route {...rest} render={(props) => (
+        checkOceanCarrier() ?
+          <Component {...props} />
+          : <Redirect to='/error' />
+      )} />
+    )
+
+    const checkFinancialInstitution = () =>{
+      const isAuthenticated = localStorage.getItem('token');
+      const org_type = localStorage.getItem('org_type');
+      if (org_type !== 'financial-institution') {
+          return false;
+      }
+      else{
+        return true;
+      }
+    }
+    
+    const FinancialInstitution = ({ component: Component, ...rest }) => (
+    
+      <Route {...rest} render={(props) => (
+        checkFinancialInstitution() ?
+          <Component {...props} />
+          : <Redirect to='/error' />
+      )} />
+    )
+
+    const checkCustom = () =>{
+      const isAuthenticated = localStorage.getItem('token');
+      const org_type = localStorage.getItem('org_type');
+      if (org_type !== 'custom') {
+          return false;
+      }
+      else{
+        return true;
+      }
+    }
+    
+    const Custom = ({ component: Component, ...rest }) => (
+    
+      <Route {...rest} render={(props) => (
+        checkCustom() ?
+          <Component {...props} />
+          : <Redirect to='/error' />
+      )} />
+    )
+
+    const checkTerminalOperator = () =>{
+      const isAuthenticated = localStorage.getItem('token');
+      const org_type = localStorage.getItem('org_type');
+      if (org_type !== 'terminal-operator') {
+          return false;
+      }
+      else{
+        return true;
+      }
+    }
+    
+    const TerminalOperator = ({ component: Component, ...rest }) => (
+    
+      <Route {...rest} render={(props) => (
+        checkTerminalOperator() ?
+          <Component {...props} />
+          : <Redirect to='/error' />
+      )} />
+    )
+
+    const checkInlandTransporter = () =>{
+      const isAuthenticated = localStorage.getItem('token');
+      const org_type = localStorage.getItem('org_type');
+      if (org_type !== 'terminal-operator') {
+          return false;
+      }
+      else{
+        return true;
+      }
+    }
+    
+    const InlandTransporter = ({ component: Component, ...rest }) => (
+    
+      <Route {...rest} render={(props) => (
+        checkInlandTransporter() ?
+          <Component {...props} />
+          : <Redirect to='/error' />
+      )} />
+    )
+
     const hist = createBrowserHistory();
     const org_type = localStorage.getItem('org_type');
     return (
@@ -174,46 +274,46 @@ class App extends PureComponent {
               <ShippingCompany path="/viewContainer" component={ViewContainers}/>
               <ShippingCompany path="/makeQuotation" component={MakeQuotations}/>
               //oceanCarrier
-              {/* <PrivateRoute path="/dashboardOc" component={DashboardOC}/> */}
-              {/* <PrivateRoute path="/createSchedule" component={CreateSchedule}/>
-              <PrivateRoute path="/addShip" component={AddShip}/>
-              <PrivateRoute path="/viewShip" component={ViewShips}/>
-              <PrivateRoute path="/addContainer" component={AddContainer}/>
-              <PrivateRoute path="/viewContainerOC" component={ViewContainersOC}/>
+              <OceanCarrier path="/dashboardOc" component={DashboardOC}/>
+              <OceanCarrier path="/createSchedule" component={CreateSchedule}/>
+              <OceanCarrier path="/addShip" component={AddShip}/>
+              <OceanCarrier path="/viewShip" component={ViewShips}/>
+              <OceanCarrier path="/addContainer" component={AddContainer}/>
+              <OceanCarrier path="/viewContainerOC" component={ViewContainersOC}/>
             
-              <PrivateRoute path="/dashboardFI" component={DashboardFI}/>
-              <PrivateRoute path="/lcPrevious" component={LCPrevious}/>
-              <PrivateRoute path="/lcRequests" component={LCRequests}/>
-              <PrivateRoute path="/lcSearch" component={LCSearch}/>
+              <FinancialInstitution path="/dashboardFI" component={DashboardFI}/>
+              <FinancialInstitution path="/lcPrevious" component={LCPrevious}/>
+              <FinancialInstitution path="/lcRequests" component={LCRequests}/>
+              <FinancialInstitution path="/lcSearch" component={LCSearch}/>
 
               
-              <PrivateRoute path="/dashboardCu" component={DashboardCu}/>
-              <PrivateRoute path="/cuSearch" component={CuSearch}/>
-              <PrivateRoute path="/viewConsignmentsCu" component={ViewConsignmentsCu}/>
-              <PrivateRoute path="/cuaddtax" component={CuAddTax}/>
-              <PrivateRoute path="/cuviewtax" component={CuViewTax}/>
-              <PrivateRoute path="/cuassigntax" component={CuAssignTax}/>
-              <PrivateRoute path="/cuallow" component={CuAllow}/>
+              <Custom path="/dashboardCu" component={DashboardCu}/>
+              <Custom path="/cuSearch" component={CuSearch}/>
+              <Custom path="/viewConsignmentsCu" component={ViewConsignmentsCu}/>
+              <Custom path="/cuaddtax" component={CuAddTax}/>
+              <Custom path="/cuviewtax" component={CuViewTax}/>
+              <Custom path="/cuassigntax" component={CuAssignTax}/>
+              <Custom path="/cuallow" component={CuAllow}/>
 
               
-              <PrivateRoute path="/dashboardTO" component={DashboardTO}/>
-              <PrivateRoute path="/TOAddBerth" component={TOAddBerth}/>
-              <PrivateRoute path="/TOAddYard" component={TOAddYard}/>
-              <PrivateRoute path="/TOAssignYard" component={TOAssignYard}/>
-              <PrivateRoute path="/TOSearch" component={TOSearch}/>
-              <PrivateRoute path="/TOViewAllSch" component={TOViewAllSch}/>
-              <PrivateRoute path="/TOViewBerth" component={TOViewBerth}/>
-              <PrivateRoute path="/TOViewLoading" component={TOViewLoading}/>
-              <PrivateRoute path="/TOViewSchReq" component={TOViewSchReq}/>
-              <PrivateRoute path="/TOViewUnloading" component={TOViewUnloading}/>
-              <PrivateRoute path="/TOViewYard" component={TOViewYard}/>
+              <TerminalOperator path="/dashboardTO" component={DashboardTO}/>
+              <TerminalOperator path="/TOAddBerth" component={TOAddBerth}/>
+              <TerminalOperator path="/TOAddYard" component={TOAddYard}/>
+              <TerminalOperator path="/TOAssignYard" component={TOAssignYard}/>
+              <TerminalOperator path="/TOSearch" component={TOSearch}/>
+              <TerminalOperator path="/TOViewAllSch" component={TOViewAllSch}/>
+              <TerminalOperator path="/TOViewBerth" component={TOViewBerth}/>
+              <TerminalOperator path="/TOViewLoading" component={TOViewLoading}/>
+              <TerminalOperator path="/TOViewSchReq" component={TOViewSchReq}/>
+              <TerminalOperator path="/TOViewUnloading" component={TOViewUnloading}/>
+              <TerminalOperator path="/TOViewYard" component={TOViewYard}/>
               
 
               
-              <PrivateRoute path="/dashboardIT" component={DashboardIT}/>
-              <PrivateRoute path="/itSearch" component={ITSearch}/>
-              <PrivateRoute path="/itViewShipment" component={ITShipment}/>
-              <PrivateRoute path="/itaddroute" component={ITAddRoute}/> */}
+              <InlandTransporter path="/dashboardIT" component={DashboardIT}/>
+              <InlandTransporter path="/itSearch" component={ITSearch}/>
+              <InlandTransporter path="/itViewShipment" component={ITShipment}/>
+              <InlandTransporter path="/itaddroute" component={ITAddRoute}/>
             </Switch>
           </Router>
         </div>

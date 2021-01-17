@@ -39,7 +39,21 @@ class Login extends PureComponent {
         else if(org_type === 'shipping-company'){
           this.props.history.push('/dashboardSc');
         }
-        
+        else if(org_type === 'ocean-carrier'){
+          this.props.history.push('/dashboardOc');
+        }
+        else if(org_type === 'financial-institution'){
+          this.props.history.push('/dashboardFI');
+        }
+        else if(org_type === 'custom'){
+          this.props.history.push('/dashboardCu');
+        }
+        else if(org_type === 'terminal-operator'){
+          this.props.history.push('/dashboardTO');
+        }
+        else if(org_type === 'inland-transporter'){
+          this.props.history.push('/dashboardIT');
+        }
         this.setState({
           loggedIn: true
         })

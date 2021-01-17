@@ -15,6 +15,8 @@ const {
   getStopsBySchedule_Id,
   getOceanCarrierById,
   getShippingCompanyById,
+  getDocumentById,
+  rejectQuotation,
 } = require("./cargoOwner.service");
 const {
   getOrganizationByID,
@@ -128,6 +130,9 @@ module.exports = {
     try {
       let body = req.body;
       body.decoded = req.decoded;
+      let result = [];
+      let schedules;
+      let document;
       const quotations = await viewQuotations(body.decoded.result.org_id);
       if (!quotations.length) {
         return res.status(404).send({
@@ -136,10 +141,14 @@ module.exports = {
           data: null,
         });
       }
-      const schedules = await getScheduleById(quotations.schedule_id);
-      let result = {};
-      result.quotations = quotations;
-      result.schedule = schedules;
+      for (let i = 0; i < quotations.length; i++) {
+        schedules = await getScheduleById(quotations[i].schedule_id);
+        document = await getDocumentById(quotations[i].document_id);
+        result.push({});
+        result[i].quotations = quotations[i];
+        result[i].schedule = schedules;
+        result[i].document = document;
+      }
       res.status(202).send({
         success: 1,
         message: "succesfully got quotations",
@@ -214,7 +223,7 @@ module.exports = {
           message: "there are no quotations",
           data: null,
         });
-      } else if (quotations.quote_status != "owner-pending") {
+      } else if (quotations.quote_status != "cargo-owner-pending") {
         return res.status(409).send({
           success: 0,
           message: "still not approved by authorities",
@@ -235,6 +244,41 @@ module.exports = {
       res.status(502).send({
         success: 0,
         message: "something went wrong while approving quotations",
+        data: null,
+      });
+    }
+  },
+  rejectQuotation: async (req, res) => {
+    try {
+      let body = req.body;
+      const quotations = await viewQuotationById(body.quotation_id);
+      if (!quotations) {
+        return res.status(404).send({
+          success: 0,
+          message: "there are no quotations",
+          data: null,
+        });
+      } else if (
+        quotations.quote_status != "approve-owner" ||
+        quotations.quote_status != "pending"
+      ) {
+        return res.status(409).send({
+          success: 0,
+          message: "you can not cancel request now!",
+          data: null,
+        });
+      }
+      await rejectQuotation(quotations.quotation_id);
+      res.status(202).send({
+        success: 1,
+        message: "succesfully rejected quotations",
+        data: null,
+      });
+    } catch (e) {
+      console.log(e);
+      res.status(502).send({
+        success: 0,
+        message: "something went wrong while rejecting quotations",
         data: null,
       });
     }
@@ -359,6 +403,33 @@ module.exports = {
       res.status(502).send({
         success: 0,
         message: "something went wrong while checking schedules",
+        data: null,
+      });
+    }
+  },
+  getQuotationUrl: async (req, res) => {
+    try {
+      let body = req.body;
+      body.decoded = req.decoded;
+      const document = await getDocumentById(body.document_id);
+      if (!document) {
+        return res.status(404).send({
+          success: 0,
+          message: "document not found",
+          data: null,
+        });
+      }
+      const url = document.location.split(`documents\\`)[1];
+      return res.status(202).send({
+        success: 1,
+        message: "document succesfully found",
+        data: url,
+      });
+    } catch (e) {
+      console.log(e);
+      res.status(502).send({
+        success: 0,
+        message: "something went wrong while getting document",
         data: null,
       });
     }
