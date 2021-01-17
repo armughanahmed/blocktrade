@@ -230,6 +230,16 @@ class ViewQuotations extends PureComponent {
                             <span className="badge badge-info text-center">Pending</span>
                         );
                      }
+                     else if (tableMeta.rowData[9]=== "approve-owner"){
+                        return (
+                            <span className="badge badge-primary text-center">Approved</span>
+                        );
+                     }
+                     else if (tableMeta.rowData[9]=== "owner-rejected"){
+                        return (
+                            <span className="badge badge-danger text-center">Rejected</span>
+                        );
+                     }
                       else{
                         return (
                              <span className="badge badge-warning">Waiting</span>
@@ -247,7 +257,7 @@ class ViewQuotations extends PureComponent {
                  sort: false,
                  customBodyRender: (value, tableMeta, updateValue) => {
                     let id = tableMeta.rowData[0];
-                    if (tableMeta.rowData[9]=== "pending") {
+                    if (tableMeta.rowData[9]=== "pending" || tableMeta.rowData[9]=== "owner-rejected" || tableMeta.rowData[9]=== "approve-owner") {
                         return (
                             <button className="btn btn-primary btn-sm" disabled>
                             Approve
@@ -273,12 +283,20 @@ class ViewQuotations extends PureComponent {
                  sort: false,
                  customBodyRender: (value, tableMeta, updateValue) => {
                     let id = tableMeta.rowData[0];
+                    if(tableMeta.rowData[9]=== "owner-rejected" || tableMeta.rowData[9]=== "approve-owner"){
+                        return (
+                            <button className="btn btn-danger btn-sm" onClick={() => this.reject(id)} disabled>
+                            Cancel
+                            </button>
+                        ); 
+                    }
+                    else{
                         return (
                             <button className="btn btn-danger btn-sm" onClick={() => this.reject(id)}>
                             Cancel
                             </button>
                         );
-                    
+                        }
                   }
                 },
                 

@@ -1,8 +1,22 @@
-import React from 'react';
+import React, { PureComponent } from 'react'
 import './NavbarIT.css';
 
-function NavbarIT() {
-    return (
+class NavbarIT extends PureComponent {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      
+    }
+  }
+
+  logout(){
+    localStorage.setItem('token','');
+    localStorage.setItem('org_type','');
+  }
+
+  render() {
+      return (
         <nav className="navbar navbar-expand-xl py-md-2">
            
         <h2 className="py-md-2"><strong>Block Trade</strong></h2>
@@ -77,9 +91,7 @@ function NavbarIT() {
              <i className="fa fa-user fa-lg"></i>
             </a>
             <div className="dropdown-menu dropdown-menu-right">
-              <a className="dropdown-item" href="#">Link 1</a>
-              <a className="dropdown-item" href="#">Link 2</a>
-              <a className="dropdown-item" href="#">Link 3</a>
+              <a className="dropdown-item" href="/login" onClick={this.logout}>Logout</a>
             </div>
           </li>
         </ul>
@@ -88,6 +100,7 @@ function NavbarIT() {
        
         
     )
+  }
 }
 
-export default NavbarIT;
+export default NavbarIT

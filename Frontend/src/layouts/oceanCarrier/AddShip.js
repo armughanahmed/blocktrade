@@ -14,7 +14,8 @@ class AddShip extends PureComponent {
             shipType: '',
             capacity: '',
             length: '',
-            width: ''
+            width: '',
+            success: false,
         }
     }
 
@@ -24,21 +25,29 @@ class AddShip extends PureComponent {
         //console.log(token);
         const obj = {
             type: this.state.shipType,
-            total_capacity: this.state.capacity,
-            length: this.state.length,
-            width: this.state.width
+            total_capacity: parseInt(this.state.capacity),
+            length: parseInt(this.state.length),
+            width: parseInt(this.state.width)
         }
         console.log(obj);
         try{ 
-        const response = await axios.post('http://localhost:4000/oceanCarrier/add',{
+        const response = await axios.post('http://localhost:4000/oceanCarrier/addShip',obj,{
             headers: {
                 'Authorization': `Bearer ${token}`
             }
         })
+        if(response.status === 202){
+            this.setState({
+                success: true
+            })
+            setTimeout(function(){
+                window.location.reload();
+           }, 3000);
+        }
         console.log(response)
        }
         catch(e){
-         console.log(e);
+         console.log(e.response);
         }  
     }
 
@@ -116,6 +125,14 @@ class AddShip extends PureComponent {
                                         <label htmlFor="width">Width:</label>
                                         <input className="form-control" value={this.state.width} type="number" min="1" onChange={(e) => this.updateWidth(e)} placeholder="Enter width" />
                                     </div>
+                                </div>
+                            </div>
+                            <div className="row text-center">
+                                <div className="col"> 
+                                {
+                                    this.state.success === true&&
+                                        <p id="success-add-ship">Successfully added ship!</p>
+                                }
                                 </div>
                             </div>
                             <div className="row">

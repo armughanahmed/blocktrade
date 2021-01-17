@@ -11,11 +11,8 @@ class NavbarCO extends PureComponent {
   }
 
   logout(){
-    
     localStorage.setItem('token','');
     localStorage.setItem('org_type','');
-
-
   }
 
   render() {

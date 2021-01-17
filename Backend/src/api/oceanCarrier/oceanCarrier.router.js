@@ -1,5 +1,9 @@
 const router = require("express").Router();
-const { addShip, getPort } = require("./oceanCarrier.controller");
+const {
+  addShip,
+  getPort,
+  createContainer,
+} = require("./oceanCarrier.controller");
 const {
   auth,
   authAdmin,
@@ -9,4 +13,5 @@ const {
 router.post("/addShip", auth, authOceanCarrier, addShip);
 router.get("/getPort", auth, getPort);
 router.post("/getShipsByType", auth, getPort);
+router.post("/createContainer", auth, authOceanCarrier, createContainer);
 module.exports = router;

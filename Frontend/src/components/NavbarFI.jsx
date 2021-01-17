@@ -1,7 +1,20 @@
-import React from 'react';
-import './NavbarCO.css';
+import React, { PureComponent } from 'react'
 
-function NavbarCO() {
+class NavbarFI extends PureComponent {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      
+    }
+  }
+
+  logout(){
+    localStorage.setItem('token','');
+    localStorage.setItem('org_type','');
+  }
+
+  render() {
     return (
         <nav className="navbar navbar-expand-xl py-md-2">
            
@@ -28,9 +41,7 @@ function NavbarCO() {
              <i className="fa fa-user fa-lg"></i>
             </a>
             <div className="dropdown-menu dropdown-menu-right">
-              <a className="dropdown-item" href="#">Link 1</a>
-              <a className="dropdown-item" href="#">Link 2</a>
-              <a className="dropdown-item" href="#">Link 3</a>
+              <a className="dropdown-item" href="/login" onClick={this.logout}>Logout</a>
             </div>
           </li>
         </ul>
@@ -39,6 +50,7 @@ function NavbarCO() {
        
         
     )
+  }
 }
 
-export default NavbarCO;
+export default NavbarFI

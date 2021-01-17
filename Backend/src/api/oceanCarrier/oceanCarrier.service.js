@@ -60,13 +60,13 @@ module.exports = {
     return new Promise((resolve, reject) => {
       pool.query(
         `insert into ships(	total_capacity,	type,	length,	width,ocean_carrier_id) 
-        values(?,?,?,?,?,?)`,
+        values(?,?,?,?,?)`,
         [
           data.total_capacity,
           data.type,
           data.length,
           data.width,
-          data.decode.result.ocean_carrier_id,
+          data.decoded.result.ocean_carrier_id,
         ],
         (error, results, fields) => {
           if (error) {
@@ -161,7 +161,7 @@ module.exports = {
         `insert into containers(ocean_carrier_id,	type,	size,	total_space ,	empty_weight) 
         values(?,?,?,?,?)`,
         [
-          data.decode.result.ocean_carrier_id,
+          data.decoded.result.org_id,
           data.type,
           data.size,
           data.total_space,
