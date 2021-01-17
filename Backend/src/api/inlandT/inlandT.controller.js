@@ -5,7 +5,8 @@ const { getUserByUserId } = require("../users/user.service");
 module.exports = {
   addVehicle: async (req, res) => {
     try {
-      const body = req.body;
+      let body = req.body;
+      body.decoded = req.decoded
       const addVeh = await addVehicle(body);
       body.Vmodel= addVeh.insertId;
       console.log(addVeh);

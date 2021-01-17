@@ -30,7 +30,7 @@ function NavbarCO() {
             <div className="dropdown-menu dropdown-menu-right">
               <a className="dropdown-item" href="#">Link 1</a>
               <a className="dropdown-item" href="#">Link 2</a>
-              <a className="dropdown-item" href="#">Link 3</a>
+              <a className="dropdown-item" href="/login">Logout</a>
             </div>
           </li>
         </ul>

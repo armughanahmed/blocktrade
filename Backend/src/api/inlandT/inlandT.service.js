@@ -4,11 +4,13 @@ const { getUserByUserId } = require("../users/user.service");
 
 module.exports = {
     addVehicle: (data) => {
+      console.log("abc");
+      console.log(data)
       return new Promise((resolve, reject) => {
         pool.query(
             "insert into vehicles(inland_id,type,model,make,year,distance_travelled,status) values(?,?,?,?,?,?,?)",
             [
-              1,
+              data.decoded.result.id,
               data.Vtype,
               data.Vmodel,
               data.Vmake,

@@ -2,19 +2,56 @@ import React, { PureComponent } from 'react'
 import NavbarCO from '../../components/NavbarCO';
 import Footer from '../../components/Footer';
 import MUIDataTable from "mui-datatables";
+import axios from 'axios';
 
 class ViewQuotations extends PureComponent {
     constructor(props) {
         super(props)
 
         this.state = {
-            data : [
-                { id: 1, name: "Electronics", originCountry: "Pakistan", originCity: "Karachi", destinationCity: "Dubai",  destinationCountry: "UAE", lastCheckpoint: "Gwadar",  estimatedDeparture:"25-12-2020", estimatedArrival:"25-12-2020", totalCharges: 10000, status: "completed" },
-                { id: 2, name: "Electronics", originCountry: "Pakistan", originCity: "Karachi", destinationCity: "Dubai",  destinationCountry: "UAE", lastCheckpoint: "Gwadar",  estimatedDeparture:"25-12-2020", estimatedArrival:"25-12-2020", totalCharges: 10000, status:"abc" },
-                { id: 3, name: "Electronics", originCountry: "Pakistan", originCity: "Karachi", destinationCity: "Dubai",  destinationCountry: "UAE", lastCheckpoint: "Gwadar",  estimatedDeparture:"25-12-2020", estimatedArrival:"25-12-2020", totalCharges: 10000, status:"abc" },
-                { id: 4, name: "Electronics", originCountry: "Pakistan", originCity: "Karachi", destinationCity: "Dubai",  destinationCountry: "UAE", lastCheckpoint: "Gwadar",  estimatedDeparture:"25-12-2020", estimatedArrival:"25-12-2020", totalCharges: 10000, status:"abc" },
-            ],
+            data : [],
             table: true
+        }
+    }
+
+    componentDidMount(){
+        this.getQuotation();
+    }
+
+    async getQuotation(){
+        const token = localStorage.getItem('token');
+        try{
+            const response = await axios.get('http://localhost:4000/cargo-owner/view-quotations',{
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            //console.log(response.data.data);
+            let temp = [];
+            for (let index = 0; index < response.data.data.length; index++) {
+                const element = response.data.data[index];
+                //console.log(element.quotations);
+                //console.log(element.schedule); 
+                const obj = {
+                    id: element.quotations.quotation_id,
+                    originCountry: element.schedule.origin_country, 
+                    originCity: element.schedule.origin_city,
+                    destinationCity: element.schedule.destination_city,
+                    destinationCountry: element.schedule.destination_country,
+                    estimatedDeparture: element.schedule.departure_date,
+                    estimatedArrival: element.schedule.arrival_date,
+                    totalCharges: element.quotations.price,
+                    status: element.quotations.quote_status,
+                }
+                console.log(obj);  
+                temp.push(obj);
+            }
+            this.setState({
+                data: temp
+            })
+        }
+        catch(e){
+            console.log(e.response);
         }
     }
 
@@ -88,19 +125,29 @@ class ViewQuotations extends PureComponent {
                 
                },
                {
-                name: "details",
-                label: "Details",
+                name: "document",
+                label: "Document",
                 
                 options: {
                  filter: true,
                  sort: false,
                  customBodyRender: (value, tableMeta, updateValue) => {
                      let id = tableMeta.rowData[0];
-                    return (
-                      <button className="btn btn-primary btn-sm" onClick={(e) => this.viewDocument(e,id)}>
-                       View details
-                      </button>
-                    );}
+                     if (tableMeta.rowData[9]=== "pending") {
+                        return (
+                            <button className="btn btn-primary btn-sm" disabled>
+                             Download
+                            </button>
+                        );
+                     }
+                     else{
+                        return (
+                            <button className="btn btn-primary btn-sm">
+                             Download
+                            </button>
+                        );
+                     }
+                  }
                 },
                 
                },
@@ -111,15 +158,15 @@ class ViewQuotations extends PureComponent {
                  filter: true,
                  sort: false,
                  customBodyRender: (value, tableMeta, updateValue)  => {
-                     //console.log(tableMeta.rowData[7]);
-                     if (tableMeta.rowData[8]=== "completed") {
+                     console.log(tableMeta);
+                     if (tableMeta.rowData[9]=== "pending") {
                         return (
-                            <span className="badge badge-info">Completed</span>
+                            <span className="badge badge-info text-center">Pending</span>
                         );
                      }
                       else{
                         return (
-                             <span className="badge badge-warning">In progress</span>
+                             <span className="badge badge-warning">Waiting</span>
                         );
                       }
                    }
@@ -127,18 +174,54 @@ class ViewQuotations extends PureComponent {
                 
                },
                {
-                name: "approveCancel",
+                name: "approve",
                 label: "Approval",
                 options: {
                  filter: true,
                  sort: false,
                  customBodyRender: (value, tableMeta, updateValue) => {
                     let id = tableMeta.rowData[0];
-                    return (
-                      <button className="btn btn-primary btn-sm"  onClick={(e) => this.viewDetail(e,id)}>
-                      Approve/Cancel
-                      </button>
-                    );}
+                    if (tableMeta.rowData[9]=== "pending") {
+                        return (
+                            <button className="btn btn-primary btn-sm" disabled>
+                            Approve
+                            </button>
+                          );
+                    }
+                    else{
+                        return (
+                            <button className="btn btn-primary btn-sm">
+                            Approve
+                            </button>
+                          );
+                    }
+                  }
+                },
+                
+               },
+               {
+                name: "cancel",
+                label: "Cancel",
+                options: {
+                 filter: true,
+                 sort: false,
+                 customBodyRender: (value, tableMeta, updateValue) => {
+                    let id = tableMeta.rowData[0];
+                    if (tableMeta.rowData[9]=== "pending") {
+                        return (
+                            <button className="btn btn-danger btn-sm" disabled>
+                            Cancel
+                            </button>
+                        );
+                    }
+                    else{
+                        return (
+                            <button className="btn btn-danger btn-sm">
+                            Cancel
+                            </button>
+                        );
+                    }
+                  }
                 },
                 
                },
