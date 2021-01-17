@@ -9,13 +9,16 @@ const {
   createDocument,
   updateQuotationDocument,
 } = require("./shippingCompany.service");
-const {createQuotationDocument,createDocHash} = require("../constants/functions");
+const {
+  createQuotationDocument,
+  createDocHash,
+} = require("../constants/functions");
 const { viewFCL, viewLCL } = require("../cargoOwner/cargoOwner.service");
 const { getOrganizationByID } = require("../organization/organization.service");
 const { getUserByUserId } = require("../users/user.service");
 const { hashSync, genSaltSync, compareSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
-const { getPort, getPortById } = require("../oceanCarrier/oceanCarrier.service");
+const { getPortById } = require("../oceanCarrier/oceanCarrier.service");
 module.exports = {
   getNonAssignedConsignments: async (req, res) => {
     try {
@@ -113,8 +116,8 @@ module.exports = {
         quotation.shipping_company_id
       );
       const schedule = await getScheduleById(body.scheduleId);
-      const arrivalPort=await getPortById(schedule.arrival_port_id)
-      const departurePort=await getPortById(schedule.departure_port_id)
+      const arrivalPort = await getPortById(schedule.arrival_port_id);
+      const departurePort = await getPortById(schedule.departure_port_id);
       const fcl = body.fcl;
       const lcl = body.lcl;
       let priceArrayObj = fcl.concat(lcl);
@@ -141,30 +144,39 @@ module.exports = {
       await updateQuotationPriceAndStatus(body);
       //filename = cargoOwner_shippingCompany_quotationId
       const filename = `${cargoOwner.name}-${shippingCompany.name}-${quotation.quotation_id}`;
-      console.log(filename)
-      let scheduleObj={}
-      scheduleObj.departurePort=departurePort.name
-      scheduleObj.arrivalPort=arrivalPort.name
-      scheduleObj.departureDate=schedule.departure_date
-      scheduleObj.arrival_date=schedule.arrival_date
-      const fileLocation =createQuotationDocument(filename,
-          schedule,
-          priceArrayObj)
-      console.log("fileee")
-      console.log(fileLocation)
-      console.log("fileee")
-      // const docHash = createDocHash(fileLocation);
-      // documentObj.name = filename;
-      // documentObj.location = fileLocation;
-      // documentObj.hash = docHash;
-      // document.type = "quotation";
-      // const document = await createDocument(documentObj);
-      // body.document_id = document.insertId;
-      // await updateQuotationDocument(body);
+      let scheduleObj = {};
+      scheduleObj.departurePort = departurePort.name;
+      scheduleObj.arrivalPort = arrivalPort.name;
+      scheduleObj.departureDate = schedule.departure_date;
+      scheduleObj.arrivalDate = schedule.arrival_date;
+      priceArrayObj.forEach(function (obj) {
+        if (obj.fcl_id) {
+          obj.id = obj.fcl_id;
+          delete obj.fcl_id;
+        } else if (obj.lcl_id) {
+          obj.id = obj.lcl_id;
+          delete obj.lcl_id;
+        }
+      });
+      const fileLocation = await createQuotationDocument(
+        filename,
+        scheduleObj,
+        priceArrayObj
+      );
+      const docHash = await createDocHash(fileLocation);
+      documentObj.name = filename;
+      documentObj.location = fileLocation;
+      documentObj.hash = docHash;
+      documentObj.type = "quotation";
+      const document = await createDocument(documentObj);
+      body.document_id = document.insertId;
+      await updateQuotationDocument(body);
+      const fileSplit = fileLocation.split(`documents\\`)[1];
+      console.log(fileSplit);
       return res.status(201).send({
         success: 1,
         message: "succesfully created quotation",
-        data: fileLocation,
+        data: fileSplit,
       });
     } catch (e) {
       console.log(e);

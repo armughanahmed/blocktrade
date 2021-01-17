@@ -28,6 +28,9 @@ const {
 const { hashSync, genSaltSync, compareSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
+const {
+  getScheduleById,
+} = require("../shippingComapny/shippingCompany.service");
 const sendEmail = async (text, to, org) => {
   let transporter = nodemailer.createTransport({
     service: "gmail",
@@ -126,17 +129,21 @@ module.exports = {
       let body = req.body;
       body.decoded = req.decoded;
       const quotations = await viewQuotations(body.decoded.result.org_id);
-      if (!quotations) {
-        return res.status(202).send({
+      if (!quotations.length) {
+        return res.status(404).send({
           success: 0,
           message: "there are no quotations",
           data: null,
         });
       }
+      const schedules = await getScheduleById(quotations.schedule_id);
+      let result = {};
+      result.quotations = quotations;
+      result.schedule = schedules;
       res.status(202).send({
         success: 1,
         message: "succesfully got quotations",
-        data: quotations,
+        data: result,
       });
     } catch (e) {
       console.log(e);
@@ -215,11 +222,13 @@ module.exports = {
         });
       }
       await approveQuotation(quotations.quotation_id);
-      await createConsignment(quotations.quotation_id);
+      const createdConsignments = await createConsignment(
+        quotations.quotation_id
+      );
       res.status(202).send({
         success: 1,
         message: "succesfully approved quotations",
-        data: null,
+        data: createdConsignments,
       });
     } catch (e) {
       console.log(e);

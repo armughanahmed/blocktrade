@@ -190,14 +190,15 @@ module.exports = {
   createConsignment: (data) => {
     return new Promise((resolve, reject) => {
       pool.query(
-        `update quotations set quote_status=? where quotation_id=?`,
-        ["approve-owner", data],
+        `insert into consignments(quotation_id) 
+        values(?)`,
+        [data],
         (error, results, fields) => {
           if (error) {
-            console.log("approveQuotation::");
+            console.log("createConsignment::");
             return reject(error);
           }
-          console.log("approveQuotation::");
+          console.log("createConsignment::");
           console.log(results);
           resolve(results);
         }

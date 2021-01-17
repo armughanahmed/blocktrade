@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^12.2.2",
     "axios": "^0.21.0",
     "history": "^4.10.1",
+    "http-server": "^0.12.3",
     "mui-datatables": "^3.7.1",
     "react": "^16.12.0",
     "react-bootstrap": "^1.4.0",

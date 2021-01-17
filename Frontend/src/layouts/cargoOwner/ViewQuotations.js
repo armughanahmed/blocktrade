@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import NavbarCO from '../../components/NavbarCO';
 import Footer from '../../components/Footer';
 import MUIDataTable from "mui-datatables";
+import axios from 'axios';
 
 class ViewQuotations extends PureComponent {
     constructor(props) {
@@ -15,6 +16,25 @@ class ViewQuotations extends PureComponent {
                 { id: 4, name: "Electronics", originCountry: "Pakistan", originCity: "Karachi", destinationCity: "Dubai",  destinationCountry: "UAE", lastCheckpoint: "Gwadar",  estimatedDeparture:"25-12-2020", estimatedArrival:"25-12-2020", totalCharges: 10000, status:"abc" },
             ],
             table: true
+        }
+    }
+
+    componentDidMount(){
+        this.getQuotation();
+    }
+
+    async getQuotation(){
+        const token = localStorage.getItem('token');
+        try{
+            const response = await axios.get('http://localhost:4000/cargo-owner/view-quotations',{
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            console.log(response);
+        }
+        catch(e){
+            console.log(e.response);
         }
     }
 
@@ -88,8 +108,8 @@ class ViewQuotations extends PureComponent {
                 
                },
                {
-                name: "details",
-                label: "Details",
+                name: "document",
+                label: "Document",
                 
                 options: {
                  filter: true,
@@ -97,8 +117,8 @@ class ViewQuotations extends PureComponent {
                  customBodyRender: (value, tableMeta, updateValue) => {
                      let id = tableMeta.rowData[0];
                     return (
-                      <button className="btn btn-primary btn-sm" onClick={(e) => this.viewDocument(e,id)}>
-                       View details
+                      <button className="btn btn-primary btn-sm" >
+                       Download
                       </button>
                     );}
                 },
@@ -127,7 +147,7 @@ class ViewQuotations extends PureComponent {
                 
                },
                {
-                name: "approveCancel",
+                name: "approve",
                 label: "Approval",
                 options: {
                  filter: true,
@@ -135,8 +155,24 @@ class ViewQuotations extends PureComponent {
                  customBodyRender: (value, tableMeta, updateValue) => {
                     let id = tableMeta.rowData[0];
                     return (
-                      <button className="btn btn-primary btn-sm"  onClick={(e) => this.viewDetail(e,id)}>
-                      Approve/Cancel
+                      <button className="btn btn-primary btn-sm">
+                      Approve
+                      </button>
+                    );}
+                },
+                
+               },
+               {
+                name: "cancel",
+                label: "Cancel",
+                options: {
+                 filter: true,
+                 sort: false,
+                 customBodyRender: (value, tableMeta, updateValue) => {
+                    let id = tableMeta.rowData[0];
+                    return (
+                      <button className="btn btn-danger btn-sm">
+                      Cancel
                       </button>
                     );}
                 },

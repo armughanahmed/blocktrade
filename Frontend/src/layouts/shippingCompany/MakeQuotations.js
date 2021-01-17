@@ -19,6 +19,7 @@ class MakeQuotations extends PureComponent {
             quoteCharges: '',
             lclCharges: [],
             fclCharges: [],
+            success: false,
 
         }
     }
@@ -33,7 +34,8 @@ class MakeQuotations extends PureComponent {
         else{
             this.setState({
                 showSchedule: true,
-                charges: true
+                charges: true,
+                success: false
             })
         }
         this.setState({
@@ -231,6 +233,21 @@ class MakeQuotations extends PureComponent {
                 }
             })
             console.log(response);
+            if(response.data.success === 1){
+                this.setState({
+                    success: true,
+                    showSchedule: false
+                })
+                setTimeout(function(){ 
+                    var url = `http://127.0.0.1:8080/${response.data.data}`;
+                    window.open(url,null);
+                }, 2000);
+                setTimeout(function(){ 
+                    window.location.reload();
+                 }, 4000);
+               
+            }
+            
            }
            catch(e){
                console.log(e.response);
@@ -244,7 +261,7 @@ class MakeQuotations extends PureComponent {
     showFcl(fcl){
         if (this.state.quote === true) {
             return (
-                <div className="col-lg-4" id="fcl-card">
+                <div className="col-lg-4 col-md-6 col-sm-12" id="fcl-card">
                     <div className="card">
                         <div className="card-body">
                             <h5>Ocean FCL</h5>
@@ -264,7 +281,7 @@ class MakeQuotations extends PureComponent {
     showLcl(lcl){
         if (this.state.quote === true) {
         return (
-            <div className="col-lg-4" id="lcl-card">
+            <div className="col-lg-4 col-md-6 col-sm-12" id="lcl-card">
                 <div className="card">
                     <div className="card-body">
                         <h5>Ocean LCL</h5>
@@ -307,10 +324,20 @@ class MakeQuotations extends PureComponent {
                                             </select>
                                         </div>
                                     </div>
+                                    <div className="row text-center">
+                                        {
+                                            this.state.success === true&&
+                                            <div className="col">
+                                                <p id="quote-success">Quotation sent succesfully!</p>
+                                            </div> 
+                                            
+                                        }
+                                    </div>
                                     {
                                         this.state.showSchedule === true &&
+                                        <div >
                                         <div className="row">
-                                            <div className="col-lg-6 offset-lg-3" id="schedule-details">
+                                            <div className="col-lg-6 offset-lg-3"   id="schedule-details">
                                                 <h3>Schedule details</h3>
                                             <ul>
                                                 <li><strong>Schedule id: </strong>{this.state.schedule.schedule_id}</li>
@@ -323,15 +350,18 @@ class MakeQuotations extends PureComponent {
                                             </ul>
                                             </div>
                                         </div>
+                                        </div>
                                     }
                                     <form className="form-group" onSubmit={(e) => this.makeQuote(e)}> 
                                         <div className="row" id="fcl-row">
-                                            {this.state.fcl.map((fcl) => (
+                                            {this.state.success === false&&
+                                                this.state.fcl.map((fcl) => (
                                                 this.showFcl(fcl)  
                                             ))}
                                         </div>
                                         <div className="row" id="lcl-row">
-                                            {this.state.lcl.map((lcl) => (
+                                            {   this.state.success === false&&
+                                                this.state.lcl.map((lcl) => (
                                                 this.showLcl(lcl)  
                                             ))}
                                         </div>
@@ -340,7 +370,7 @@ class MakeQuotations extends PureComponent {
                                                 <button className="btn btn-custom" type="submit">Make Quote</button>
                                             </div>
                                         </div>
-                                    </form>                           
+                                    </form>                 
                                 </div> 
                             </div>
                         </div>

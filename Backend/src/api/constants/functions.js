@@ -2,10 +2,8 @@ const pdf = require("pdf-creator-node");
 const crypto = require("crypto");
 const fs = require("fs");
 const path = require("path");
-const createQuotationDocument = (filename,schedule,consignments) => {
-  console.log("inside")
-  console.log(filename)
-  var html = fs.readFileSync(path.resolve(__dirname, "template.html"),'utf8');
+const createQuotationDocument = async (filename, schedule, consignments) => {
+  var html = fs.readFileSync(path.resolve(__dirname, "template.html"), "utf8");
 
   var options = {
     format: "A4",
@@ -46,7 +44,7 @@ const createQuotationDocument = (filename,schedule,consignments) => {
 
   // var schedule = {
   //   departurePort: "Port Qasim",
-  //   arrivalPort: "Gwadar port", 
+  //   arrivalPort: "Gwadar port",
   //   departureDate: "17-12-2020",
   //   arrivalDate: "30-12-20",
   // };
@@ -56,10 +54,13 @@ const createQuotationDocument = (filename,schedule,consignments) => {
       consignments: consignments,
       schedule: schedule,
     },
-    path: path.resolve(__dirname,`../documents/quotations/${filename}`),
+    path: path.resolve(__dirname, `../documents/quotations/${filename}.pdf`),
   };
-  let returnedValue=path.resolve(__dirname,`../documents/quotations/${filename}.pdf`);
-  pdf
+  let returnedValue = path.resolve(
+    __dirname,
+    `../documents/quotations/${filename}.pdf`
+  );
+  await pdf
     .create(document, options)
     .then((res) => {
       console.log(res);
@@ -67,16 +68,16 @@ const createQuotationDocument = (filename,schedule,consignments) => {
     .catch((error) => {
       console.error(error);
     });
-    return returnedValue
+  return returnedValue;
 };
-const createDocHash = (filePath) => {
+const createDocHash = async (filePath) => {
   let file_buffer = fs.readFileSync(filePath);
   let sum = crypto.createHash("sha256");
   sum.update(file_buffer);
   const hex = sum.digest("hex");
+  console.log(hex);
   return hex;
 };
-
 const emailService = async (to, org, subject, html) => {
   let transporter = nodemailer.createTransport({
     service: "gmail",
