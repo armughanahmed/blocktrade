@@ -191,9 +191,6 @@ module.exports = {
       body.size = containerArray[0];
       body.empty_weight = containerArray[1];
       body.total_space = containerArray[2];
-      console.log("body");
-      console.log(body);
-      console.log("body");
       const createdContainer = await createContainer(body);
       res.status(202).send({
         success: 1,
@@ -273,7 +270,10 @@ module.exports = {
     try {
       let body = req.body;
       body.decoded = req.decoded;
-      const ports = await getPort(body);
+      console.log("body")
+      console.log(body)
+      const ports = await getPort(body.cityName);
+      console.log(ports.length)
       if (!ports.length) {
         return res.status(404).send({
           success: 1,

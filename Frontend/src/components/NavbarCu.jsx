@@ -44,7 +44,7 @@ class NavbarCu extends PureComponent {
         Shipment
         </a>
         <div className="dropdown-menu" aria-labelledby="navbarDropdown1">
-          <a className="dropdown-item" href="/ViewConsignmentsCu#">Upcoming</a>
+          <a className="dropdown-item" href="/ViewConsignmentsCu">Upcoming</a>
           <a className="dropdown-item" href="/ViewConsignmentsCu">Clearence pending</a>
           <a className="dropdown-item" href="/ViewConsignmentsCu">Tax pending</a>
           <a className="dropdown-item" href="/ViewConsignmentsCu">Cleared</a>

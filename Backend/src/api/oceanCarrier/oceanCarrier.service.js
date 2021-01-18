@@ -234,7 +234,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       pool.query(
         `select * from ports where city=?`,
-        [data.container_id],
+        [data],
         (error, results, fields) => {
           if (error) {
             console.log("getPort::");

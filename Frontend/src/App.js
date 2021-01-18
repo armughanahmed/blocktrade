@@ -70,6 +70,8 @@ import ITSearch from './layouts/inlandT/ITSearch';
 import ITShipment from './layouts/inlandT/ITViewShipment';
 import ITAddRoute from './layouts/inlandT/ITAddRoute';
 import Error from './layouts/Error';
+import ITAddVehicle from './layouts/inlandT/ITAddVehicle';
+import AddEmployee from './layouts/AddEmployee';
 
 
 class App extends PureComponent {
@@ -153,6 +155,7 @@ class App extends PureComponent {
           return false;
       }
       else{
+        console.log(org_type);
         return true;
       }
     }
@@ -189,7 +192,7 @@ class App extends PureComponent {
     const checkCustom = () =>{
       const isAuthenticated = localStorage.getItem('token');
       const org_type = localStorage.getItem('org_type');
-      if (org_type !== 'custom') {
+      if (org_type !== 'customs') {
           return false;
       }
       else{
@@ -229,7 +232,7 @@ class App extends PureComponent {
     const checkInlandTransporter = () =>{
       const isAuthenticated = localStorage.getItem('token');
       const org_type = localStorage.getItem('org_type');
-      if (org_type !== 'terminal-operator') {
+      if (org_type !== 'inland-transporter') {
           return false;
       }
       else{
@@ -256,6 +259,7 @@ class App extends PureComponent {
               <Route path="/login" component={Login}/>
               <Route path="/register" component={Register}/>
               <Route path="/error" component={Error} />
+              <Route path="/addEmployee" component={AddEmployee} />
               <CargoOwner path="/dashboard" component={DashboardCO}/>
               <CargoOwner path="/startConsignment" component={StartConsignmentCO}/>
               <CargoOwner path="/viewConsignments" component={ViewConsignmentsCO}/>
@@ -314,6 +318,7 @@ class App extends PureComponent {
               <InlandTransporter path="/itSearch" component={ITSearch}/>
               <InlandTransporter path="/itViewShipment" component={ITShipment}/>
               <InlandTransporter path="/itaddroute" component={ITAddRoute}/>
+              <InlandTransporter path="/itaddvehicle" component={ITAddVehicle}/>
             </Switch>
           </Router>
         </div>

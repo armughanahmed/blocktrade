@@ -6,7 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios'
 import Stop from '../../components/oceanCarrier/Stops'
 import NavbarOC from '../../components/NavbarOC'
-import NavbarCO from '../../components/NavbarCO';
+
 
 class CreateSchedule extends PureComponent {
     static propTypes = {}
@@ -15,14 +15,7 @@ class CreateSchedule extends PureComponent {
         super(props)
 
         this.state = {
-            ships: [
-                {
-                    id: 1
-                },
-                {
-                    id: 2
-                }
-            ],
+            ships: [],
             selectShipType: false, //If ship type selected that we'll receive corresponding free ships from backend
             addStops: false,
             stop: false,
@@ -37,7 +30,14 @@ class CreateSchedule extends PureComponent {
             departureCountry: '',
             departureCity: '',
             destinationCountry: '',
-            destinationCity: ''
+            destinationCity: '',
+            warning: false,
+            desPorts: [],
+            depPorts: [],
+            getDes: false,
+            getDep: false,
+            portSuccess1: true,
+            portSuccess2: true,
         }
         this.addStopState = this.addStopState.bind(this);
     }
@@ -47,22 +47,34 @@ class CreateSchedule extends PureComponent {
 
     async getShips(type){
         //type sent to backend to receive corresponding ships of that type that belongs to ocean carrier
+        console.log(type);
         const token = localStorage.getItem('token');
-        //console.log(token);
+        console.log(token);
+        const obj = {
+            type: type
+        }
         try{ 
-        const response = await axios.post('http://localhost:4000/organization/removePartner',{
+        const response = await axios.post('http://localhost:4000/oceanCarrier/getShipsByType',obj,{
             headers: {
                 'Authorization': `Bearer ${token}`
             }
         })
         //console.log('far')
-        this.setState({
-            ships: response.data
-        })
-        console.log(response)
+        console.log(response);
+        if (response.status === 202) {
+            this.setState({
+                ships: response.data.data,
+                warning: false,
+            })
+        }
+        
        }
         catch(e){
-         console.log(e);
+         console.log(e.response);
+         this.setState({
+            ships: [],
+            warning: true,
+        })
         }  
     }
 
@@ -138,7 +150,7 @@ class CreateSchedule extends PureComponent {
 
     showShips(ship){
         return (
-            <option value={ship.id}>{ship.id}</option>
+            <option value={ship.ship_id}>{ship.ship_id}</option>
             //<option value="check">Check</option>
         )
     }
@@ -176,20 +188,123 @@ class CreateSchedule extends PureComponent {
         )
     }
 
-    create(event){
+    depPort(port){
+        return(
+            <option value={port.port_id}>{port.name}</option>
+        )
+    }
+
+    desPort(port){
+        return(
+            <option value={port.port_id}>{port.name}</option>
+        )
+    }
+
+    async getDeparturePorts(){
+        const token = localStorage.getItem('token');
+        console.log(token);
+        const obj = {
+            cityName: this.state.departureCity
+        }
+        try{ 
+        const response = await axios.post('http://localhost:4000/oceanCarrier/getPort',obj,{
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        //console.log('far')
+        console.log(response);
+        if (response.status === 202) {
+            this.setState({
+                depPorts: response.data.data,
+                getDep: true,
+                portSuccess1: true,
+            })
+            console.log(this.state.desPorts)
+        }
+        else if(response.status === 404){
+            this.setState({
+                portSuccess1: false,
+                depPorts: [],
+            })
+        }
+       }
+        catch(e){
+         console.log(e.response);
+         this.setState({
+            portSuccess1: false,
+            depPorts: [],
+        })
+        } 
+    }
+
+    async getDestinationPorts(){
+        const token = localStorage.getItem('token');
+        console.log(token);
+        const obj = {
+            cityName: this.state.destinationCity
+        }
+        try{ 
+        const response = await axios.post('http://localhost:4000/oceanCarrier/getPort',obj,{
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        //console.log('far')
+        console.log(response);
+        if (response.status === 202) {
+            this.setState({
+                desPorts: response.data.data,
+                getDes: true,
+                portSuccess2: true,
+            })
+            console.log(this.state.desPorts)
+        }
+        else if(response.status === 404){
+            this.setState({
+                portSuccess2: false,
+                desPorts: [],
+            })
+        }
+        
+       }
+        catch(e){
+         console.log(e.response);
+         this.setState({
+            portSuccess2: false,
+            desPorts: [],
+        })
+        } 
+    }
+
+    async create(event){
         event.preventDefault();
         const obj = {
             stops: this.state.stops,
             shipType: this.state.shipType,
             arrivalDate: this.state.arrivalDate,
             departureDate: this.state.departureDate,
-            ship: this.state.ship,
-            departurePort: this.state.departurePort,
-            destinationPort: this.state.destinationPort,
+            ship_id: parseInt(this.state.ship),
+            departurePort: parseInt(this.state.departurePort),
+            destinationPort: parseInt(this.state.destinationPort),
             departureCountry: this.state.departureCountry,
             departureCity: this.state.departureCity,
             destinationCountry: this.state.destinationCountry,
             destinationCity: this.state.destinationCity
+        }
+
+        const token = localStorage.getItem('token');
+
+        try{
+            const response = await axios.post('http://localhost:4000/oceanCarrier/createSchedule',obj,{
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            console.log(response);
+        }
+        catch(e){
+            console.log(e.response);
         }
         console.log(obj);
     }
@@ -197,7 +312,7 @@ class CreateSchedule extends PureComponent {
     render() {
         return (
             <div className="wrapper">
-                <NavbarCO/>
+                <NavbarOC/>
             <div className="container" id="create-schedule">
                 <form className="form-group" action="#" onSubmit={(e) => this.create(e)}>
                     <div className="card">
@@ -206,13 +321,13 @@ class CreateSchedule extends PureComponent {
                                 <div className="col-lg-6">
                                     <div className="form-group">
                                         <label>Departure country:</label>
-                                        <input className="form-control" type="text" onChange={(e) => this.updateDepartureCountry(e)} required/>
+                                        <input className="form-control" type="text" value={this.state.departureCountry} onChange={(e) => this.updateDepartureCountry(e)} required/>
                                     </div>
                                 </div>
                                 <div className="col-lg-6">
                                     <div className="form-group">
                                         <label>Departure city:</label>
-                                        <input className="form-control" type="text" onChange={(e) => this.updateDepartureCity(e)} required/>
+                                        <input className="form-control" type="text" value={this.state.departureCity} onChange={(e) => this.updateDepartureCity(e)} onBlur={() => this.getDeparturePorts()} required/>
                                     </div>
                                 </div>
                             </div>
@@ -220,13 +335,13 @@ class CreateSchedule extends PureComponent {
                                 <div className="col-lg-6">
                                     <div className="form-group">
                                         <label>Destination country:</label>
-                                        <input className="form-control" type="text" onChange={(e) => this.updateDestinationCountry(e)} required/>
+                                        <input className="form-control" type="text" value={this.state.destinationCountry} onChange={(e) => this.updateDestinationCountry(e)} required/>
                                     </div>
                                 </div>
                                 <div className="col-lg-6">
                                     <div className="form-group">
                                         <label>Destination city:</label>
-                                        <input className="form-control" type="text" onChange={(e) => this.updateDestinationCity(e)} required/>
+                                        <input className="form-control" type="text" value={this.state.destinationCity} onChange={(e) => this.updateDestinationCity(e)} onBlur={() => this.getDestinationPorts()} required/>
                                     </div>
                                 </div>
                             </div>
@@ -250,13 +365,38 @@ class CreateSchedule extends PureComponent {
                                 <div className="col-lg-6">
                                     <div className="form-group">
                                         <label>Departure port:</label>
-                                        <input className="form-control" type="text" onChange={(e) => this.updateDeparturePort(e)} required/>
+                                        <select class="form-control" id="sel1" value={this.state.departurePort} onChange={(e) => this.updateDeparturePort(e)} required>
+                                        <option value="">Select departure port</option>
+                                            {
+                                                this.state.getDep === true&&
+                                                this.state.depPorts.map((value) => (
+                                                    this.depPort(value)
+                                                ))
+                                            }
+                                        </select>
+                                        {
+                                            this.state.portSuccess1 === false&&
+                                            <p>No port found!</p>
+                                        }
                                     </div>
                                 </div>
                                 <div className="col-lg-6">
                                     <div className="form-group">
-                                        <label>Destination port:</label>
-                                        <input className="form-control" type="text" onChange={(e) => this.updateDestinationPort(e)} required/>
+                                        <label htmlFor="sel2">Destination port:</label>
+                                        <select class="form-control" id="sel2" value={this.state.destinationPort} onChange={(e) => this.updateDestinationPort(e)} required>
+                                        <option value="">Select destination port</option>
+                                            {
+                                                this.state.getDes === true&&
+                                                this.state.desPorts.map((value) => (
+                                                    this.desPort(value)
+                                                ))
+                                            }
+
+                                        </select>
+                                        {
+                                            this.state.portSuccess2 === false&&
+                                            <p>No port found!</p>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -266,12 +406,16 @@ class CreateSchedule extends PureComponent {
                                         <label htmlFor="sel1">Ship type:</label>
                                         <select class="form-control" id="sel1" value={this.state.shipType} onChange={(e) => this.updateShipType(e)} required>
                                             <option value="">Select ship type</option>
-                                            <option value="panamax">Panamax</option>
+                                            <option value="panamax" onClick={() => this.getShips(this.value)}>Panamax</option>
                                             <option value="suezmax">Suezmax</option>
                                             <option value="post-panamax">Post-Panamax</option>
                                             <option value="post-suezmax">Post-Suezmax</option>
                                             <option value="post-malaccamax">Post-Malaccamax</option>
                                         </select>
+                                        {
+                                            this.state.warning === true&&
+                                            <p>No ships of this type available</p>
+                                        }
                                     </div>
                                 </div>
                                 <div className="col-lg-6">

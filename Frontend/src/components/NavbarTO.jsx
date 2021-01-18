@@ -34,10 +34,10 @@ class NavbarTO extends PureComponent {
         Schedule
         </a>
         <div className="dropdown-menu" aria-labelledby="navbarDropdown1">
-          <a className="dropdown-item" href="/cuaddtax">Ship loading</a>
-          <a className="dropdown-item" href="/cuaddtax">Ship unloading</a>
+          <a className="dropdown-item" href="/TOViewLoading">Ship loading</a>
+          <a className="dropdown-item" href="/TOViewUnloading">Ship unloading</a>
           <div className="dropdown-divider"></div>
-          <a className="dropdown-item" href="/cuviewtax">All</a>
+          <a className="dropdown-item" href="/TOViewAllSch">All</a>
         </div>
       </li>
 
@@ -46,9 +46,9 @@ class NavbarTO extends PureComponent {
         Yard
         </a>
         <div className="dropdown-menu" aria-labelledby="navbarDropdown1">
-          <a className="dropdown-item" href="/ViewConsignmentsCu#">Add Yard</a>
-          <a className="dropdown-item" href="/ViewConsignmentsCu">Assign Yard</a>
-          <a className="dropdown-item" href="/ViewConsignmentsCu">View Yard</a>
+          <a className="dropdown-item" href="/TOAddYard">Add Yard</a>
+          <a className="dropdown-item" href="/TOAssignYard">Assign Yard</a>
+          <a className="dropdown-item" href="/TOViewYard">View Yard</a>
         </div>
       </li>
 
@@ -57,13 +57,13 @@ class NavbarTO extends PureComponent {
         Berth
         </a>
         <div className="dropdown-menu" aria-labelledby="navbarDropdown1">
-          <a className="dropdown-item" href="/ViewConsignmentsCu#">Add Berth</a>
-          <a className="dropdown-item" href="/ViewConsignmentsCu">View Berth</a>
+          <a className="dropdown-item" href="/TOAddBerth">Add Berth</a>
+          <a className="dropdown-item" href="/TOViewBerth">View Berth</a>
         </div>
       </li>
 
       <li className="nav-item py-md-2 px-3">
-          <a className="nav-link" href="/">Schedule Requests</a>
+          <a className="nav-link" href="TOViewSchReq">Schedule Requests</a>
         </li>
 
       </ul>

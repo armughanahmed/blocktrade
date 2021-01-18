@@ -24,31 +24,28 @@ class NavbarOC extends PureComponent {
       <div className="collapse navbar-collapse" id="collapsibleNavbar">
       <ul className="navbar-nav">
         <li className="nav-item py-md-2 px-3 ml-5">
-          <a className="nav-link" href="/dashboard" active>Dashboard</a>
+          <a className="nav-link" href="/dashboardOc" active>Dashboard</a>
         </li>
         <li class="nav-item dropdown py-md-2 px-3 ml-4">
                   <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Schedules</a>
                   <div class="dropdown-menu">
-                      <a href="startConsignment" class="dropdown-item">Create</a>
-                      <a href="/viewConsignments" class="dropdown-item">Update</a>
-                      <a href="/trackConsignment" class="dropdown-item">View</a>
+                      <a href="/createSchedule" class="dropdown-item">Create</a>
+                      <a href="/dashboardOc" class="dropdown-item">Update</a>
+                      <a href="/dashboardOc" class="dropdown-item">View</a>
                   </div>
           </li>
-        <li className="nav-item py-md-2 px-3">
-          <a className="nav-link" href="/viewQuotations">Shipments</a>
-        </li>
         <li class="nav-item dropdown py-md-2 px-3 ml-3">
                   <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Containers</a>
                   <div class="dropdown-menu">
-                      <a href="/addPartnerCO" class="dropdown-item">Add</a>
-                      <a href="/requestsCO" class="dropdown-item">View</a>
+                      <a href="/addContainer" class="dropdown-item">Add</a>
+                      <a href="/viewContainerOC" class="dropdown-item">View</a>
                   </div>
           </li>
           <li class="nav-item dropdown py-md-2 px-3 ml-3">
                   <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Ships</a>
                   <div class="dropdown-menu">
-                      <a href="/addPartnerCO" class="dropdown-item">Add</a>
-                      <a href="/requestsCO" class="dropdown-item">View</a>
+                      <a href="/addShip" class="dropdown-item">Add</a>
+                      <a href="/viewShip" class="dropdown-item">View</a>
                   </div>
           </li>
       </ul>

@@ -108,7 +108,7 @@ module.exports = {
   createUser: async (req, res) => {
     try {
       const body = req.body;
-      body.decode = req.decoded;
+      body.decoded = req.decoded;
       const userEmail = await getUserByUserEmail(body.email);
       if (userEmail) {
         return res.status(302).send({
@@ -117,6 +117,7 @@ module.exports = {
           data: null,
         });
       }
+      console.log(body)
       await createInvite(body);
 
       const jsontoken = sign({ result: body }, "invite");
@@ -124,7 +125,7 @@ module.exports = {
       const mail = sendEmail(
         url,
         body.receiver_email,
-        body.decode.result.org_id
+        body.decoded.result.org_id
       );
       if (!mail) {
         console.log("createUser:: error in sending mail");
@@ -132,9 +133,10 @@ module.exports = {
       return res.status(200).send({
         success: 1,
         message: "succesfully created",
-        data: results,
+        data: url,
       });
     } catch (e) {
+      console.log(e)
       return res.status(500).send({
         success: 0,
         message: "Something went wrong while creating user",

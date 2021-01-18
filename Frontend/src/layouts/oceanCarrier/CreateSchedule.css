@@ -8,11 +8,11 @@
 }
 
 #create-schedule hr{
-    background-color: orange;
+    background-color: rgb(142, 231, 253);
 }
 
 #create-schedule p{
-    color: rgb(218, 143, 5);
+    color: rgb(142, 231, 253);
     font-size: 14px;
 }
 

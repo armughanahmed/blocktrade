@@ -31,38 +31,38 @@ class NavbarIT extends PureComponent {
           </li>
 
           <li className="nav-item dropdown py-md-2 px-3">
-          <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a className="nav-link dropdown-toggle" href="/dashboardIT" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Vehicle
           </a>
           <div className="dropdown-menu" aria-labelledby="navbarDropdown1">
-            <a className="dropdown-item" href="/cuaddtax">Add Vehicle</a>
-            <a className="dropdown-item" href="/cuviewtax">View Vehicles</a>
+            <a className="dropdown-item" href="/itaddvehicle">Add Vehicle</a>
+            <a className="dropdown-item" href="/dashboardIT">View Vehicles</a>
           </div>
         </li>
 
 
         <li className="nav-item dropdown py-md-2 px-3">
-          <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a className="nav-link dropdown-toggle" href="/dashboardIT" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Route
           </a>
           <div className="dropdown-menu" aria-labelledby="navbarDropdown1">
-            <a className="dropdown-item" href="/cuaddtax">Add Route</a>
-            <a className="dropdown-item" href="/cuviewtax">View/Update Routes</a>
+            <a className="dropdown-item" href="/itaddroute">Add Route</a>
+            <a className="dropdown-item" href="/dashboardIT">View/Update Routes</a>
           </div>
         </li>
 
 
         <li className="nav-item dropdown py-md-2 px-3">
-          <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a className="nav-link dropdown-toggle" href="/dashboardIT" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Shipment
           </a>
           <div className="dropdown-menu" aria-labelledby="navbarDropdown1">
-            <a className="dropdown-item" href="/ViewConsignmentsCu#">Upcoming</a>
-            <a className="dropdown-item" href="/ViewConsignmentsCu">Pending</a>
-            <a className="dropdown-item" href="/ViewConsignmentsCu">In progress</a>
-            <a className="dropdown-item" href="/ViewConsignmentsCu">Completed</a>
+            <a className="dropdown-item" href="/itViewShipment">Upcoming</a>
+            <a className="dropdown-item" href="/itViewShipment">Pending</a>
+            <a className="dropdown-item" href="/itViewShipment">In progress</a>
+            <a className="dropdown-item" href="/itViewShipment">Completed</a>
             <div className="dropdown-divider"></div>
-            <a className="dropdown-item" href="/ViewConsignmentsCu">All</a>
+            <a className="dropdown-item" href="/itViewShipment">All</a>
           </div>
         </li>
 
@@ -71,8 +71,8 @@ class NavbarIT extends PureComponent {
           Partners
           </a>
           <div className="dropdown-menu" aria-labelledby="navbarDropdown1">
-            <a className="dropdown-item" href="/cuaddtax">Add partner</a>
-            <a className="dropdown-item" href="/cuviewtax">View partners</a>
+            <a className="dropdown-item" href="/dashboardIT">Add partner</a>
+            <a className="dropdown-item" href="/dashboardIT">View partners</a>
           </div>
         </li>
 

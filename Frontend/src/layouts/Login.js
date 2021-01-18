@@ -45,7 +45,7 @@ class Login extends PureComponent {
         else if(org_type === 'financial-institution'){
           this.props.history.push('/dashboardFI');
         }
-        else if(org_type === 'custom'){
+        else if(org_type === 'customs'){
           this.props.history.push('/dashboardCu');
         }
         else if(org_type === 'terminal-operator'){

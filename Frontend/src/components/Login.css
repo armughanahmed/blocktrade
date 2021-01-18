@@ -88,13 +88,14 @@
     text-align: center;
   }
 
+  @media only screen and (max-width: 990px) {
+    #login-image{
+      display: none;
+    }
+  }
 
   @media only screen and (max-width: 600px) {
-    #login-card{
-      vertical-align: center;
-      padding: 45px;
-      background-color: #FAFAFA;
-    }
+    
 
     #login-image{
       display: none;
@@ -116,7 +117,7 @@
   }
     #login-page{
       background-image: none;
-      background-color: #266593;
+      background-color: #0b101f;
     }
   }
 

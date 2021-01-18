@@ -3,6 +3,8 @@ const {
   addShip,
   getPort,
   createContainer,
+  getShipsByType,
+  createSchedule
 } = require("./oceanCarrier.controller");
 const {
   auth,
@@ -11,7 +13,8 @@ const {
   authOceanCarrier,
 } = require("../../middleware/auth");
 router.post("/addShip", auth, authOceanCarrier, addShip);
-router.get("/getPort", auth, getPort);
-router.post("/getShipsByType", auth, getPort);
+router.post("/createSchedule", auth, authOceanCarrier, createSchedule);
+router.post("/getPort", auth, getPort);
+router.post("/getShipsByType", auth, authOceanCarrier, getShipsByType);
 router.post("/createContainer", auth, authOceanCarrier, createContainer);
 module.exports = router;
