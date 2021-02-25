@@ -47,7 +47,7 @@ module.exports = {
       );
     });
   },
-  getAdminByEmail: (data, callback) => {
+  getAdminByEmail: (data) => {
     return new Promise((resolve, reject) => {
       pool.query(
         `select * from employees where email=?`,
@@ -60,6 +60,40 @@ module.exports = {
           console.log("getAdminByMail::");
           console.log(results);
           resolve(error, results[0]);
+        }
+      );
+    });
+  },
+  getUnverifiedOrganizations: () => {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `select * from organizations where verificationStatus=?`,
+        ["0"],
+        (error, results, fields) => {
+          if (error) {
+            console.log("getUnverifiedOrganizations::");
+            return reject(error);
+          }
+          console.log("getUnverifiedOrganizations::");
+          console.log(results);
+          resolve(results);
+        }
+      );
+    });
+  },
+  registerOrganization: (data) => {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `update organizations set verificationStatus=? where id=?`,
+        ["1", data],
+        (error, results, fields) => {
+          if (error) {
+            console.log("registerOrganization::");
+            return reject(error);
+          }
+          console.log("registerOrganization::");
+          console.log(results);
+          resolve(error, results);
         }
       );
     });
