@@ -7,6 +7,7 @@ const {
   login,
   verifyToken,
   getUserByUserId,
+  tokenDecode,
   getUsers,
   updateUsers,
   deleteUser,
@@ -19,4 +20,5 @@ router.post("/login", login);
 router.patch("/", auth, updateUsers);
 router.delete("/", auth, authAdmin, authOrganization, deleteUser);
 router.get("/invite/:token", verifyToken);
+router.post("/tokenDecode", tokenDecode);
 module.exports = router;
