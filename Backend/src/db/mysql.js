@@ -2,7 +2,7 @@ const { createPool } = require("mysql");
 
 const pool = createPool({
   host: "localhost",
-  port: "3306",
+  port: "8000",
   user: "root",
   password: "",
   database: "blocktrade",

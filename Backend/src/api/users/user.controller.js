@@ -70,6 +70,33 @@ module.exports = {
       });
     }
   },
+  tokenDecode: async (req, res) => {
+    try {
+      let body = req.body;
+      verify(body.token, "invite", (err, decoded) => {
+        if (err) {
+          return res.status(400).send({
+            success: 0,
+            message: "Invalid Invite link",
+            data: null,
+          });
+        }
+      });
+      const decoded = decode(body.token);
+      return res.status(200).send({
+        success: 1,
+        message: "Succesfully decoded token",
+        data: decoded,
+      });
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send({
+        success: 0,
+        message: "error in decoding token",
+        data: null,
+      });
+    }
+  },
   verifyToken: async (req, res) => {
     try {
       let token = req.params.token;
@@ -109,7 +136,7 @@ module.exports = {
     try {
       const body = req.body;
       body.decoded = req.decoded;
-      const userEmail = await getUserByUserEmail(body.email);
+      const userEmail = await getUserByUserEmail(body.receiver_email);
       if (userEmail) {
         return res.status(302).send({
           success: 0,
@@ -117,7 +144,7 @@ module.exports = {
           data: null,
         });
       }
-      console.log(body)
+      console.log(body);
       await createInvite(body);
 
       const jsontoken = sign({ result: body }, "invite");
@@ -136,7 +163,7 @@ module.exports = {
         data: url,
       });
     } catch (e) {
-      console.log(e)
+      console.log(e);
       return res.status(500).send({
         success: 0,
         message: "Something went wrong while creating user",

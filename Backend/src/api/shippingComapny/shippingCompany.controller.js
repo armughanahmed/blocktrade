@@ -161,7 +161,9 @@ module.exports = {
       const fileLocation = await createQuotationDocument(
         filename,
         scheduleObj,
-        priceArrayObj
+        priceArrayObj,
+        shippingCompany,
+        cargoOwner
       );
       const docHash = await createDocHash(fileLocation);
       documentObj.name = filename;

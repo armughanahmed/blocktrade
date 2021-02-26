@@ -2,10 +2,14 @@ const {
   getAdmin,
   createModerator,
   getAdminByEmail,
+  getUnverifiedOrganizations,
+  registerOrganization,
+  rejectOrganization,
 } = require("./admin.service");
 const { hashSync, genSaltSync, compareSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
+const { getOrganizationByID } = require("../organization/organization.service");
 const sendEmailModerator = async (text, to, org) => {
   let transporter = nodemailer.createTransport({
     service: "gmail",
@@ -59,32 +63,131 @@ module.exports = {
           data: null,
         });
       }
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send({
+        success: 0,
+        message: "something went wrong while registering organization",
+        data: null,
+      });
+    }
   },
-  adminSignup: async (req, res) => {
+  // adminSignup: async (req, res) => {
+  //   try {
+  //     let body = req.body;
+  //     body.decode = req.decoded;
+  //     const admin = await getAdminByEmail(body);
+  //     if (admin) {
+  //       return res.status(302).send({
+  //         success: 0,
+  //         message: "Email already exists",
+  //         data: null,
+  //       });
+  //     }
+  //     const salt = genSaltSync(10);
+  //     body.password = hashSync(body.password, salt);
+  //     const moderator = await createModerator(body);
+  //     const mail = sendEmailModerator(body.name, body.email, null);
+  //     if (!mail) {
+  //       console.log("createUser:: error in sending mail");
+  //     }
+  //     return res.status(201).send({
+  //       success: 1,
+  //       message: "moderator created",
+  //       data: null,
+  //     });
+  //   } catch (e) {}
+  // },
+  getUnverifiedOrganizations: async (req, res) => {
     try {
-      let body = req.body;
-      body.decode = req.decoded;
-      const admin = await getAdminByEmail(body);
-      if (admin) {
-        return res.status(302).send({
+      const body = req.body;
+      body.decoded = req.decoded;
+      const organizations = await getUnverifiedOrganizations();
+      if (!organizations.length) {
+        return res.status(404).send({
           success: 0,
-          message: "Email already exists",
+          message: "no requests found",
           data: null,
         });
       }
-      const salt = genSaltSync(10);
-      body.password = hashSync(body.password, salt);
-      const moderator = await createModerator(body);
-      const mail = sendEmailModerator(body.name, body.email, null);
-      if (!mail) {
-        console.log("createUser:: error in sending mail");
-      }
-      return res.status(201).send({
+      return res.status(200).send({
         success: 1,
-        message: "moderator created",
+        message: "got organizations",
+        data: organizations,
+      });
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send({
+        success: 0,
+        message: "something went wrong while geeting organizations",
         data: null,
       });
-    } catch (e) {}
+    }
   },
+  registerOrganization: async (req, res) => {
+    try {
+      const body = req.body;
+      body.decoded = req.decoded;
+      const organizations = await getOrganizationByID(body.org_id);
+      if (!organizations.length) {
+        return res.status(404).send({
+          success: 0,
+          message: "no such organizations found",
+          data: null,
+        });
+      } else if (organizations.verificationStatus == 1) {
+        return res.status(400).send({
+          success: 0,
+          message: "organization already registered.",
+          data: null,
+        });
+      }
+      await registerOrganization(body.org_id);
+      return res.status(200).send({
+        success: 1,
+        message: "registered organization succesfully",
+        data: null,
+      });
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send({
+        success: 0,
+        message: "something went wrong while registering organization",
+        data: null,
+      });
+    }
+  },
+  // rejectOrganization: async (req, res) => {
+  //   try {
+  //     const body = req.body;
+  //     body.decoded = req.decoded;
+  //     const organizations = await getOrganizationByID(body.org_id);
+  //     if (!organizations.length) {
+  //       return res.status(404).send({
+  //         success: 0,
+  //         message: "no such organizations found",
+  //         data: null,
+  //       });
+  //     } else if (organizations.verificationStatus == 1) {
+  //       return res.status(400).send({
+  //         success: 0,
+  //         message: "organization already registered.",
+  //         data: null,
+  //       });
+  //     }
+  //     await rejectOrganization(body.org_id);
+  //     return res.status(200).send({
+  //       success: 1,
+  //       message: "registered organization succesfully",
+  //       data: null,
+  //     });
+  //   } catch (e) {
+  //     console.log(e);
+  //     return res.status(500).send({
+  //       success: 0,
+  //       message: "something went wrong while registering organization",
+  //       data: null,
+  //     });
+  //   }
+  // },
 };
