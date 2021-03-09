@@ -10,6 +10,7 @@ const {
   updateQuotationDocument,
   getContainerPendingConsignments,
   getQuotationsByShippingCompanyId,
+  getQuotationsByCargoOwnerId,
 } = require("./shippingCompany.service");
 const {
   createQuotationDocument,
@@ -254,6 +255,38 @@ module.exports = {
       return res.status(502).send({
         success: 0,
         message: "something went wrong while creating quotation",
+        data: null,
+      });
+    }
+  },
+  getPartnerConsignmentsById: async (req, res) => {
+    try {
+      let body = req.body;
+      body.decoded = req.decoded;
+      const quotations = await getQuotationsByCargoOwnerId(body.cargo_owner_id);
+      if (!quotations.length) {
+        return res.status(404).send({
+          success: 1,
+          message: "no consignments",
+          data: null,
+        });
+      }
+      let consignments = [];
+      for (let i = 0; i < quotations.length; i++) {
+        consignments[i] = await getContainerPendingConsignments(
+          quotations[i].quotation_id
+        );
+      }
+      return res.status(200).send({
+        success: 1,
+        message: "succesfully got unassigned consignments",
+        data: consignments,
+      });
+    } catch (e) {
+      console.log(e);
+      return res.status(502).send({
+        success: 0,
+        message: "something went wrong while getting unassigned consignmnets",
         data: null,
       });
     }

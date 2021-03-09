@@ -5,6 +5,7 @@ const {
   viewQuotationsDetails,
   makeQuotation,
   getPartnerConsignments,
+  getPartnerConsignmentsById,
 } = require("./shippingCompany.controller");
 const { auth, authShippingComapny } = require("../../middleware/auth");
 // router.post("/create-shipment", auth, authShippingComapny, createShipment);
@@ -21,5 +22,11 @@ router.post(
   auth,
   authShippingComapny,
   getPartnerConsignments
+);
+router.post(
+  "/getConsignmnetsByCargoOwnerId",
+  auth,
+  authShippingComapny,
+  getPartnerConsignmentsById
 );
 module.exports = router;

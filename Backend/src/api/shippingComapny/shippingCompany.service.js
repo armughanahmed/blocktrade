@@ -191,4 +191,21 @@ module.exports = {
       );
     });
   },
+  getQuotationsByCargoOwnerId: (data) => {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `select * from quotations where cargo_owner_id=? and quote_status=?`,
+        [data, "approve-owner"],
+        (error, results, fields) => {
+          if (error) {
+            console.log("getQuotationsByCargoOwnerId::");
+            return reject(error);
+          }
+          console.log("getQuotationsByCargoOwnerId::");
+          console.log(results);
+          resolve(results);
+        }
+      );
+    });
+  },
 };
