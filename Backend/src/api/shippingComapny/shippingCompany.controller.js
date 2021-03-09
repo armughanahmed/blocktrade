@@ -216,7 +216,6 @@ module.exports = {
           j++;
         }
       }
-      console.log(containerPendingConsignments);
       const cargoOwnerId = shippingCompanyQuotations.filter((quotations) => {
         for (let i = 0; i < containerPendingConsignments.length; i++) {
           if (
@@ -233,10 +232,22 @@ module.exports = {
           cargoOwnerId[i].cargo_owner_id
         );
       }
+      j = 0;
+      for (let i = 1; i < cargoOwner.length; i++) {
+        if (cargoOwner[j].cargo_owner_id == cargoOwner[i].cargo_owner_id) {
+          cargoOwner[i].check = 1;
+        }
+        j++;
+      }
+      const cargoOwnerDuplicated = cargoOwner.filter((co) => {
+        if (co.check != 1) {
+          return true;
+        }
+      });
       return res.status(200).send({
         success: 1,
         message: "succesfully got cargo owner",
-        data: cargoOwner,
+        data: cargoOwnerDuplicated,
       });
     } catch (e) {
       console.log(e);
