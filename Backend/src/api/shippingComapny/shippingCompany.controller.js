@@ -11,13 +11,19 @@ const {
   getContainerPendingConsignments,
   getQuotationsByShippingCompanyId,
   getQuotationsByCargoOwnerId,
+  createBRequest,
+  getNonScheduledContainers,
 } = require("./shippingCompany.service");
 const {
   createQuotationDocument,
   createDocHash,
 } = require("../constants/functions");
 const { viewFCL, viewLCL } = require("../cargoOwner/cargoOwner.service");
-const { getOrganizationByID } = require("../organization/organization.service");
+const {
+  getOrganizationByID,
+  viewPartnerReceiver,
+  viewPartnerSender,
+} = require("../organization/organization.service");
 const { getUserByUserId } = require("../users/user.service");
 const { hashSync, genSaltSync, compareSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
@@ -192,6 +198,26 @@ module.exports = {
       });
     }
   },
+  createBRequest: async (req, res) => {
+    try {
+      let body = req.body;
+      body.decoded = req.decoded;
+      const createdSchedule = await createBRequest(body);
+      res.status(202).send({
+        success: 1,
+        message: "BookingRequests schedule successfully created",
+        data: createdSchedule.insertId,
+      });
+    } catch (e) {
+      console.log(e);
+      return res.status(502).send({
+        success: 0,
+        message:
+          "something went wrong while creating BookingRequests schedules",
+        data: null,
+      });
+    }
+  },
   getPartnerConsignments: async (req, res) => {
     try {
       let body = req.body;
@@ -287,6 +313,67 @@ module.exports = {
       return res.status(502).send({
         success: 0,
         message: "something went wrong while getting unassigned consignmnets",
+        data: null,
+      });
+    }
+  },
+  bookContainers: async (req, res) => {
+    try {
+      let body = req.body;
+      body.decoded = req.decoded;
+      let partner = await viewPartnerReceiver(req.decoded.result.org_id);
+      const partners = partner.concat(
+        await viewPartnerSender(req.decoded.result.org_id)
+      );
+      if (!partners.length) {
+        return res.status(404).send({
+          success: 0,
+          message: "no partners found",
+          data: null,
+        });
+      }
+      const containerArray = body.containerSize.split(" ");
+      body.size = containerArray[0];
+      body.empty_weight = containerArray[1];
+      body.total_space = containerArray[2];
+      let organization = [];
+      for (let i = 0; i < partners.length; i++) {
+        if (partners[i].sender_org_id == req.decoded.result.org_id) {
+          organization[i] = await getOrganizationByID(
+            partners[i].receiver_org_id
+          );
+        } else {
+          organization[i] = await getOrganizationByID(
+            partners[i].sender_org_id
+          );
+        }
+      }
+      let containers = [];
+      let j = 0;
+      for (let i = 0; i < organization.length; i++) {
+        body.oc_id = organization[i].id;
+        const getCont = await getNonScheduledContainers(body);
+        if (getCont.length) {
+          containers[j++] = getCont;
+        }
+      }
+      if (!containers.length) {
+        return res.status(404).send({
+          success: 0,
+          message: "could not find any containers in the location",
+          data: null,
+        });
+      }
+      return res.status(200).send({
+        success: 1,
+        message: "succesfully got unassigned containers",
+        data: containers,
+      });
+    } catch (e) {
+      console.log(e);
+      return res.status(502).send({
+        success: 0,
+        message: "something went wrong while getting unassigned containers",
         data: null,
       });
     }

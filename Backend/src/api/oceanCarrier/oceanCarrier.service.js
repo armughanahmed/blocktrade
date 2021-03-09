@@ -80,42 +80,53 @@ module.exports = {
       );
     });
   },
-  createBRequest: (data) => {
+  updateBRequest: (data) => {
     return new Promise((resolve, reject) => {
       pool.query(
-        `insert into bookingrequests(container_id,schedule_id,shipping_company_id,price) 
-        values(?,?,?,?)`,
-        [
-          data.container_id,
-          data.schedule_id,
-          data.shipping_company_id,
-          data.price,
-        ],
+        `update bookingrequests set status=?,booking_from=? where bRequest_id=?`,
+        [1, data.booking_from, data.bRequest_id],
         (error, results, fields) => {
           if (error) {
-            console.log("createBRequest::");
+            console.log("updateBRequest::");
             return reject(error);
           }
-          console.log("createBRequest::");
+          console.log("updateBRequest::");
           console.log(results);
           resolve(results);
         }
       );
     });
   },
-  updateBRequest: (data) => {
+  rejectBRequest: (data) => {
     return new Promise((resolve, reject) => {
       pool.query(
-        `update bookingrequests set shipping_company_id=?,status=? where bRequest_id=?`,
-        [data.shipping_company_id, 1, data.bRequest_id],
+        `delete from bookingrequests where bRequest_id=?`,
+        [data],
         (error, results, fields) => {
           if (error) {
-            console.log("updateSchedule::");
+            console.log("rejectBRequest::");
             return reject(error);
           }
-          console.log("updateSchedule::");
+          console.log("rejectBRequest::");
           console.log(results);
           resolve(results);
+        }
+      );
+    });
+  },
+  getBookingRequestsById: (data) => {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `select * from bookingrequests where bRequest_id=?`,
+        [data],
+        (error, results, fields) => {
+          if (error) {
+            console.log("getBookingRequestsById::");
+            return reject(error);
+          }
+          console.log("getBookingRequestsById::");
+          console.log(results);
+          resolve(results[0]);
         }
       );
     });
@@ -158,14 +169,15 @@ module.exports = {
   createContainer: (data) => {
     return new Promise((resolve, reject) => {
       pool.query(
-        `insert into containers(ocean_carrier_id,	type,	size,	total_space ,	empty_weight) 
-        values(?,?,?,?,?)`,
+        `insert into containers(ocean_carrier_id,	type,	size,	total_space ,	empty_weight,location) 
+        values(?,?,?,?,?,?)`,
         [
           data.decoded.result.org_id,
           data.type,
           data.size,
           data.total_space,
           data.empty_weight,
+          data.port,
         ],
         (error, results, fields) => {
           if (error) {

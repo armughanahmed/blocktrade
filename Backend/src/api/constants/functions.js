@@ -1,5 +1,6 @@
 const pdf = require("pdf-creator-node");
 const crypto = require("crypto");
+const nodemailer = require("nodemailer");
 const fs = require("fs");
 const path = require("path");
 const createQuotationDocument = async (filename, schedule, consignments) => {

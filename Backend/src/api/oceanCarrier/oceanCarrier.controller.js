@@ -2,7 +2,6 @@ const {
   createSchedule,
   createStop,
   addShip,
-  createBRequest,
   createContainer,
   AssignScheduleToContainer,
   getContainerById,
@@ -16,6 +15,7 @@ const {
   getPortById,
   getBookingRequestsForRejection,
   getBookingRequestsById,
+  rejectBRequest,
 } = require("./oceanCarrier.service");
 const { getOrganizationByID } = require("../organization/organization.service");
 const { emailService } = require("../constants/functions");
@@ -101,41 +101,23 @@ module.exports = {
       });
     }
   },
-  createBRequest: async (req, res) => {
-    try {
-      let body = req.body;
-      body.decoded = req.decoded;
-      const createdSchedule = await createBRequest(body);
-      res.status(202).send({
-        success: 1,
-        message: "BookingRequests schedule successfully created",
-        data: createdSchedule.insertId,
-      });
-    } catch (e) {
-      console.log(e);
-      return res.status(502).send({
-        success: 0,
-        message:
-          "something went wrong while creating BookingRequests schedules",
-        data: null,
-      });
-    }
-  },
+
   acceptBRequest: async (req, res) => {
     try {
       let body = req.body;
       body.decoded = req.decoded;
-
+      body.booking_from = new Date();
       const updatedSchedule = await updateBRequest(body);
+      const bookingrequests = await getBookingRequestsById(body.bRequest_id);
       const shippingCompany = await getOrganizationByID(
-        body.shipping_company_id
+        bookingrequests.shipping_company_id
       );
       //add affected row logic
       const htmlAcceptContainerBooking = `<h3>thank you ${shippingCompany.name} for using blocktrade for sending booking request</h3><br>
       <h3>your request has been accepted.</h3>`;
-      const containerId = await getContainerIdFromBR(body.bRequest_id);
-      const updatedContainer = await updateContainer(containerId.container_id);
-      const requestedContainer = await getBookingRequestsById(body.bRequest_id);
+      const updatedContainer = await updateContainer(
+        bookingrequests.container_id
+      );
       const mail = emailService(
         shippingCompany.email,
         "k173696@nu.edu.pk",
@@ -145,15 +127,45 @@ module.exports = {
       if (!mail) {
         console.log("error in sending mail");
       }
-      body.container_id = containerId.container_id;
-      const rejectingRequests = await getBookingRequestsForRejection(body);
-      let htmlRejectContainerBooking = `<h3>thank you ${shippingCompany.name} for using blocktrade for sending booking request</h3><br>
-      <h3>your request has been accepted.</h3>`;
-
       res.status(202).send({
         success: 1,
         message: "BookingRequests successfully accepted",
-        data: createdSchedule.insertId,
+        data: updatedSchedule.insertId,
+      });
+    } catch (e) {
+      console.log(e);
+      return res.status(502).send({
+        success: 0,
+        message: "something went wrong while accepting BookingRequests",
+        data: null,
+      });
+    }
+  },
+  rejectBRequest: async (req, res) => {
+    try {
+      let body = req.body;
+      body.decoded = req.decoded;
+      const bookingrequests = await getBookingRequestsById(body.bRequest_id);
+      const shippingCompany = await getOrganizationByID(
+        bookingrequests.shipping_company_id
+      );
+      const updatedSchedule = await rejectBRequest(body.bRequest_id);
+      //add affected row logic
+      const htmlAcceptContainerBooking = `<h3>thank you ${shippingCompany.name} for using blocktrade for sending booking request</h3><br>
+      <h3>your request has been rejected.</h3>`;
+      const mail = emailService(
+        shippingCompany.email,
+        "k173696@nu.edu.pk",
+        "Container booking Request",
+        htmlAcceptContainerBooking
+      );
+      if (!mail) {
+        console.log("error in sending mail");
+      }
+      res.status(202).send({
+        success: 1,
+        message: "BookingRequests successfully rejected",
+        data: updatedSchedule.insertId,
       });
     } catch (e) {
       console.log(e);

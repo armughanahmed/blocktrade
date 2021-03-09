@@ -208,4 +208,47 @@ module.exports = {
       );
     });
   },
+  createBRequest: (data) => {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `insert into bookingrequests(container_id,shipping_company_id,booking_till) 
+        values(?,?,?)`,
+        [data.container_id, data.decoded.result.org_id, data.booking_till],
+        (error, results, fields) => {
+          if (error) {
+            console.log("createBRequest::");
+            return reject(error);
+          }
+          console.log("createBRequest::");
+          console.log(results);
+          resolve(results);
+        }
+      );
+    });
+  },
+  getNonScheduledContainers: (data) => {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `select * from containers where ocean_carrier_id=? and type=? and size=? and empty_weight=? and total_space=? and location=? and isScheduled=?`,
+        [
+          data.oc_id,
+          data.type,
+          data.size,
+          data.empty_weight,
+          data.total_space,
+          data.port,
+          0,
+        ],
+        (error, results, fields) => {
+          if (error) {
+            console.log("getNonScheduledContainers::");
+            return reject(error);
+          }
+          console.log("getNonScheduledContainers::");
+          console.log(results);
+          resolve(results);
+        }
+      );
+    });
+  },
 };
