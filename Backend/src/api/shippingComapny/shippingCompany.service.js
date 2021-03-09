@@ -251,4 +251,21 @@ module.exports = {
       );
     });
   },
+  getBookingRequestsByShippingCompanyId: (data) => {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `select * from bookingrequests where shipping_company_id=?`,
+        [data],
+        (error, results, fields) => {
+          if (error) {
+            console.log("getBookingRequestsByShippingCompanyId::");
+            return reject(error);
+          }
+          console.log("getBookingRequestsByShippingCompanyId::");
+          console.log(results);
+          resolve(results);
+        }
+      );
+    });
+  },
 };

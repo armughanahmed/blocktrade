@@ -8,6 +8,7 @@ const {
   getPartnerConsignmentsById,
   bookContainers,
   createBRequest,
+  getBookingRequests,
 } = require("./shippingCompany.controller");
 const { auth, authShippingComapny } = require("../../middleware/auth");
 // router.post("/create-shipment", auth, authShippingComapny, createShipment);
@@ -33,4 +34,10 @@ router.post(
 );
 router.post("/bookContainers", auth, authShippingComapny, bookContainers);
 router.post("/requestContainer", auth, authShippingComapny, createBRequest);
+router.post(
+  "/getBookingRequests",
+  auth,
+  authShippingComapny,
+  getBookingRequests
+);
 module.exports = router;

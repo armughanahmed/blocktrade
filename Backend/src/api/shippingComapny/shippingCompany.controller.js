@@ -13,6 +13,7 @@ const {
   getQuotationsByCargoOwnerId,
   createBRequest,
   getNonScheduledContainers,
+  getBookingRequestsByShippingCompanyId,
 } = require("./shippingCompany.service");
 const {
   createQuotationDocument,
@@ -214,6 +215,34 @@ module.exports = {
         success: 0,
         message:
           "something went wrong while creating BookingRequests schedules",
+        data: null,
+      });
+    }
+  },
+  getBookingRequests: async (req, res) => {
+    try {
+      let body = req.body;
+      body.decoded = req.decoded;
+      const bookingRequests = await getBookingRequestsByShippingCompanyId(
+        body.decoded.result.org_id
+      );
+      if (!bookingRequests.length) {
+        return res.status(404).send({
+          success: 0,
+          message: "no requests found",
+          data: bookingRequests,
+        });
+      }
+      return res.status(202).send({
+        success: 1,
+        message: "got booking requests succesfully",
+        data: bookingRequests,
+      });
+    } catch (e) {
+      console.log(e);
+      return res.status(502).send({
+        success: 0,
+        message: "something went wrong while getting booking requests",
         data: null,
       });
     }
