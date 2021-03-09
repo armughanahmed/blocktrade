@@ -66,7 +66,7 @@ module.exports = {
           data.type,
           data.length,
           data.width,
-          data.decoded.result.ocean_carrier_id,
+          data.decoded.result.org_id,
         ],
         (error, results, fields) => {
           if (error) {

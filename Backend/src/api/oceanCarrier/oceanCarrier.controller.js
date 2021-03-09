@@ -270,10 +270,10 @@ module.exports = {
     try {
       let body = req.body;
       body.decoded = req.decoded;
-      console.log("body")
-      console.log(body)
+      console.log("body");
+      console.log(body);
       const ports = await getPort(body.cityName);
-      console.log(ports.length)
+      console.log(ports.length);
       if (!ports.length) {
         return res.status(404).send({
           success: 1,
