@@ -1,6 +1,11 @@
 const router = require("express").Router();
 const { auth, authModerator } = require("../../middleware/auth");
-const { adminSignup, login } = require("./admin.controller");
+const {
+  adminSignup,
+  login,
+  getUnverifiedOrganizations,
+  registerOrganization,
+} = require("./admin.controller");
 // router.post("/signup", auth, authModerator, adminSignup);
 router.post(
   "/getUnverifiedOrganizations",

@@ -8,6 +8,8 @@ const {
   updateQuotationPriceAndStatus,
   createDocument,
   updateQuotationDocument,
+  getContainerPendingConsignments,
+  getQuotationsByShippingCompanyId,
 } = require("./shippingCompany.service");
 const {
   createQuotationDocument,
@@ -179,6 +181,62 @@ module.exports = {
         success: 1,
         message: "succesfully created quotation",
         data: fileSplit,
+      });
+    } catch (e) {
+      console.log(e);
+      return res.status(502).send({
+        success: 0,
+        message: "something went wrong while creating quotation",
+        data: null,
+      });
+    }
+  },
+  getPartnerConsignments: async (req, res) => {
+    try {
+      let body = req.body;
+      body.decoded = req.decoded;
+      let shippingCompanyQuotations = await getQuotationsByShippingCompanyId(
+        body.decoded.result.org_id
+      );
+      if (!shippingCompanyQuotations.length) {
+        return res.status(404).send({
+          success: 0,
+          message: "no consignments found",
+          data: null,
+        });
+      }
+      let containerPendingConsignments = [];
+      let j = 0;
+      for (let i = 0; i < shippingCompanyQuotations.length; i++) {
+        const temp = await getContainerPendingConsignments(
+          shippingCompanyQuotations[i].quotation_id
+        );
+        if (temp) {
+          containerPendingConsignments[j] = temp;
+          j++;
+        }
+      }
+      console.log(containerPendingConsignments);
+      const cargoOwnerId = shippingCompanyQuotations.filter((quotations) => {
+        for (let i = 0; i < containerPendingConsignments.length; i++) {
+          if (
+            quotations.quotation_id ==
+            containerPendingConsignments[i].quotation_id
+          ) {
+            return true;
+          }
+        }
+      });
+      let cargoOwner = [];
+      for (let i = 0; i < cargoOwnerId.length; i++) {
+        cargoOwner[i] = await getOrganizationByID(
+          cargoOwnerId[i].cargo_owner_id
+        );
+      }
+      return res.status(200).send({
+        success: 1,
+        message: "succesfully got cargo owner",
+        data: cargoOwner,
       });
     } catch (e) {
       console.log(e);

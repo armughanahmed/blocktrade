@@ -157,4 +157,38 @@ module.exports = {
       );
     });
   },
+  getContainerPendingConsignments: (data) => {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `select * from consignments where quotation_id=? and progressStatus=?`,
+        [data, "container-pending"],
+        (error, results, fields) => {
+          if (error) {
+            console.log("getContainerPendingConsignments::");
+            return reject(error);
+          }
+          console.log("getContainerPendingConsignments::");
+          console.log(results);
+          resolve(results[0]);
+        }
+      );
+    });
+  },
+  getQuotationsByShippingCompanyId: (data) => {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `select * from quotations where shipping_company_id=?`,
+        [data],
+        (error, results, fields) => {
+          if (error) {
+            console.log("getQuotationsByShippingCompanyId::");
+            return reject(error);
+          }
+          console.log("getQuotationsByShippingCompanyId::");
+          console.log(results);
+          resolve(results);
+        }
+      );
+    });
+  },
 };
