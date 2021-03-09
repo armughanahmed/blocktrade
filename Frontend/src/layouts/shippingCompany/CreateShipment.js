@@ -1,22 +1,14 @@
 import React, { PureComponent } from 'react'
 import './CreateShipment.css'
-import NavbarSC from '../../components/NavbarSC'
+import NavbarSC from '../../components/NavbarSC';
+import axios from 'axios';
 
 class CreateShipment extends PureComponent {
     constructor(props) {
         super(props)
 
         this.state = {
-            cargoOwners: [
-                {
-                    id: 1,
-                    name: 'Farhan'
-                },
-                {
-                    id: 2,
-                    name: 'Armughan'
-                }
-            ],
+            cargoOwners: [],
             selectedCargoOwner: '',
             nonAssignedConsignments: [
                 {
@@ -99,10 +91,15 @@ class CreateShipment extends PureComponent {
         })
     }
 
+    componentDidMount(){
+        this.getConsignments();
+    }
+
     updateSelectedCargoOwner(event){
         this.setState({
             selectedCargoOwner: event.target.value
         })
+       this.sendId(event.target.value);
     }
 
     updateSelectedContainer(event){
@@ -144,6 +141,28 @@ class CreateShipment extends PureComponent {
         )
     }
 
+    async sendId(id){
+         console.log(id);
+        const token = localStorage.getItem('token');
+        const obj = {
+            cargo_owner_id: id
+        }
+        try{
+            const response = await axios.post('http://localhost:4000/shippingCompany/getConsignmnetsByCargoOwnerId',obj,{
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                  },
+            })
+            console.log(response);
+            // this.setState({
+            //     cargoOwners: response.data.data
+            // })
+        }
+        catch(e){
+            console.log(e.response);
+        }
+    }
+
     showUnfilledContainers(container){
         return (
             <option value={container.id}>{container.spaceAvailable}</option>
@@ -164,6 +183,26 @@ class CreateShipment extends PureComponent {
     
     confirmBooking(event){
         alert('Done!');
+    }
+
+    async getConsignments(){
+        const token = localStorage.getItem('token');
+        const obj = {
+        }
+        try{
+            const response = await axios.post('http://localhost:4000/shippingCompany/getCargoOwnerByConsignment',obj,{
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                  },
+            })
+            console.log(response);
+            this.setState({
+                cargoOwners: response.data.data
+            })
+        }
+        catch(e){
+            console.log(e.response);
+        }
     }
 
     showPickupInlandDetails(){
