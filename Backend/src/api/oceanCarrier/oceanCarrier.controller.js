@@ -16,6 +16,7 @@ const {
   getBookingRequestsForRejection,
   getBookingRequestsById,
   rejectBRequest,
+  getBookingRequestsByOceanCarrierId,
 } = require("./oceanCarrier.service");
 const { getOrganizationByID } = require("../organization/organization.service");
 const { emailService } = require("../constants/functions");
@@ -329,6 +330,35 @@ module.exports = {
       return res.status(502).send({
         success: 0,
         message: "something went wrong while getting ships",
+        data: null,
+      });
+    }
+  },
+  getContainerBookingRequests: async (req, res) => {
+    try {
+      let body = req.body;
+      body.decoded = req.decoded;
+      const BookingRequests = await getBookingRequestsByOceanCarrierId(
+        body.decoded.result.org_id
+      );
+      if (!BookingRequests.length) {
+        return res.status(404).send({
+          success: 0,
+          message: "no requests",
+          data: null,
+        });
+      }
+      res.status(202).send({
+        success: 1,
+        message: "succesfully got requests",
+        data: BookingRequests,
+      });
+    } catch (e) {
+      console.log(e);
+      return res.status(502).send({
+        success: 0,
+        message:
+          "something went wrong while getting container booking requests",
         data: null,
       });
     }

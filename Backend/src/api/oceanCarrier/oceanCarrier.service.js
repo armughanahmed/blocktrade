@@ -310,4 +310,21 @@ module.exports = {
       );
     });
   },
+  getBookingRequestsByOceanCarrierId: (data) => {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `select * from bookingrequests where container_id IN(select container_id from containers where ocean_carrier_id=?)`,
+        [data],
+        (error, results, fields) => {
+          if (error) {
+            console.log("getBookingRequestsByOceanCarrierId::");
+            return reject(error);
+          }
+          console.log("getBookingRequestsByOceanCarrierId::");
+          console.log(results);
+          resolve(results);
+        }
+      );
+    });
+  },
 };

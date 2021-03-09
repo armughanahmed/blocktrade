@@ -7,6 +7,7 @@ const {
   createSchedule,
   acceptBRequest,
   rejectBRequest,
+  getContainerBookingRequests,
 } = require("./oceanCarrier.controller");
 const {
   auth,
@@ -21,4 +22,10 @@ router.post("/getShipsByType", auth, authOceanCarrier, getShipsByType);
 router.post("/createContainer", auth, authOceanCarrier, createContainer);
 router.post("/acceptBookingRequest", auth, authOceanCarrier, acceptBRequest);
 router.post("/rejectBookingRequest", auth, authOceanCarrier, rejectBRequest);
+router.post(
+  "/getContainerBookingRequest",
+  auth,
+  authOceanCarrier,
+  getContainerBookingRequests
+);
 module.exports = router;
