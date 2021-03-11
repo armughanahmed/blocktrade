@@ -201,9 +201,9 @@ module.exports = {
       let body = req.body;
       body.decoded = req.decoded;
       const containerArray = body.containerSize.split(" ");
-      body.size = containerArray[0];
-      body.empty_weight = containerArray[1];
-      body.total_space = containerArray[2];
+      body.size = containerArray[0].split("-")[0];
+      body.empty_weight = containerArray[1].split("-")[0];
+      body.total_space = containerArray[2].split("-")[0];
       const createdContainer = await createContainer(body);
       res.status(202).send({
         success: 1,
