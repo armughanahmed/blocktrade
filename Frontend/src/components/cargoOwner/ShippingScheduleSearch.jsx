@@ -2,6 +2,11 @@ import React, { PureComponent,useState } from 'react'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import './ShippingScheduleSearch.css';
+import {
+    countries,
+    cities,
+    getCitiesByCountryCode,
+  } from "country-city-location";
 
 class ShippingScheduleSearch extends PureComponent {
     constructor(props) {
@@ -11,6 +16,12 @@ class ShippingScheduleSearch extends PureComponent {
             originCountry: '',
             originCity: '',
             destinationCountry: '',
+            countries1: [],
+            cities1: [],
+            countryCode1: '',
+            countryCode2: '',
+            countries2: [],
+            cities2: [],
             destinationCity: '',
             departureDate: new Date(),
             arrivalDate: new Date(),
@@ -19,8 +30,22 @@ class ShippingScheduleSearch extends PureComponent {
         this.search = this.search.bind(this);
     }
 
+    componentDidMount(){
+        this.setState({
+            countries1: countries,
+            countries2: countries
+        })
+    }
+
     updateOriginCountry(event){
+        var check = document.getElementById(event.target.value);
+        var name = check.getAttribute('name');
+        console.log(name);
         this.setState({originCountry: event.target.value})
+        var c = getCitiesByCountryCode(name);
+        this.setState({
+            cities1: c
+        })
     }
 
     updateOriginCity(event){
@@ -28,7 +53,14 @@ class ShippingScheduleSearch extends PureComponent {
     }
 
     updateDestinationCountry(event){
+        var check = document.getElementById(event.target.value);
+        var name = check.getAttribute('name');
+        console.log(name);
         this.setState({destinationCountry: event.target.value})
+        var c = getCitiesByCountryCode(name);
+        this.setState({
+            cities2: c
+        })
     }
 
     updateDestinationCity(event){
@@ -64,7 +96,19 @@ class ShippingScheduleSearch extends PureComponent {
         console.log(obj);
         this.props.searchFromChild(obj);
     }
+
+    showCountries(value){
+        return(
+            <option value={value.Name} id={value.Name} name={value.Alpha2Code}>{value.Name}</option>
+        )
+    }
    
+    showCities(value){
+        return(
+            <option value={value.name}>{value.name}</option>
+        )
+    }
+
     render() {
         return (
         <div className="shipping-schedule-search">
@@ -77,13 +121,27 @@ class ShippingScheduleSearch extends PureComponent {
                                         <div className="row">
                                             <div className="col-lg-12">
                                                 <label htmlFor="">Origin country:</label>
-                                                <input className="form-control" type="text" id="origincountry" value={this.state.originCountry} onChange={(e) => this.updateOriginCountry(e)} placeholder="Enter origin country" required/>
+                                                <select class="form-control" id="origincountry" value={this.state.originCountry} onChange={(e) => this.updateOriginCountry(e)} id="sel5" required>
+                                                    <option value="">Select origin country</option>
+                                                    {
+                                                        this.state.countries1.map((value) =>
+                                                            this.showCountries(value)
+                                                        )
+                                                    }
+                                                </select>
                                             </div>
                                             <br/>
                                             <div className="col-lg-12">
                                                 <br/>
                                                 <label htmlFor="">Origin city:</label>
-                                                <input className="form-control" type="text" id="origincity" value={this.state.originCity} onChange={(e) => this.updateOriginCity(e)} placeholder="Enter origin city" required/>
+                                                <select class="form-control" id="origincity" value={this.state.originCity} onChange={(e) => this.updateOriginCity(e)} id="sel5" required>
+                                                    <option value="">Select origin city</option>
+                                                    {
+                                                        this.state.cities1.map((value) =>
+                                                            this.showCities(value)
+                                                        )
+                                                    }
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -96,12 +154,26 @@ class ShippingScheduleSearch extends PureComponent {
                                         <div className="row">
                                             <div className="col-lg-12">
                                                 <label htmlFor="">Destination country:</label>
-                                                <input className="form-control" type="text" id="destinationcountry" value={this.state.destinationCountry} onChange={(e) => this.updateDestinationCountry(e)} placeholder="Enter destination country" required />
+                                                <select class="form-control" id="destinationcountry" value={this.state.destinationCountry} onChange={(e) => this.updateDestinationCountry(e)} id="sel5" required>
+                                                    <option value="">Select destination country</option>
+                                                    {
+                                                        this.state.countries2.map((value) =>
+                                                            this.showCountries(value)
+                                                        )
+                                                    }
+                                                </select>
                                             </div>
                                             <div className="col-lg-12">
                                                 <br/>
                                                 <label htmlFor="">Destination city:</label>
-                                                <input className="form-control" type="text" id="destinationcity" value={this.state.destinationCity} onChange={(e) => this.updateDestinationCity(e)} placeholder="Enter destination city" required/>
+                                                <select class="form-control" id="destinationcity" value={this.state.destinationCity} onChange={(e) => this.updateDestinationCity(e)} id="sel5" required>
+                                                    <option value="">Select destination city</option>
+                                                    {
+                                                        this.state.cities2.map((value) =>
+                                                            this.showCities(value)
+                                                        )
+                                                    }
+                                                </select>
                                             </div>
                                         </div>
                                     </div>

@@ -13,6 +13,10 @@
   }
 }
 
+#org-verified{
+  color: rgb(52, 199, 199);
+}
+
 .page-container{
   display: flex;
   flex-direction: column;
@@ -23,6 +27,28 @@
 .container-wrap{
   flex: 1;
 }
+
+.responsive {
+  width: 100%;
+  height: auto;
+  margin-top: 25px;
+}
+
+#request-error{
+  color: red;
+  font-size: 14px;
+}
+
+#request-success{
+  color: rgb(72, 186, 252);
+  font-size: 14px;
+}
+
+#request-alreadyPartner{
+  color: rgb(245, 32, 32);
+  font-size: 14px;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;

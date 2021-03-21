@@ -73,6 +73,13 @@ import Error from './layouts/Error';
 import ITAddVehicle from './layouts/inlandT/ITAddVehicle';
 import AddEmployee from './layouts/AddEmployee';
 
+import AdminLogin from './layouts/Admin/Login';
+import Home from './layouts/Admin/Home';
+import Invite from './layouts/Invite';
+import EmployeeSignup from './layouts/EmployeeSignup';
+import PendingConfirmation from './layouts/oceanCarrier/PendingConfirmation';
+import AssignSchedule from './layouts/shippingCompany/AssignSchedule';
+
 
 class App extends PureComponent {
   static propTypes = {}
@@ -249,6 +256,26 @@ class App extends PureComponent {
       )} />
     )
 
+    const checkAdmin = () =>{
+      const isAuthenticated = localStorage.getItem('token');
+      const org_type = localStorage.getItem('org_type');
+      if (org_type !== 'moderator') {
+          return false;
+      }
+      else{
+        return true;
+      }
+    }
+    
+    const Admin = ({ component: Component, ...rest }) => (
+    
+      <Route {...rest} render={(props) => (
+        checkAdmin() ?
+          <Component {...props} />
+          : <Redirect to='/error' />
+      )} />
+    )
+
     const hist = createBrowserHistory();
     const org_type = localStorage.getItem('org_type');
     return (
@@ -256,8 +283,9 @@ class App extends PureComponent {
         <div className="container-wrap">
           <Router history={hist}>
             <Switch>
-              <Route path="/login" component={Login}/>
+              <Route exact path="/login" component={Login}/>
               <Route path="/register" component={Register}/>
+              <Route path="/admin" component={AdminLogin} />
               <Route path="/error" component={Error} />
               <Route path="/addEmployee" component={AddEmployee} />
               <CargoOwner path="/dashboard" component={DashboardCO}/>
@@ -265,10 +293,10 @@ class App extends PureComponent {
               <CargoOwner path="/viewConsignments" component={ViewConsignmentsCO}/>
               <CargoOwner path="/trackConsignment" component={TrackConsignment}/>
               <CargoOwner path="/viewQuotations" component={ViewQuotations}/>
-              <CargoOwner path="/addPartnerCO" component={AddPartner}/>
-              <CargoOwner path="/requestsCO" component={PartnerRequests}/>
-              <CargoOwner path="/viewPartnerCO" component={ViewPartner}/>
-              <CargoOwner path="/addPartnerSc" component={AddPartnerSc}/>
+              <Route path="/addPartner" component={AddPartner}/>
+              <Route path="/requests" component={PartnerRequests}/>
+              <Route path="/viewPartner" component={ViewPartner}/>
+              <ShippingCompany path="/addPartnerSc" component={AddPartnerSc}/>
               //shippingCompany
               <ShippingCompany path="/dashboardSc" component={Dashboard}/>
               <ShippingCompany path="/createShipment" component={CreateShipment}/>
@@ -277,6 +305,7 @@ class App extends PureComponent {
               <ShippingCompany path="/bookContainer" component={BookContainer}/>
               <ShippingCompany path="/viewContainer" component={ViewContainers}/>
               <ShippingCompany path="/makeQuotation" component={MakeQuotations}/>
+              <ShippingCompany path="/assignSchedule" component={AssignSchedule}/>
               //oceanCarrier
               <OceanCarrier path="/dashboardOc" component={DashboardOC}/>
               <OceanCarrier path="/createSchedule" component={CreateSchedule}/>
@@ -284,6 +313,7 @@ class App extends PureComponent {
               <OceanCarrier path="/viewShip" component={ViewShips}/>
               <OceanCarrier path="/addContainer" component={AddContainer}/>
               <OceanCarrier path="/viewContainerOC" component={ViewContainersOC}/>
+              <OceanCarrier path="/pendingConfirmation" component={PendingConfirmation}/>
             
               <FinancialInstitution path="/dashboardFI" component={DashboardFI}/>
               <FinancialInstitution path="/lcPrevious" component={LCPrevious}/>
@@ -319,6 +349,11 @@ class App extends PureComponent {
               <InlandTransporter path="/itViewShipment" component={ITShipment}/>
               <InlandTransporter path="/itaddroute" component={ITAddRoute}/>
               <InlandTransporter path="/itaddvehicle" component={ITAddVehicle}/>
+
+              <Admin path='/home' component={Home} />
+
+              <Route path='/invite' component={Invite} />
+              <Route path='/signup' component={EmployeeSignup} />
             </Switch>
           </Router>
         </div>

@@ -42,6 +42,7 @@ class ShippingMode extends PureComponent {
       deliverCountry: "",
       deliverCity: "",
       deliverAddress: "",
+      success: false,
     });
   }
 
@@ -362,6 +363,7 @@ class ShippingMode extends PureComponent {
                                
                         ))}         */}
           </div>
+          
           <div className="row">
             <div className="text-center col">
               <button
