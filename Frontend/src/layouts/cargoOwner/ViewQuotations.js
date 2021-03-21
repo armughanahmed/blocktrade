@@ -3,6 +3,8 @@ import NavbarCO from '../../components/NavbarCO';
 import Footer from '../../components/Footer';
 import MUIDataTable from "mui-datatables";
 import axios from 'axios';
+import Success from '../Success';
+import Failure from '../Failure';
 
 class ViewQuotations extends PureComponent {
     constructor(props) {
@@ -10,7 +12,9 @@ class ViewQuotations extends PureComponent {
 
         this.state = {
             data : [],
-            table: true
+            table: true,
+            approved: false,
+            rejected: false,
         }
     }
 
@@ -46,6 +50,9 @@ class ViewQuotations extends PureComponent {
     }
 
     async approve(id){
+        this.setState({
+            approved: false
+        })
         const token = localStorage.getItem('token');
         const obj = {
             quotation_id: id
@@ -57,6 +64,11 @@ class ViewQuotations extends PureComponent {
                 }
             })
             console.log(response);
+            if (response.status === 202) {
+                this.setState({
+                    approved: true
+                })
+            }
         }
         catch(e){
             console.log(e.response);
@@ -64,6 +76,9 @@ class ViewQuotations extends PureComponent {
     }
 
     async reject(id){
+        this.setState({
+            rejected: false
+        })
         const token = localStorage.getItem('token');
         const obj = {
             quotation_id: id
@@ -75,6 +90,11 @@ class ViewQuotations extends PureComponent {
                 }
             })
             console.log(response);
+            if (response.status === 202) {
+                this.setState({
+                    rejected: true
+                })
+            }
         }
         catch(e){
             console.log(e.response);
@@ -327,7 +347,14 @@ class ViewQuotations extends PureComponent {
                         />
                     }
                    
-                    
+                    {
+                        this.state.approved === true&&
+                        <Success message="Approved successfully"/>
+                    }
+                     {
+                        this.state.rejected === true&&
+                        <Failure message="Quotation rejected"/>
+                    }
                 </div>
              
             </div>  

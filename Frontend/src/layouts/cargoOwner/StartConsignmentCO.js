@@ -6,6 +6,7 @@ import './StartConsignment.css';
 import NavbarCO from '../../components/NavbarCO';
 import { Link, animateScroll as scroll } from "react-scroll";
 import axios from 'axios';
+import Success from '../Success';
 
 class StartConsignmentCO extends PureComponent {
     constructor(props) {
@@ -21,7 +22,8 @@ class StartConsignmentCO extends PureComponent {
           selectedSchedule: '',
           openLcls: '',
           openFcls: '',
-          check4: false
+          check4: false,
+          success: false,
         }
     }
  
@@ -66,6 +68,12 @@ class StartConsignmentCO extends PureComponent {
         })
         if (response.data.success === 1) {
          // alert('helloo');
+            this.setState({
+                success: true,
+            })
+            setTimeout(function(){
+                window.location.reload();
+            },2500)
         console.log(response);
          //this.props.history.push('/dashboard');
          }
@@ -93,10 +101,10 @@ class StartConsignmentCO extends PureComponent {
         //console.log(obj);
     }
 
-    async getSchedule(obj){
+     async getSchedule(obj){
         //console.log(obj1);
         console.log(obj);
-        //console.log('abcdefg');
+        console.log('abcdefg');
         const token = localStorage.getItem('token');
         try{ 
         const response = await axios.post('http://localhost:4000/cargo-owner/getSchedule',obj,{
@@ -131,7 +139,17 @@ class StartConsignmentCO extends PureComponent {
                                 }
                                 {
                                     this.state.check3 === true &&
+                                    <div>
                                     <ShippingMode getConsignments={this.getConsignments}/>
+                                        <div className="row text-center">
+                                            <div className="col">
+                                            {
+                                                this.state.success === true&&
+                                                <Success message="Quotation made successfully!"/>
+                                            }
+                                            </div>
+                                        </div>
+                                    </div>
                                 }
                                 {
                                     this.state.check4 === true &&

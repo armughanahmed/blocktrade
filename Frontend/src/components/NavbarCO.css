@@ -10,6 +10,10 @@ h2{
 a{
     color: white;
 }
+
+.nav-link{
+    color: white;
+}
 .nav-link:active{
     color: aliceblue;
 }

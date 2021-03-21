@@ -65,16 +65,14 @@ class NavbarIT extends PureComponent {
             <a className="dropdown-item" href="/itViewShipment">All</a>
           </div>
         </li>
-
-        <li className="nav-item dropdown py-md-2 px-3">
-          <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Partners
-          </a>
-          <div className="dropdown-menu" aria-labelledby="navbarDropdown1">
-            <a className="dropdown-item" href="/dashboardIT">Add partner</a>
-            <a className="dropdown-item" href="/dashboardIT">View partners</a>
-          </div>
-        </li>
+        <li class="nav-item dropdown py-md-2 px-3 ml-3">
+                  <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Partner</a>
+                  <div class="dropdown-menu">
+                      <a href="/addPartner" class="dropdown-item">Add</a>
+                      <a href="/requests" class="dropdown-item">Pending requests</a>
+                      <a href="/viewPartner" class="dropdown-item">View</a>
+                  </div>
+          </li>
 
 
 

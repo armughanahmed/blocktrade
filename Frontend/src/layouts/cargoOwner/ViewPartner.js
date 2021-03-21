@@ -1,5 +1,11 @@
 import React, { PureComponent } from 'react'
 import NavbarCO from '../../components/NavbarCO';
+import NavbarSC from '../../components/NavbarSC';
+import NavbarOC from '../../components/NavbarOC';
+import NavbarIT from '../../components/NavbarIT';
+import NavbarFI from '../../components/NavbarFI';
+import NavbarTO from '../../components/NavbarTO';
+import NavbarCU from '../../components/NavbarCu';
 import './PartnerRequest.css'
 import axios from 'axios'
 
@@ -68,13 +74,54 @@ class ViewPartner extends PureComponent {
             </tr>
         )
     }
+    navbarDecision(){
+        const org_type = localStorage.getItem('org_type');
+        console.log(org_type);
+        if(org_type === 'cargo-owner'){
+            return(
+                <NavbarCO/>
+            )
+          }
+          else if(org_type === 'shipping-company'){
+            return(
+                <NavbarSC/>
+            )
+          }
+          else if(org_type === 'ocean-carrier'){
+            return(
+                <NavbarOC/>
+            )
+          }
+          else if(org_type === 'financial-institution'){
+            return(
+                <NavbarFI/>
+            )
+          }
+          else if(org_type === 'customs'){
+            return(
+                <NavbarCU/>
+            )
+          }
+          else if(org_type === 'terminal-operator'){
+            return(
+                <NavbarTO/>
+            )
+          }
+          else if(org_type === 'inland-transporter'){
+            return(
+                <NavbarIT/>
+            )
+          }
+    }
   
    
 
     render() {
         return (
     <div>
-          <NavbarCO/>
+         {
+              this.navbarDecision()
+          }
         <div className="container" id="pending-requests">    
             <div className="row">
             <h3>Active partners</h3> 

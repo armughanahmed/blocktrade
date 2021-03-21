@@ -9,7 +9,11 @@ function DashboardCu() {
     <div className="wrapper">
       <NavbarCu />
       <div className="container-fluid" id="card-section">
-
+      <div className="row text-center">
+                <div className="col">
+                    <h2 className="welcome">Welcome! Customs authority</h2>
+                </div>   
+            </div>
         <div className="row text-center">
           <div className="col-lg-10 offset-lg-1 col-md-12 col-sm-12">
             <div className="card" id="track-card">

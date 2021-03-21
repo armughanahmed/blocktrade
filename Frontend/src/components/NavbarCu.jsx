@@ -52,6 +52,14 @@ class NavbarCu extends PureComponent {
           <a className="dropdown-item" href="/ViewConsignmentsCu">All</a>
         </div>
       </li>
+      <li class="nav-item dropdown py-md-2 px-3 ml-3">
+                  <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Partner</a>
+                  <div class="dropdown-menu">
+                      <a href="/addPartner" class="dropdown-item">Add</a>
+                      <a href="/requests" class="dropdown-item">Pending requests</a>
+                      <a href="/viewPartner" class="dropdown-item">View</a>
+                  </div>
+          </li>
 
       </ul>
 

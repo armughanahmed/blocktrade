@@ -16,8 +16,8 @@ class NavbarOC extends PureComponent {
   render() {
     return (
       <nav className="navbar navbar-expand-xl py-md-2">
-         
-      <h2 className="py-md-2"><strong>Block Trade</strong></h2>
+          <h2 className="py-md-2"><strong>Block Trade</strong></h2>  
+      
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
               <span className="navbar-toggler-icon"></span>
           </button>
@@ -46,6 +46,14 @@ class NavbarOC extends PureComponent {
                   <div class="dropdown-menu">
                       <a href="/addShip" class="dropdown-item">Add</a>
                       <a href="/viewShip" class="dropdown-item">View</a>
+                  </div>
+          </li>
+          <li class="nav-item dropdown py-md-2 px-3 ml-3">
+                  <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Partner</a>
+                  <div class="dropdown-menu">
+                      <a href="/addPartner" class="dropdown-item">Add</a>
+                      <a href="/requests" class="dropdown-item">Pending requests</a>
+                      <a href="/viewPartner" class="dropdown-item">View</a>
                   </div>
           </li>
       </ul>

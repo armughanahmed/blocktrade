@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import './NavbarCO.css'
 
 class NavbarSC extends PureComponent {
   constructor(props) {
@@ -16,7 +17,7 @@ class NavbarSC extends PureComponent {
 
   render() {
     return (
-      <nav className="navbar navbar-expand-xl py-md-2">
+      <nav className="navbar navbar-expand-xl navbar-dark py-md-2">
          
       <h2 className="py-md-2"><strong>Block Trade</strong></h2>
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -32,9 +33,6 @@ class NavbarSC extends PureComponent {
           <a className="nav-link" href="/makeQuotation">Quotations</a>
         </li>
         
-          <li className="nav-item py-md-2 px-3">
-          <a className="nav-link" href="/dashboardsc">Add Partner</a>
-        </li>
         <li class="nav-item dropdown py-md-2 px-3 ml-3">
                   <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Containers</a>
                   <div class="dropdown-menu">
@@ -48,6 +46,14 @@ class NavbarSC extends PureComponent {
                       <a href="/createShipment" class="dropdown-item">Create</a>
                       <a href="/viewShipments" class="dropdown-item">View</a>
                       <a href="/track" class="dropdown-item">Track</a>
+                  </div>
+          </li>
+          <li class="nav-item dropdown py-md-2 px-3 ml-3">
+                  <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Partner</a>
+                  <div class="dropdown-menu">
+                      <a href="/addPartner" class="dropdown-item">Add</a>
+                      <a href="/requests" class="dropdown-item">Pending requests</a>
+                      <a href="/viewPartner" class="dropdown-item">View</a>
                   </div>
           </li>
       </ul>
