@@ -1,0 +1,22 @@
+.modal-content{
+    background-color: #0e2934;
+    color: rgb(142, 238, 253);
+    margin: auto;
+    padding: 20px;
+    border-radius: 4px;
+    max-width: 450px;
+    height: 250px;
+}
+
+
+.modal{
+    background: rgba(135, 135, 135, 0.3) /* Green background with 30% opacity */
+}
+
+.close{
+    color: white;
+}
+
+.close:hover{
+    color: rgb(179, 179, 179);
+}

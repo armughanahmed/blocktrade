@@ -1,0 +1,135 @@
+
+  
+  #login-page {
+    display: flex;
+    font-weight: 400;
+    font-family: sans-serif;
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+
+  #login-card{
+    margin-top: 130px;
+    padding: 45px;
+    background-color: #131B31;
+  }
+
+  #login-card strong{
+    color: white;
+  }
+
+  h3{
+      text-align: center;
+  }
+  
+
+  
+  .navbar-light {
+    background-color: #ffffff;
+    box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+  }
+  
+  .outer {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: left;
+  }
+  
+  .inner {
+    width: 450px;
+    margin: auto;
+    background: #ffffff;
+    box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+    padding: 40px 55px 45px 55px;
+    border-radius: 15px;
+    transition: all .3s;
+  }
+  
+  .outer .form-control:focus {
+    border-color: #167bff;
+    box-shadow: none;
+  }
+  
+  .outer h3 {
+    text-align: center;
+    margin: 0;
+    line-height: 1;
+    padding-bottom: 20px;
+  }
+  
+  .custom-control-label {
+    font-weight: 400;
+  }
+  
+  .forgot-password,
+  .forgot-password a {
+    text-align: right;
+    font-size: 13px;
+    padding-top: 10px;
+    color: #7f7d7d;
+    margin: 0;
+  }
+  
+  .forgot-password a {
+    color: #167bff;
+  }
+
+
+  #login-card button{
+      background-color:  #266593;
+      color: white;
+      padding: 5px 25px;
+      border: 2px solid  #266593;
+      border-radius: 3px;
+  }
+  #button{
+    text-align: center;
+  }
+
+  @media only screen and (max-width: 990px) {
+    #login-image{
+      display: none;
+    }
+  }
+
+  @media only screen and (max-width: 600px) {
+    
+
+    #login-image{
+      display: none;
+    }
+    #login-page h3{
+     font-size: 18px;
+     padding: 25px;
+    }
+
+    #login-page label{
+      font-size: 14px;
+    }
+    #login-card button{
+      background-color: #25867e;
+      color: white;
+      padding: 5px 15px;
+      border: 2px solid  #25867e;
+      border-radius: 3px;
+  }
+    #login-page{
+      background-image: none;
+      background-color: #0b101f;
+    }
+  }
+
+  #login-card .invalid {
+    color: rgb(255, 73, 73);
+    font-size: 14px;
+    letter-spacing: 0.7px;
+  }
+
+  #login-card .not-exist {
+    color: rgb(255, 73, 73);
+    font-size: 14px;
+    letter-spacing: 0.7px;
+  }
+
+

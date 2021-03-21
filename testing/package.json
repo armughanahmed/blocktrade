@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "pdf-creator-node": "^1.4.2"
+  }
+}

@@ -1,0 +1,19 @@
+
+#container{
+    color: #0b101f;
+    background-color: #7ac8f3;
+}
+
+#container label{
+    color: #0b101f;
+}
+
+#container .form-group input{
+    color: #0b101f;
+    background-color: #ade0fc;
+    border-color: #5e70a5;
+}
+
+#container .row{
+    padding: 8px;
+}

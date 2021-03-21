@@ -1,0 +1,41 @@
+
+@media only screen and (max-width: 600px) {
+    #shipping-mode .card{
+       padding: 25px;
+    }
+    #shipping-mode .card{
+        background-color:#1e2c3d;
+     }
+}
+.added-consignments .card{
+    background-color: #0B101F;
+    padding: 25px;
+    border: 1px solid #e68507;
+    border-radius: 3px;
+}
+
+.added-consignments p strong{
+    font-size: 14px;
+    color: white;
+}
+
+.added-consignments p{
+    font-size: 13px;
+    
+}
+
+.main-added-consignments{
+    margin-top: 80px;
+}
+
+.main-added-consignments h3{
+    margin-bottom: 20px;
+    text-align: center;
+    padding: 25px;
+    font-size: 22px;
+    color: white;
+}
+#shipping-mode .card{
+    background-color:#1e2c3d;
+    padding: 25px;
+ }

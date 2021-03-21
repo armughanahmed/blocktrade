@@ -1,0 +1,70 @@
+#consignments-table{
+    padding: 45px;
+   
+}
+
+.pagination>li>a{
+    background-color: white;
+}
+
+.pagination>li>a:active{
+    background-color: white;
+}
+
+.page-item.active .page-link {
+    z-index: 1;
+    color: black;
+    background-color: #B1CA0F;
+    border-color: #B1CA0F;
+}
+
+.btn-secondary {
+    color: #266593;
+    background-color: white;
+    border-color: #266593;
+}
+
+.btn-secondary:hover {
+    color: #266593;
+    background-color: white;
+    border-color: #266593;
+}
+
+.btn-secondary:not(:disabled):not(.disabled).active, .btn-secondary:not(:disabled):not(.disabled):active, .show>.btn-secondary.dropdown-toggle {
+    color: #266593;
+    background-color: white;
+    border-color: #266593; 
+}
+
+.badge-primary {
+    color: #fff;
+    background-color: #97068b;
+}
+
+.allowbtn {
+    color: #fff;
+    background-color: #201148;
+    border: 1px solid #201148;   
+    font-size: .875rem;     
+}
+
+.allowbtn:hover {
+    opacity: 85%;
+    background-color: #201148;
+    border: 1px solid #201148;  
+    font-size: .875rem;   
+}
+
+.assignbtn {
+    color: #fff;
+    background-color: #4c5c02;
+    border: 1px solid #4c5c02;     
+    font-size: .875rem;   
+}
+
+.assignbtn:hover {
+    opacity: 85%;
+    background-color: #4c5c02;
+    border: 1px solid #4c5c02;
+    font-size: .875rem; 
+}

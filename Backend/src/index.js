@@ -1,0 +1,26 @@
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const organization_router = require("./api/organization/organization.router");
+const user_router = require("./api/users/user.router");
+const admin_router = require("./api/admin/admin.router");
+const cargo_owner = require("./api/cargoOwner/cargoOwner.router");
+const ocean_carrier = require("./api/oceanCarrier/oceanCarrier.router");
+const terminal_operator = require("./api/TO/TO.router");
+const inland_transporter = require("./api/inlandT/inlandT.router");
+const shipping_company = require("./api/shippingComapny/shippingCompany.router");
+const app = express();
+const port = process.env.PORT || 4000;
+app.use(cors());
+app.use(express.json());
+app.use("/organization", organization_router);
+app.use("/user", user_router);
+app.use("/admin", admin_router);
+app.use("/cargo-owner", cargo_owner);
+app.use("/oceanCarrier", ocean_carrier);
+app.use("/inlandT", inland_transporter);
+app.use("/TO", terminal_operator);
+app.use("/shippingCompany", shipping_company);
+app.listen(port, () => {
+  console.log("Server running on port " + port);
+});

@@ -1,0 +1,31 @@
+#request{
+    margin-top: 15px;
+}
+
+#request p{
+    text-align: left;
+}
+
+#pending-requests .card{
+    background-color:#1e2c3d;
+    padding: 35px 25px;
+    width: 100%;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+#pending-requests h3{
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+
+#pending-requests td{
+    color: rgb(8, 2, 37);
+    text-align: center;
+}
+
+#pending-requests th{
+    color: rgb(8, 2, 37);
+    text-align: center;
+}

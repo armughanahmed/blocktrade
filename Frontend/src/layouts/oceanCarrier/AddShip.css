@@ -1,0 +1,22 @@
+#add-ship .card{
+    display: flex;
+    background-color:#1e2c3d;
+    padding: 35px;
+    width: 100%;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+#success-add-ship{
+    color: rgb(136, 219, 240);
+    font-size: 16px;
+    margin-bottom: 25px;
+}
+
+#add-ship select{
+    background-color: rgb(238, 237, 237);
+}
+
+#add-ship input{
+    background-color:rgb(238, 237, 237);
+}
