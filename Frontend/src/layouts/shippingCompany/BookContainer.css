@@ -3,11 +3,33 @@
     padding: 65px 45px;
     width: 100%;
     justify-content: center;
-    margin-top: 70px; 
+    margin-top: 40px; 
     border-radius: 3px;
 }
 
 #book-container h3{
     color: white;
     margin-bottom: 45px;
+}
+
+.no-container{
+    color: rgb(161, 244, 253);
+    text-align: center;
+    margin-top: 15px;
+}
+
+.btn-custom1{
+    color: #bfe6fb;
+    background-color: #27384e;
+}
+
+.btn-custom1:hover{
+    color: #dff0fa;
+    background-color: #27384e;
+    opacity: 98%;
+}
+
+#sel5 option{
+        height: 100px !important;
+        width: 50px !important;
 }

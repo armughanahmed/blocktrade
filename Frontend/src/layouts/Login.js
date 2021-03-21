@@ -77,6 +77,7 @@ class Login extends PureComponent {
   render() {
     //const token = localStorage.getItem('token');
     if (this.state.loggedIn === true) {
+     
         return(<Redirect to={{ pathname: '/dashboard' }}/>)
     }
     return (

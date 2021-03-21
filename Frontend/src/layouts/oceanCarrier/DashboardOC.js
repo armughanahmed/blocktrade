@@ -8,6 +8,11 @@ function DashboardOC() {
         <NavbarOC/>    
         <div className="container-fluid" id="ocean-carrier-dashboard">
             <div className="row text-center">
+                <div className="col">
+                    <h2 className="welcome">Welcome! Ocean carrier</h2>
+                </div>   
+            </div>
+            <div className="row text-center">
                 <div className="col-lg-5 offset-lg-1">
                     <div className="card">
                         <div className="card-body">
@@ -82,7 +87,7 @@ function DashboardOC() {
                         <div className="card-body">
                             <h5 className="card-title">Pending confirmation</h5>
                             <p className="card-text">View shipments pending confirmation</p>
-                            <a href="#" className="btn btn-custom" disabled><strong>View</strong></a>
+                            <a href="/pendingConfirmation" className="btn btn-custom" disabled><strong>View</strong></a>
                         </div>
                     </div>
                 </div>

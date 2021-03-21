@@ -4,7 +4,7 @@
     padding: 35px;
     width: 100%;
     justify-content: center;
-    margin-top: 70px;
+    margin-top: 40px;
 }
 
 #ocean-carrier-dashboard  h5{
@@ -19,4 +19,9 @@ text-align: center;
 #ocean-carrier-dashboard{
     padding-left: 55px;
     padding-right: 55px;
+}
+
+.welcome{
+    padding: 15px;
+    margin-top: 10px;
 }

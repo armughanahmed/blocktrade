@@ -10,30 +10,11 @@ class CreateShipment extends PureComponent {
         this.state = {
             cargoOwners: [],
             selectedCargoOwner: '',
-            nonAssignedConsignments: [
-                {
-                    id: 1,
-                    name: "electronics",
-                    type: "p2p"
-                },
-                {
-                    id: 2,
-                    name: "clothing",
-                    type: "p2d"
-                },
-                {
-                    id: 3,
-                    name: "clothing",
-                    type: "d2p"
-                },
-                {
-                    id: 4,
-                    name: "clothing",
-                    type: "d2d"
-                }
-            ], //Armughan will send data
+            nonAssignedConsignments: [], //Armughan will send data
             selectedConsignment: '',
             containerType: '',
+            LclFcls: [],
+            SelectedLclFcl: '',
             unfilledContainers: [
                 {
                     id: 1,
@@ -75,6 +56,7 @@ class CreateShipment extends PureComponent {
     }
 
     updateSelectedConsignment(event){
+        console.log(event.target.value);
         this.setState({
             selectedConsignment: event.target.value
         })
@@ -89,6 +71,7 @@ class CreateShipment extends PureComponent {
             return false
            
         })
+        this.getFclLcl(parseInt(event.target.value));
     }
 
     componentDidMount(){
@@ -124,14 +107,37 @@ class CreateShipment extends PureComponent {
         this.setState({
             containerType: event.target.value
         })
+        console.log(event.target.value)
+        this.getFreeContainers(event.target.value);
         //request jaegi to get containers of that type
     }
 
     showNonAssignedConsignments(consignment){
         //console.log("hello");
         return (
-            <option value={consignment.id}>{consignment.name}</option>
+            <option value={consignment.consignment_id}>{consignment.consignment_id}</option>
         )
+    }
+
+    showLclFcls(consignment){
+        //console.log("hello");
+        if (consignment.mode === 'ocean-lcl') {
+            return (
+                <option value={consignment.lcl_id}>{consignment.lcl_id}</option>
+            )
+        }
+        else{
+            return (
+                <option value={consignment.fcl_id}>{consignment.fcl_id}</option>
+            )
+        }
+       
+    }
+
+    updateSelectedLclFcl(event){
+        this.setState({
+            SelectedLclFcl: event.target.value
+        })
     }
 
     showCargoOwners(cargoOwner){
@@ -154,14 +160,58 @@ class CreateShipment extends PureComponent {
                   },
             })
             console.log(response);
-            // this.setState({
-            //     cargoOwners: response.data.data
-            // })
+            this.setState({
+                nonAssignedConsignments: response.data.data
+            })
         }
         catch(e){
             console.log(e.response);
         }
     }
+
+    async getFclLcl(id){
+       const token = localStorage.getItem('token');
+       const obj = {
+          consignment_id: id
+       }
+       console.log(obj);
+       try{
+           const response = await axios.post('http://localhost:4000/shippingCompany/getFcLcl',obj,{
+               headers: {
+                   'Authorization': `Bearer ${token}`,
+                 },
+           })
+           console.log(response);
+           this.setState({
+              LclFcls: response.data.data
+           })
+       }
+       catch(e){
+           console.log(e.response);
+       }
+   }
+
+    async getFreeContainers(value){
+         const token = localStorage.getItem('token');
+         //console.log(token);
+         const obj = {
+             type: value,
+         }
+         console.log(obj);
+         try{ 
+         const response = await axios.post('http://localhost:4000/shippingCompany/getFreeContainers',obj,{
+             headers: {
+                 'Authorization': `Bearer ${token}`
+             }
+         })
+         //console.log('far')
+         console.log(response);
+         
+        }
+         catch(e){
+          console.log(e.response);
+         } 
+     }
 
     showUnfilledContainers(container){
         return (
@@ -336,6 +386,21 @@ class CreateShipment extends PureComponent {
                                                 <option value="">Select consignment</option>
                                                 {this.state.nonAssignedConsignments.map((consignment,index) => (
                                                     this.showNonAssignedConsignments(consignment,index)  
+                                                ))}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-lg-3 offset-lg-2">
+                                        <label>Ocean-LCL or Ocean-FCL:</label>
+                                    </div>
+                                    <div className="col-lg-5">
+                                        <div className="form-group">
+                                            <select className="form-control" value={this.state.SelectedLclFcl} onChange={(e) => this.updateSelectedLclFcl(e)} id="sel5" required>
+                                                <option value="">Select LCL or FCL</option>
+                                                {this.state.LclFcls.map((consignment,index) => (
+                                                    this.showLclFcls(consignment,index)  
                                                 ))}
                                             </select>
                                         </div>

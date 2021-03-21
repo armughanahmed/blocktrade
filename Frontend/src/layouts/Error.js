@@ -6,7 +6,7 @@ function Error() {
         <div className="container">
             <div className="row text-center">
                 <div className="col">
-                    <h1 id="access-denied">Unauthorized Access!</h1>
+                    <img src="../images/401-error-wordpress-featured-image.jpg" className="responsive"></img>
                 </div>
             </div>
         </div>
