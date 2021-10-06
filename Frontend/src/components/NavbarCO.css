@@ -1,0 +1,18 @@
+nav{
+    background-color: white;
+    
+}
+h2{
+    color: #053C66;
+    padding-left: 15px;
+    padding-top: 20px;
+}
+a{
+    color: #053C66;
+}
+a:active{
+    color: aliceblue;
+}
+.nav-link:hover {
+    text-decoration: underline;
+}

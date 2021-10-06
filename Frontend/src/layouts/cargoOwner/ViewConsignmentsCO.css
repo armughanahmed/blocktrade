@@ -1,0 +1,39 @@
+#consignments-table{
+    background-color: #266593;
+    padding: 45px;
+   
+}
+
+.pagination>li>a{
+    background-color: white;
+}
+
+.pagination>li>a:active{
+    background-color: white;
+}
+
+.page-item.active .page-link {
+    z-index: 1;
+    color: black;
+    background-color: #B1CA0F;
+    border-color: #B1CA0F;
+}
+
+.btn-secondary {
+    color: #266593;
+    background-color: white;
+    border-color: #266593;
+}
+
+.btn-secondary:hover {
+    color: #266593;
+    background-color: white;
+    border-color: #266593;
+}
+
+.btn-secondary:not(:disabled):not(.disabled).active, .btn-secondary:not(:disabled):not(.disabled):active, .show>.btn-secondary.dropdown-toggle {
+    color: #266593;
+    background-color: white;
+    border-color: #266593; 
+}
+
