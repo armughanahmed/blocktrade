@@ -5,10 +5,7 @@ import './DashboardCO.css';
 import { Redirect } from 'react-router-dom'
 
 function DashboardCO() {
-    const token = localStorage.getItem('token');
-    if (token === null || token === undefined) {
-        return(<Redirect to={{ pathname: '/login' }}/>)
-    }
+ 
     return (
             <div className="wrapper">
                  <NavbarCO/> 
@@ -44,7 +41,6 @@ function DashboardCO() {
                         </div>
                     </div>
                 </div>
-                <Footer/>
             </div>
         </div>
     )

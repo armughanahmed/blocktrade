@@ -26,9 +26,20 @@
 .shipping-schedule-search .card{
     padding: 30px 20px;
     width: 100%;
+    background-color: #131b31;
+    color: white;
+    margin-top: 25px;
 }
 
 .shipping-schedule-search .text-center{
     padding-bottom: 35px;
 }
 
+
+.shipping-schedule-search input{
+    background-color: #ebecec;
+}
+
+.shipping-schedule-search select{
+    background-color: #ebecec;
+}

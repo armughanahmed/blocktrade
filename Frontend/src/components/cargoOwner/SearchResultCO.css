@@ -1,0 +1,133 @@
+#search-results{
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+#selected-dates{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#search-selected{
+    display: flex;
+    flex-direction: column-reverse;
+    padding: 40px 20px;
+}
+
+#selected{
+    border: 1px solid #79acc7;
+}
+
+#light-bg{
+    background-color:#0B101F;
+    
+    border-radius: 3px;
+}
+
+#search-selected .card{
+    height: 8rem;
+    
+}
+
+#header{
+    color: #79acc7;
+}
+#search-selected p{
+    font-size: 14px;
+    color:#79acc7;
+}
+
+.bold-src{
+    font-size: 16px;
+    color:#79acc7;
+}
+
+#selected-dates strong{
+    font-size: 16px;
+    color:#79acc7;
+}
+
+#selected-dates p{
+    font-size: 15px;
+}
+
+#search-selected ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+#search-selected ul:before {
+    content: "";
+    display: inline-block;
+    width: 2px;
+    background:  #79acc7;
+    position: absolute;
+    left: 3px;
+    top: 5px;
+    height: calc(100% - 35px);
+}
+#search-selected ul li {
+    position: relative;
+    padding-left: 15px;
+    margin-bottom: 15px;
+}
+#search-selected ul li:before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background:  #79acc7;
+    position: absolute;
+    left: 0;
+    top: 5px;
+    border-radius: 10px;
+}
+
+
+
+    
+  
+
+#schedules-p{
+    font-size: 13px;
+    color:#79acc7;
+}
+
+#schedules-p1{
+    font-size: 13px;
+    color:#79acc7;
+}
+
+#schedules-p2{
+    font-size: 13px;
+    color:#79acc7;
+}
+
+#schedules-p3{
+    font-size: 13px;
+    color: #79acc7;
+}
+
+#schedules-p4{
+    font-size: 13px;
+    color: #79acc7;
+}
+
+
+#search-results .card{
+    border: 1px solid  #79acc7;
+    margin-top: 15px;
+}
+
+.search-result-card strong{
+    font-size: 15px;
+    color:#79acc7;
+}
+
+
+#light-bg .card{
+    background-color:#131B31;
+}

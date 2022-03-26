@@ -186,7 +186,6 @@ class ViewConsignmentsCO extends PureComponent {
                     }
                     
                 </div>
-                <Footer/>
             </div>  
         )
     }

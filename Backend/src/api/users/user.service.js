@@ -33,7 +33,7 @@ module.exports = {
       pool.query(
         `insert into invites(emp_id,org_id,receiver_email) 
         values(?,?,?)`,
-        [data.decode.result.id, data.decode.result.org_id, data.receiver_email],
+        [data.decoded.result.id, data.decoded.result.org_id, data.receiver_email],
         (error, results, fields) => {
           if (error) {
             console.log("createInvite::");
@@ -178,7 +178,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       pool.query(
         `update invites set verified = ? where receiver_email = ? and org_id = ?`,
-        [1, data.result.receiver_email, data.result.decode.result.org_id],
+        [1, data.result.receiver_email, data.result.decoded.result.org_id],
         (error, results, fields) => {
           if (error) {
             console.log("verifyToken::services ");

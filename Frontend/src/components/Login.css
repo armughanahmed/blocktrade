@@ -1,18 +1,22 @@
 
   
   #login-page {
-    min-height: 100vh;
     display: flex;
     font-weight: 400;
     font-family: sans-serif;
     overflow-x: hidden;
     overflow-y: hidden;
-    background-image: linear-gradient( 90.9deg,  rgba(3,195,195,1) 0.3%, rgba(37,84,112,1) 87.8% );
   }
 
-  .card{
+  #login-card{
     margin-top: 150px;
     margin-right: 55px;
+    padding: 45px;
+    background-color: #1e2c3d;
+  }
+
+  #login-card strong{
+    color: white;
   }
 
   h3{
@@ -84,16 +88,14 @@
     text-align: center;
   }
 
-#login-card{
-  background-color: rgb(240, 241, 241);
-}
+  @media only screen and (max-width: 990px) {
+    #login-image{
+      display: none;
+    }
+  }
 
   @media only screen and (max-width: 600px) {
-    #login-card{
-      vertical-align: center;
-      padding: 45px;
-      background-color: #FAFAFA;
-    }
+    
 
     #login-image{
       display: none;
@@ -115,10 +117,20 @@
   }
     #login-page{
       background-image: none;
-      background-color: #266593;
+      background-color: #0b101f;
     }
   }
 
+  #login-card .invalid {
+    color: rgb(255, 73, 73);
+    font-size: 14px;
+    letter-spacing: 0.7px;
+  }
 
+  #login-card .not-exist {
+    color: rgb(255, 73, 73);
+    font-size: 14px;
+    letter-spacing: 0.7px;
+  }
 
 

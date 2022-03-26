@@ -1,12 +1,10 @@
 import React, { PureComponent } from 'react';
 import ShippingMode from '../../components/cargoOwner/ShippingMode';
 import ShippingScheduleSearch from '../../components/cargoOwner/ShippingScheduleSearch';
-import SearchResult from '../../components/cargoOwner/SearchResult';
+import SearchResultCO from '../../components/cargoOwner/SearchResultCO';
 import './StartConsignment.css';
 import NavbarCO from '../../components/NavbarCO';
-import Footer from '../../components/Footer';
 import { Link, animateScroll as scroll } from "react-scroll";
-import { Redirect } from 'react-router-dom'
 import axios from 'axios';
 
 class StartConsignmentCO extends PureComponent {
@@ -18,54 +16,8 @@ class StartConsignmentCO extends PureComponent {
         check1: true,
         check2: false,
         check3: false,
-        searchResult:[
-            {
-                departurePort: 'Karachi',
-                arrivalPort: 'Wuhan',
-                departureDate: '20-11-20',
-                arrivalDate: '25-11-20',
-                noOfStops: 2,
-                shippingCompany: 'XYZ',
-                oceanCarrier: 'Maersk',
-                noOfDays: 5,
-                stops: [{
-                    portName: 'Port Qasim',
-                    arrivalDate: '21-11-20',
-                    departureDate: '21-11-20'
-                },
-                {
-                    portName: 'Port Qasim',
-                    arrivalDate: '21-11-20',
-                    departureDate: '21-11-20'
-                },
-                {
-                    portName: 'Port Qasim',
-                    arrivalDate: '21-11-20',
-                    departureDate: '21-11-20'
-                },
-                {
-                    portName: 'Saudi Port',
-                    arrivalDate: '22-11-20',
-                    departureDate: '23-11-20'
-                }]
-            },
-            {
-                departurePort: 'Karachi1',
-                arrivalPort: 'Wuhan1',
-                departureDate: '21-11-20',
-                arrivalDate: '25-11-20',
-                noOfStops: 2,
-                shippingCompany: 'XYZ',
-                oceanCarrier: 'Maersk',
-                noOfDays: 5,
-                stops: [{
-                    portName: 'Port Qasim1',
-                    arrivalDate: '21-11-20',
-                    departureDate: '21-11-20'
-                }
-                ]
-            }
-          ],
+        searchResult:[],
+        shippingCompany: '',
           selectedSchedule: '',
           openLcls: '',
           openFcls: '',
@@ -73,9 +25,10 @@ class StartConsignmentCO extends PureComponent {
         }
     }
  
-    getSelectedSchedule = (schedule) =>{
+    getSelectedSchedule = (schedule,shippingCompany) =>{
        this.setState({
            selectedSchedule: schedule,
+           shippingCompany: shippingCompany,
            check1: false,
            check2: false,
            check3: true
@@ -83,15 +36,19 @@ class StartConsignmentCO extends PureComponent {
        console.log(schedule);
     }
 
-    getConsignments = (lcls,fcls) =>{
+    getConsignments = (lcls,addressDetails,fcls) =>{
         this.setState({
             openFcls: fcls,
             openLcls: lcls,
             check4: true
         })
+        //console.log(this.state.selectedSchedule.scheduleId)
         const obj = {
             lcl: lcls,
-            fcl: fcls
+            fcl: fcls,
+            addressDetails: addressDetails,
+            scheduleId: this.state.selectedSchedule.scheduleId,
+            shippingCompanyId: parseInt(this.state.shippingCompany)        
         }
         this.sendQuote(obj);
         //console.log(this.state.selectedSchedule);
@@ -109,7 +66,8 @@ class StartConsignmentCO extends PureComponent {
         })
         if (response.data.success === 1) {
          // alert('helloo');
-        this.props.history.push('/login');
+        console.log(response);
+         //this.props.history.push('/dashboard');
          }
        }
         catch(e){
@@ -128,29 +86,48 @@ class StartConsignmentCO extends PureComponent {
     searchFromChild = (obj) =>{
         this.setState({
             search: obj,
-            check2: true
+            
         });
+        this.getSchedule(obj);
         scroll.scrollToBottom();
         //console.log(obj);
     }
+
+    async getSchedule(obj){
+        //console.log(obj1);
+        console.log(obj);
+        //console.log('abcdefg');
+        const token = localStorage.getItem('token');
+        try{ 
+        const response = await axios.post('http://localhost:4000/cargo-owner/getSchedule',obj,{
+        headers: {
+            'Authorization': `Bearer ${token}`
+            }
+        })
+        console.log(response);
+        this.setState({
+            searchResult: response.data.data,
+            check2: true
+        })
+       }
+        catch(e){
+         console.log(e);
+        }  
+    }
    
     render() {
-        const token = localStorage.getItem('token');
-        if (token === null || token === undefined) {
-            return(<Redirect to={{ pathname: '/login' }}/>)
-        }
         return (
             <div>
                 <NavbarCO/>
                     <div className="container-fluid" id="blue-bg">
-                        <div className="container">
+                        
                                 {
                                 this.state.check1 === true &&
                                 <ShippingScheduleSearch searchFromChild={this.searchFromChild}/>  
                                 }
                                 {
                                 this.state.check2 === true &&
-                                <SearchResult  searchResult={this.state.searchResult} getSelectedSchedule={this.getSelectedSchedule}/>  
+                                <SearchResultCO  searchResult={this.state.searchResult} getSelectedSchedule={this.getSelectedSchedule}/>  
                                 }
                                 {
                                     this.state.check3 === true &&
@@ -160,8 +137,7 @@ class StartConsignmentCO extends PureComponent {
                                     this.state.check4 === true &&
                                     this.check()
                                 }
-                        </div>
-                        <Footer/>
+                        
                     </div> 
             </div>
                 

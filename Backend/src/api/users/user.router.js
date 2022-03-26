@@ -10,6 +10,7 @@ const {
   getUsers,
   updateUsers,
   deleteUser,
+  tokenDecode,
 } = require("./user.controller");
 router.get("/", auth, authAdmin, getUsers);
 router.post("/", auth, authAdmin, createUser);
@@ -19,5 +20,5 @@ router.post("/login", login);
 router.patch("/", auth, updateUsers);
 router.delete("/", auth, authAdmin, authOrganization, deleteUser);
 router.get("/invite/:token", verifyToken);
+router.get("/tokenDecode", tokenDecode);
 module.exports = router;
-// git check

@@ -1,0 +1,13 @@
+#book-container{
+    background-color:#1e2c3d;
+    padding: 65px 45px;
+    width: 100%;
+    justify-content: center;
+    margin-top: 70px; 
+    border-radius: 3px;
+}
+
+#book-container h3{
+    color: white;
+    margin-bottom: 45px;
+}

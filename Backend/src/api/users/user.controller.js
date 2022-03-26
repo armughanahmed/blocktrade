@@ -20,7 +20,7 @@ const sendEmail = async (text, to, org) => {
     service: "gmail",
     auth: {
       user: "armughancr7@gmail.com",
-      pass: "kiunbataon",
+      pass: "blocktrade",
     },
   });
 
@@ -70,6 +70,33 @@ module.exports = {
       });
     }
   },
+  tokenDecode: async (req, res) => {
+    try {
+      let body = req.body;
+      verify(body.token, "invite", (err, decoded) => {
+        if (err) {
+          return res.status(400).send({
+            success: 0,
+            message: "Invalid Invite link",
+            data: null,
+          });
+        }
+      });
+      const decoded = decode(body.token);
+      return res.status(200).send({
+        success: 1,
+        message: "Succesfully decoded token",
+        data: decoded,
+      });
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send({
+        success: 0,
+        message: "error in decoding token",
+        data: null,
+      });
+    }
+  },
   verifyToken: async (req, res) => {
     try {
       let token = req.params.token;
@@ -108,8 +135,8 @@ module.exports = {
   createUser: async (req, res) => {
     try {
       const body = req.body;
-      body.decode = req.decoded;
-      const userEmail = await getUserByUserEmail(body.email);
+      body.decoded = req.decoded;
+      const userEmail = await getUserByUserEmail(body.receiver_email);
       if (userEmail) {
         return res.status(302).send({
           success: 0,
@@ -117,6 +144,7 @@ module.exports = {
           data: null,
         });
       }
+      console.log(body);
       await createInvite(body);
 
       const jsontoken = sign({ result: body }, "invite");
@@ -124,7 +152,7 @@ module.exports = {
       const mail = sendEmail(
         url,
         body.receiver_email,
-        body.decode.result.org_id
+        body.decoded.result.org_id
       );
       if (!mail) {
         console.log("createUser:: error in sending mail");
@@ -132,9 +160,10 @@ module.exports = {
       return res.status(200).send({
         success: 1,
         message: "succesfully created",
-        data: results,
+        data: url,
       });
     } catch (e) {
+      console.log(e);
       return res.status(500).send({
         success: 0,
         message: "Something went wrong while creating user",

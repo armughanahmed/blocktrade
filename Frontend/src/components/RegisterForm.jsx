@@ -16,15 +16,31 @@ class RegisterForm extends PureComponent {
                 password: '',
                 country: '',
                 city: '',
-                zipCode:"75330",
                 officeAddress: '',
-                phoneNumber:"031555",
-                ntn:"55265"
+                zipCode:'',
+                phoneNumber:'',
+                ntn:''
           
         }
         this.sendData = this.sendData.bind(this);
     }
-    
+    updateNTN(event){
+        this.setState({
+            ntn: event.target.value,
+        })
+    }
+    updatePhoneNumber(event){
+        this.setState({
+            phoneNumber: event.target.value,
+        })
+    }
+
+    updateZipCode(event){
+        this.setState({
+            zipCode: event.target.value,
+        })
+    }
+
     updateName(event){
         this.setState({
             name: event.target.value
@@ -78,8 +94,8 @@ class RegisterForm extends PureComponent {
             password: this.state.password,
             country: this.state.country,
             city: this.state.city,
-            zipCode: this.state.zipCode,
             officeAddress: this.state.officeAddress,
+            zipCode: this.state.zipCode,
             phoneNumber: this.state.phoneNumber,
             NTN: this.state.ntn
         }
@@ -109,20 +125,6 @@ class RegisterForm extends PureComponent {
             <div className="row">
                 <div className="col-lg-6">
                 <div className="form-group">
-                    <label>Country</label>
-                    <input type="text" className="form-control" placeholder="Enter country" value={this.state.country} onChange={(e) => this.updateCountry(e)} required/>
-                </div>
-                </div>
-                <div className="col-lg-6">
-                <div className="form-group">
-                    <label>City</label>
-                    <input type="text" className="form-control" placeholder="Enter city" value={this.state.city} onChange={(e) => this.updateCity(e)} required/>
-                </div>
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-lg-6">
-                <div className="form-group">
                     <label>Password</label>
                     <input type="password" className="form-control" placeholder="Enter password" value={this.state.password} onChange={(e) => this.updatePassword(e)} required/>
                 </div>
@@ -134,18 +136,66 @@ class RegisterForm extends PureComponent {
                 </div>
                 </div>
             </div>
-            <div className="form-group">
+            <div className="row">
+                <div className="col-lg-6">
+                <div className="form-group">
+                    <label>Country</label>
+                    <input type="text" className="form-control" placeholder="Enter country" value={this.state.country} onChange={(e) => this.updateCountry(e)} required/>
+                </div>
+                </div>
+                <div className="col-lg-6">
+                <div className="form-group">
+                    <label>City</label>
+                    <input type="text" className="form-control" placeholder="Enter city" value={this.state.city} onChange={(e) => this.updateCity(e)} required/>
+                </div>
+                </div>
+            </div>
+            
+            <div className="row">
+                <div className="col-lg-6">
+                <div className="form-group">
+                    <label>NTN</label>
+                    <input type="text" className="form-control" placeholder="Enter NTN" value={this.state.ntn} onChange={(e) => this.updateNTN(e)} required/>
+                </div>
+                </div>
+                <div className="col-lg-6">
+                <div className="form-group">
+                    <label>Zip-code</label>
+                    <input type="text" className="form-control" placeholder="Enter zip code" value={this.state.zipCode} onChange={(e) => this.updateZipCode(e)} required/>
+                </div>
+                </div>
+            </div>
+
+            
+            <div className="row">
+                <div className="col-lg-6">
+                <div className="form-group">
+                    <label>Phone number</label>
+                    <input type="text" className="form-control" placeholder="Enter your phone number" value={this.state.phoneNumber} onChange={(e) => this.updatePhoneNumber(e)} required/>
+                </div>
+                </div>
+                <div className="col-lg-6">
+                <div className="form-group">
                 <label for="sel1">Register as</label>
                 <select className="form-control" value={this.state.type}  onChange={(e) => this.updateType(e)} id="sel1">
                     <option value="">Select type</option>
                     
-                    <option value="ocean-carrier">Ocean carrier</option>
-                    <option value="port-authority">Port authority</option>
-                    <option value="exporter">Exporter</option>
-                    <option value="importer">Importer</option>
                     <option value="cargo-owner">Cargo owner</option>
-                    <option value="bank">Bank</option>
+                    <option value="customs">Customs</option>
+                    <option value="financial-institution">Financial Institution</option>
+                    <option value="inland-transporter">Inland Transporter</option>
+                    <option value="ocean-carrier">Ocean carrier</option>
+                    <option value="shipping-company">Shipping company</option>
+                    <option value="terminal-operator">Terminal Operator</option>
                 </select>
+                </div>
+                </div>
+            </div>
+
+
+
+            <div className="form-group">
+                
             </div> 
             <div className="form-group">
             <label for="comment">Office address:</label>

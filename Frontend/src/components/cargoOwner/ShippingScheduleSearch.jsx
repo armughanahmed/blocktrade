@@ -36,13 +36,13 @@ class ShippingScheduleSearch extends PureComponent {
     }
 
 
-    updateDepartureDate= date => 
+    updateDepartureDate= (date) => 
     {    
         this.setState({departureDate: date});  
     };
    
 
-    updateArrivalDate= date => {
+    updateArrivalDate= (date) => {
         this.setState({arrivalDate: date})
     }
 
@@ -70,7 +70,7 @@ class ShippingScheduleSearch extends PureComponent {
         <div className="shipping-schedule-search">
         <form action="#" onSubmit={(e) => this.search(e)}>
                             <div className="row">
-                            <div className="col-lg-6 col-sm-12">
+                            <div className="col-lg-5 col-sm-12 offset-lg-1">
                                 <div className="card">
                                     <div className="card-body">
                                         <h4>Where are you shipping from?</h4>
@@ -89,7 +89,7 @@ class ShippingScheduleSearch extends PureComponent {
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-lg-6 col-sm-12">
+                            <div className="col-lg-5 col-sm-12">
                                 <div className="card">
                                     <div className="card-body">
                                         <h4>Where are you shipping to?</h4>
@@ -109,28 +109,29 @@ class ShippingScheduleSearch extends PureComponent {
                             </div>
                         </div> 
                         <div className="row">
-                        <div className="col-lg-6 col-sm-12">
+                        <div className="col-lg-5 offset-lg-1 col-sm-12">
                             <div className="card">
                                 <div className="card-body">
                                     <h4>When you want to ship?</h4>
                                     <div className="row">
-                                        <div className="col-lg-3 offset-lg-2">
+                                        <div className="col-lg-6 offset-lg-1">
                                             <label htmlFor="">Departure date:</label>
-                                                <DatePicker className="form-control" selected={this.state.departureDate} onChange={this.updateDepartureDate} inline/>
+                                            <br/>
+                                                <DatePicker className="form-control" dateFormat="yyyy/MM/dd" selected={this.state.departureDate} onChange={(date) => this.updateDepartureDate(date)} />
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-6 col-sm-12">
+                        <div className="col-lg-5 col-sm-12">
                             <div className="card">
                                 <div className="card-body">
                                     <h4>When you want the package to arrive at destination?</h4>
                                     <div className="row">
-                                        <div className="col-lg-3 offset-lg-2">
+                                        <div className="col-lg-6 offset-lg-1">
                                             <label htmlFor="">Arrival date:  </label>
                                             <br/>
-                                                <DatePicker className="form-control" selected={this.state.arrivalDate} onChange={this.updateArrivalDate}  inline/>
+                                                <DatePicker className="form-control" dateFormat="yyyy/MM/dd" selected={this.state.arrivalDate} onChange={(date) => this.updateArrivalDate(date)} />
                                         </div>
                                     </div>
                                 </div>
@@ -138,7 +139,7 @@ class ShippingScheduleSearch extends PureComponent {
                         </div>
                     </div> 
                     <div className="row">
-                        <div className="col text-center">
+                        <div className="offset-lg-1 col-lg-10 text-center">
                             <div class="form-group">
                             <div className="card">
                                 <div className="card-body">

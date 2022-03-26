@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <mate charest="utf-8" />
+    <title>Hello world!</title>
+    <style>
+      table {
+        margin-top: 25px;
+        border: 1px solid black;
+        text-align: center;
+      }
+      th {
+        border: 1px solid grey;
+        padding: 5px;
+      }
+      tr {
+        padding: 5px;
+        margin-top: 5px;
+      }
+      td {
+        margin-top: 5px;
+      }
+      body {
+        font-family: Sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Quotation</h1>
+
+    <h3>Schedule details</h3>
+    <table style="width: 100%">
+      <tr>
+        <th>Departure port</th>
+        <th>Arrival port</th>
+        <th>Departure date</th>
+        <th>Arrival date</th>
+      </tr>
+      <tr>
+        <td>{{schedule.departurePort}}</td>
+        <td>{{schedule.arrivalPort}}</td>
+        <td>{{schedule.departureDate}}</td>
+        <td>{{schedule.arrivalDate}}</td>
+      </tr>
+    </table>
+    <table style="width: 100%">
+      <tr>
+        <th>Id</th>
+        <th>Type</th>
+        <th>Charges</th>
+      </tr>
+      {{#each consignments}}
+      <tr>
+        <td>{{this.id}}</td>
+        <td>{{this.mode}}</td>
+        <td>{{this.charges}}</td>
+      </tr>
+      {{/each}}
+    </table>
+  </body>
+</html>
